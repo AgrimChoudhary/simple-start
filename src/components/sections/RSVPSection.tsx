@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import confetti from 'canvas-confetti';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface RSVPSectionProps {
   active: boolean;
