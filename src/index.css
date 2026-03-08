@@ -1,96 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@400;500&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500;600&family=Mukta:wght@400;500&family=Playfair+Display:ital,wght@1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Royal Midnight Rajasthan Palette */
+    --background: 218 60% 10%;         /* #0A1628 */
+    --foreground: 36 30% 94%;          /* #F5F0E8 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 218 52% 14%;              /* #111E36 */
+    --card-foreground: 36 30% 94%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 218 52% 14%;
+    --popover-foreground: 36 30% 94%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 38 36% 60%;            /* #C9A96E */
+    --primary-foreground: 218 60% 10%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 218 42% 19%;         /* #1A2A4A */
+    --secondary-foreground: 36 12% 81%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 38 8% 50%;              /* #8A8578 */
+    --muted-foreground: 38 8% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 38 30% 65%;            /* #D4B87A */
+    --accent-foreground: 218 60% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 36 30% 94%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 38 36% 60% / 0.2;
+    --input: 38 36% 60% / 0.4;
+    --ring: 38 36% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Wedding-specific tokens */
+    --gold-primary: 38 36% 60%;       /* #C9A96E */
+    --gold-secondary: 38 40% 65%;     /* #D4B87A */
+    --gold-tertiary: 38 30% 35%;      /* #8B7340 */
+    --text-cream: 36 12% 81%;         /* #D4CFC5 */
+    --text-ivory: 36 30% 94%;         /* #F5F0E8 */
+    --curtain-red: 348 60% 26%;       /* #6B1A2A */
+    --curtain-dark: 348 60% 18%;      /* #4A1220 */
+    --petal-gold: 42 75% 46%;         /* #D4A017 */
+    --bg-card: 218 52% 14%;           /* #111E36 */
+    --bg-hover: 218 42% 19%;          /* #1A2A4A */
   }
 }
 
@@ -101,5 +58,276 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Lora', Georgia, serif;
+    overflow: hidden;
   }
+
+  h1, h2, h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+}
+
+/* ===== FONT CLASSES ===== */
+.font-display {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+}
+.font-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+.font-body {
+  font-family: 'Lora', Georgia, serif;
+}
+.font-ui {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.font-hindi {
+  font-family: 'Noto Sans Devanagari', 'Mukta', sans-serif;
+}
+.font-hindi-event {
+  font-family: 'Mukta', 'Noto Sans Devanagari', sans-serif;
+}
+.font-hashtag {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+}
+
+/* ===== GOLD SHIMMER TEXT ===== */
+.gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--gold-tertiary)),
+    hsl(var(--gold-primary)),
+    hsl(var(--gold-secondary)),
+    hsl(var(--gold-primary)),
+    hsl(var(--gold-tertiary))
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-shimmer 4s linear infinite;
+}
+
+.gold-shimmer-slow {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--gold-tertiary)),
+    hsl(var(--gold-primary)),
+    hsl(var(--gold-secondary)),
+    hsl(var(--gold-primary)),
+    hsl(var(--gold-tertiary))
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-shimmer 6s linear infinite;
+}
+
+/* ===== KEYFRAMES ===== */
+@keyframes gold-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes curtain-open-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes curtain-open-right {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes petal-drift {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate3d(var(--drift-x, 50px), 110vh, 0) rotate(var(--drift-rotate, 360deg));
+    opacity: 0;
+  }
+}
+
+@keyframes petal-sway {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(var(--sway-x, 30px)); }
+}
+
+@keyframes heartbeat-glow {
+  0%, 100% { 
+    box-shadow: 0 0 60px hsl(var(--gold-primary) / 0.08);
+    transform: scale(1);
+  }
+  7% { 
+    box-shadow: 0 0 100px hsl(var(--gold-primary) / 0.12);
+    transform: scale(1.02);
+  }
+  12% { 
+    box-shadow: 0 0 60px hsl(var(--gold-primary) / 0.08);
+    transform: scale(1);
+  }
+  19% { 
+    box-shadow: 0 0 100px hsl(var(--gold-primary) / 0.12);
+    transform: scale(1.02);
+  }
+  25% { 
+    box-shadow: 0 0 60px hsl(var(--gold-primary) / 0.08);
+    transform: scale(1);
+  }
+}
+
+@keyframes diya-flame {
+  0%, 100% { 
+    transform: scaleY(1) scaleX(1);
+    opacity: 1;
+  }
+  25% { 
+    transform: scaleY(1.1) scaleX(0.9);
+    opacity: 0.9;
+  }
+  50% { 
+    transform: scaleY(0.95) scaleX(1.05);
+    opacity: 1;
+  }
+  75% { 
+    transform: scaleY(1.05) scaleX(0.95);
+    opacity: 0.95;
+  }
+}
+
+@keyframes diya-glow {
+  0% { 
+    box-shadow: 0 0 0 hsl(var(--gold-primary) / 0);
+  }
+  100% { 
+    box-shadow: 0 0 30px hsl(var(--gold-primary) / 0.3);
+  }
+}
+
+@keyframes fade-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes draw-divider {
+  0% { 
+    width: 0;
+    opacity: 0;
+  }
+  100% { 
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes flip-digit {
+  0% { 
+    transform: rotateX(0);
+  }
+  50% { 
+    transform: rotateX(-90deg);
+  }
+  100% { 
+    transform: rotateX(0);
+  }
+}
+
+@keyframes button-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes slide-in-left {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes scale-fade-in {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes golden-reveal {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes music-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes scroll-carousel {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .gold-shimmer, .gold-shimmer-slow {
+    animation: none;
+    background: hsl(var(--gold-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .floating-petal {
+    display: none !important;
+  }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--gold-tertiary));
+  border-radius: 2px;
+}
+
+/* ===== UTILITY ===== */
+.section-container {
+  @apply relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden;
+  background: hsl(var(--background));
+}
+
+.jaali-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30Z' fill='none' stroke='%23C9A96E' stroke-width='0.5'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%23C9A96E' stroke-width='0.3'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
 }
