@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GoldDivider from '@/components/global/GoldDivider';
 import DiyaIcon from '@/components/global/DiyaIcon';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface OpeningSectionProps {
   active: boolean;
