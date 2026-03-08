@@ -1,0 +1,155 @@
+# 04 — Navigation, Buttons & Page Transitions
+
+# Navigation, Buttons & Page Transitions
+
+Defines the complete navigation system, button designs, visibility algorithm, and page transition mechanics including the content-behind reveal model.
+
+---
+
+## NAVIGATION BUTTON MAP
+
+Each section has exactly ONE navigation action. Linear journey through 6 rooms. Floating nav provides random access.
+
+| Section | Button Text | Type | Position | Action | 0 Ganesha | "shubh aarambh Begin" | Secondary (outlined) | Center, below divider | Palace Door -> Sec 1 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 Opening | "View Celebrations ->" | Secondary (outlined) | Center, below greeting | Fade+sweep -> Sec 2 | 2 Events | "Next: Gallery ->" | Secondary (outlined) | Fixed bottom, centered | Cross-fade -> Sec 3 |
+| 3 Gallery | "Next: Countdown ->" | Secondary (outlined) | Center, below gallery | Fade-in -> Sec 4 | 4 Countdown | "Next: RSVP ->" | Secondary (outlined) | Center, below blessings | Golden reveal -> Sec 5 |
+| 5 RSVP | "Accept Invitation" | PRIMARY (gold filled) | Center, prominent | Confetti -> Thank You |  |  |  |  |  |
+
+---
+
+## BUTTON VISIBILITY ALGORITHM
+
+Buttons appear AFTER section content animates in. Prevents clicking next before seeing current content.
+
+| Section | Appears When | Delay | Animation | 0 Ganesha | After all 4 shlok lines fade in | ~3.5s from page load | Fade in + scale 0.95->1.0 (0.4s) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 Opening | After couple names + greeting animate | ~1.5s from section enter | Fade in + slide up 10px (0.4s) | 2 Events | Immediately -- always visible | 0s (fixed at bottom) | Fades in with section transition |
+| 3 Gallery | After first gallery image loads | ~0.5s | Fade in + slide up 10px (0.4s) | 4 Countdown | After countdown + heading visible | ~0.8s | Fade in + slide up 10px (0.4s) |
+| 5 RSVP | After invitation text visible | ~0.6s | Fade in + scale 0.95->1.0 + shimmer (0.5s) |  |  |  |  |
+
+### Visibility Rules
+
+- Buttons start `opacity: 0` + `pointer-events: none`
+- When triggered: transition to `opacity: 1` + `pointer-events: auto`
+- Once visible, buttons STAY visible for rest of section visit
+- On revisit via nav: buttons appear immediately (no re-delay)
+- Track with IntersectionObserver or section state
+- NEVER hide a button after it appeared
+
+---
+
+## BUTTON DESIGN SYSTEM
+
+Two button types. Consistent luxury gold aesthetic across entire invitation.
+
+### Secondary Button (All Navigation CTAs - Sections 0-4)
+
+| Property | Value | Background | Transparent |
+| --- | --- | --- | --- |
+| Border | 1.5px solid `#C9A96E` | Text Color | `#D4CFC5` (Soft Cream) |
+| Font | Inter 600, 14px mobile / 16px desktop | Padding | 14px 28px mobile, 16px 36px desktop |
+| Height | 48px | Border Radius | 12px |
+| Width | Auto, min 180px | Arrow | Arrow character after text, `#C9A96E` |
+| Idle | Gold shimmer sweep across border every 5s | Hover | Background fills `#C9A96E`, text becomes `#0A1628`, arrow right 4px, scale 1.03 |
+| Click | Scale 0.97 (0.1s press feedback) | Focus | 2px gold outline ring, 2px offset |
+| Touch Target | Min 48x48px |  |  |
+
+### Primary Button (Accept Invitation - Section 5 ONLY)
+
+| Property | Value | Background | `#C9A96E` solid fill |
+| --- | --- | --- | --- |
+| Border | None | Text Color | `#0A1628` |
+| Font | Inter 600, 16px mobile / 18px desktop | Padding | 18px 40px |
+| Height | 56px | Border Radius | 12px |
+| Width | 80% container, max 400px | Shadow | `0 4px 24px rgba(201,169,110,0.25)` |
+| Idle | Gold shimmer sweep across surface every 4s | Hover | Brightens to `#D4B87A`, shadow intensifies, scale 1.02 |
+| Click | Scale 0.97, then triggers confetti | Focus | 2px `#D4B87A` outline ring, 3px offset |
+| Distinction | ONLY filled gold button. Unmistakable importance. |  |  |
+
+### Map Button (Inside Event Cards)
+
+| Property | Value | Style | Small pill, outlined gold |
+| --- | --- | --- | --- |
+| Border | 1px solid `#C9A96E` at 40% | Text | "Open in Maps ->" Inter 500, 13px, `#D4CFC5` |
+| Padding | 8px 16px, radius 20px | Hover | Border brightens, arrow right 4px |
+| Action | Google Maps in new tab |  |  |
+
+### Hashtag Copy Button
+
+- #HarAnshTera text is clickable
+- Click: copies to clipboard + gold toast "Copied!"
+
+---
+
+## PAGE TRANSITION MECHANICS
+
+### Content-Behind Reveal Model (Sections 0-1 transitions)
+
+For curtain reveal and palace doors, the NEXT section content is pre-rendered BEHIND the transition overlay. The overlay moves away to reveal what is already there. This creates a natural, physical feeling.
+
+**Key Principles:**
+
+- Next section content is in DOM, fully rendered, positioned behind overlay
+- Overlay (curtain/doors) has higher z-index
+- Overlay animates away (translate/rotate)
+- Content does NOT animate separately -- it is just uncovered
+- After overlay off-screen: removed from DOM
+- Result: buttery smooth, no flicker, no blank frames
+
+### Curtain Reveal (Page Load -> Section 0)
+
+- Ganesha content rendered at z-index 1, fully visible
+- Curtain overlay at z-index 50, two maroon panels covering 100% viewport
+- After 0.5s pause: panels translateX outward (-100% left, +100% right)
+- Content visible through widening center gap as curtains part
+- Duration: 2.5s, easing: cubic-bezier(0.25, 0.46, 0.45, 0.94)
+- After fully open: panels removed from DOM
+- THEN shlok lines animate (staggered fade-in)
+- THEN Begin button fades in
+
+### Palace Door Opening (Section 0 -> Section 1)
+
+- Step 1: Ganesha content fades out (0.3s)
+- Step 2: Door overlay appears at z-index 40 -- two golden panels
+- Step 3: Section 1 content renders behind doors at z-index 1
+- Step 4: Doors swing outward -- 3D perspective(1200px) + rotateY. Left: rotateY(-110deg), Right: rotateY(110deg). transform-origin: left/right center
+- Step 5: Golden radial light pours from center gap
+- Step 6: 8-12 marigold petals drift from top of frame
+- Step 7: Doors fully open -> removed from DOM
+- Duration: 1.8s, easing: cubic-bezier(0.22, 0.61, 0.36, 1)
+- Mobile fallback: fade-through-golden-light (no 3D)
+
+### Standard Transitions (Sections 1-5)
+
+| From -> To | Type | Duration | Details | Sec 1 -> 2 | Fade + Gold Sweep | 0.8s | Current fades, gold particles sweep L-to-R, new fades in |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Sec 2 -> 3 | Soft Cross-Fade | 0.6s | Simple fade with gold shimmer border | Sec 3 -> 4 | Fade-in Bottom | 0.5s | Current fades, new slides up 30px + fades in |
+| Sec 4 -> 5 | Golden Reveal Sweep | 0.7s | Gold line sweeps L-to-R, new content revealed behind it | Nav jump | Cross-Fade | 0.4s | Quick fade for floating nav / progress dot jumps |
+
+### Implementation Notes
+
+- Use Framer Motion AnimatePresence for section mount/unmount
+- Content-behind: position absolute stacking with z-index management
+- All transitions use GPU-accelerated properties (transform, opacity)
+- No layout shifts during transitions (all absolute/fixed positioning)
+- prefers-reduced-motion: all transitions become simple 0.3s cross-fade
+
+---
+
+## FLOATING NAVIGATION MENU
+
+| Property | Value | Position | Fixed top-right (desktop) / bottom-right (mobile), 16px margin |
+| --- | --- | --- | --- |
+| Toggle Button | 48px circle, `#C9A96E` bg, hamburger icon `#0A1628` | Menu Panel | Glass-morphism: `#111E36` 95% + backdrop-blur 12px |
+| Menu Items | Ganesha, Couple, Events, Gallery, Countdown, RSVP | Active Item | Gold dot + `#C9A96E` text |
+| Inactive | `#D4CFC5` text, no dot | Open Animation | Scale up + fade in (0.25s) |
+| Close | Auto-close after selection + scale down fade out |  |  |
+
+## SECTION PROGRESS DOTS
+
+| Property | Value | Position | Fixed right edge, vertically centered |
+| --- | --- | --- | --- |
+| Count | 6 dots (one per section) | Active Dot | `#C9A96E`, 10px, subtle glow |
+| Inactive | `#8B7340`, 6px | Click | Jump to section (cross-fade transition) |
+| Visibility | Desktop only (hidden mobile) |  |  |

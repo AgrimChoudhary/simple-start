@@ -1,0 +1,105 @@
+# 05 — Global Components & Animations
+
+# Global Components & Animations
+
+All persistent elements and animation specifications. These components exist across ALL sections.
+
+---
+
+## FLOATING MARIGOLD PETALS (Ambient Layer)
+
+Persistent layer across all sections. Like walking through a decorated palace corridor.
+
+| Property | Value | Count | 8-12 petals visible at any time |
+| --- | --- | --- | --- |
+| Colors | `#D4A017` and `#C9A96E` at 25-35% opacity | Size | 8-15px each, varied for depth |
+| Animation | CSS-only keyframes: downward drift + horizontal sway (sine wave). Random duration 8-15s per petal | Layer | z-index 1, behind all content |
+| Performance | Pure CSS, GPU-accelerated transform: translate3d(). Max 12 DOM elements | Accessibility | prefers-reduced-motion: hide entirely |
+| Mobile | 5-6 petals on screens under 480px | Interaction | pointer-events: none -- never blocks taps |
+
+---
+
+## DIYA (LAMP) LIGHTING MICRO-ANIMATION
+
+Every section heading gets a tiny diya that lights up on section enter.
+
+| Property | Value | Icon | 24px diya SVG, positioned left of heading |
+| --- | --- | --- | --- |
+| Idle State | Static gold outline, no flame, `#8B7340` at 40% | On Enter | Flame appears (SVG/CSS), gold glow pulse radiates outward |
+| Glow | Radial gradient `#C9A96E` to transparent, 0 to 30px radius, fades 0.6s | After | Stays lit with static flame as gold accent |
+| Duration | 0.5s flame + 0.6s glow | Sections | All headings except Section 0 (Ganesha has own opening) |
+
+---
+
+## GOLD SHIMMER TEXT EFFECT
+
+Matte antique gold light sweep. Applied to couple names and section headings.
+
+| Property | Value | Technique | CSS background-clip: text with animated linear gradient |
+| --- | --- | --- | --- |
+| Gradient | `#8B7340` -> `#C9A96E` -> `#D4B87A` -> `#C9A96E` -> `#8B7340` | Background Size | 200% 100% |
+| Couple Names | 4s per sweep loop | Section Headings | 6s per sweep loop (subtler) |
+| Fallback | Static `#C9A96E` for unsupported browsers | Key Rule | MATTE only. No sparkle, no glitter, no bright flashes. Gentle light shift across gold surface |
+
+---
+
+## BACKGROUND MUSIC
+
+| Property | Value | Track | Soft romantic lofi instrumental Raabta |
+| --- | --- | --- | --- |
+| Format | MP3 128kbps + OGG fallback | Max Size | 1.5MB |
+| Volume | 30% hardcoded max | Autoplay | No (browser policy). Prompt on first interaction |
+| Loop | Seamless | Fade In | 2s gradual 0 to 30% |
+| Library | Howler.js |  |  |
+
+### Music Toggle
+
+- Position: Fixed bottom-left, 16px margin
+- Icon: Speaker playing/muted, `#C9A96E`
+- Size: 40px circle
+- Playing state: gentle pulse animation
+- Default: muted
+
+---
+
+## ANIMATION PHILOSOPHY
+
+Every animation feels like a scene from a royal palace -- grand but never overwhelming. Cinematic, smooth, purposeful. No jittery, fast, or cheap-feeling motion.
+
+## SECTION TRANSITIONS
+
+| From -> To | Animation | Duration | Easing | Load -> Sec 0 | Curtain reveal (content-behind) | 2.5s | cubic-bezier(0.25, 0.46, 0.45, 0.94) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Sec 0 -> 1 | Palace doors (content-behind, 3D) | 1.8s | cubic-bezier(0.22, 0.61, 0.36, 1) | Sec 1 -> 2 | Fade + gold particle sweep L-to-R | 0.8s | ease-in-out |
+| Sec 2 -> 3 | Soft cross-fade + gold shimmer | 0.6s | ease-in-out | Sec 3 -> 4 | Fade-in from bottom | 0.5s | ease-out |
+| Sec 4 -> 5 | Golden reveal sweep L-to-R | 0.7s | ease-in-out | Nav jump | Cross-fade | 0.4s | ease-in-out |
+
+## ELEMENT ANIMATIONS
+
+| Element | Animation | Trigger | Duration | Diya Icon | Flame + radial glow 30px | Section enter | 0.5s + 0.6s |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Headings | Fade in + slide up 15px | Section enter | 0.5s | Event Cards | Stagger fade in (0.15s delay each) | Day switch | 0.4s each |
+| Gold Dividers | Draw from center outwards | Section enter | 0.6s | Buttons | Scale 1.03 hover, 0.97 click | Hover/Click | 0.15s |
+| Gold Shimmer | Matte gradient sweep (names) | Continuous | 4s loop | Gold Shimmer | Matte gradient sweep (headings) | Continuous | 6s loop |
+| Countdown | Flip on digit change | Every second | 0.3s | Heartbeat | Double-pulse radial glow | Continuous | 2s cycle |
+| Gallery | Fade + scale 0.97->1.0 | Viewport enter | 0.4s | Petals | Drift down + sway | Continuous | 8-15s per petal |
+
+## MICRO-INTERACTIONS
+
+| Element | Trigger | Effect | CTA Buttons | Idle | Gold shimmer sweep every 4-5s |
+| --- | --- | --- | --- | --- | --- |
+| CTA Buttons | Hover | Gold fill, text invert | Event Cards | Hover | Border brightens, shadow increases |
+| Hashtag | Click | Copy + gold pulse | Map Buttons | Hover | Arrow right 4px |
+| Music Toggle | Playing | Gentle pulse on icon | Wax Seal | Card hover | Subtle golden glow |
+| Gallery Image | Hover | Gold border glow brightens |  |  |  |
+
+---
+
+## JAALI TEXTURE GUIDELINES
+
+- Use as background overlays ONLY, never foreground
+- Opacity: 5-10% max over midnight blue
+- Patterns: Rajasthani jaali cutwork, arch silhouettes, paisley borders
+- Position: Edges and corners, never center-blocking content
+- SVG format, gold-tinted `#C9A96E` at 8% opacity
+- Max file size: 15KB per SVG

@@ -1,0 +1,181 @@
+# 06 — Performance, Accessibility & Tech Stack
+
+# Performance, Accessibility & Tech Stack
+
+Technical requirements for performance budgets, accessibility compliance, responsive design, SEO, and the recommended technology stack.
+
+---
+
+## TECH STACK
+
+| Layer | Technology | Why | Framework | Next.js 14+ (App Router) | SSG for speed, React ecosystem, Vercel deploy |
+| --- | --- | --- | --- | --- | --- |
+| Language | TypeScript | Type safety, better DX | Styling | Tailwind CSS + CSS Modules | Utility-first + scoped animation styles |
+| Animation | Framer Motion | AnimatePresence for section transitions, gesture support | Audio | Howler.js | Cross-browser audio with volume/fade control |
+| Font Loading | next/font (Google Fonts) | Zero layout shift, auto optimization | Images | next/image + Cloudinary | Auto WebP/AVIF, responsive srcset, lazy loading |
+| Hosting | Vercel | Edge network, auto SSL, instant deploys | RSVP Backend | Google Sheets API or Supabase | Simple form submission storage |
+| Analytics | Vercel Analytics or Plausible | Privacy-friendly, lightweight |  |  |  |
+
+---
+
+## PERFORMANCE BUDGETS
+
+| Metric | Target | Tool | First Contentful Paint (FCP) | Under 1.5s on 4G | Lighthouse |
+| --- | --- | --- | --- | --- | --- |
+| Largest Contentful Paint (LCP) | Under 2.5s | Lighthouse | Cumulative Layout Shift (CLS) | Under 0.1 | Lighthouse |
+| Total Blocking Time (TBT) | Under 200ms | Lighthouse | Total Page Weight | Under 3MB initial (excl. lazy images) | DevTools |
+| JS Bundle | Under 150KB gzipped | Bundle analyzer | CSS | Under 50KB gzipped | Bundle analyzer |
+| Font Files | Under 100KB total (subset) | Manual check | Music File | Under 1.5MB (MP3 128kbps) | Manual check |
+| Individual Image | Under 200KB after optimization | Cloudinary |  |  |  |
+
+### Performance Strategies
+
+- Static Site Generation (SSG) -- entire site pre-rendered at build time
+- Only Section 0 (Ganesha) loads on initial paint. Remaining sections lazy-loaded
+- All images use next/image with automatic WebP/AVIF conversion
+- Gallery images load only when gallery section entered (Intersection Observer)
+- Fonts: subset to used characters only (Hindi + English glyphs)
+- CSS animations preferred over JS where possible (petals, shimmer)
+- Framer Motion: tree-shake unused features
+- Audio file loaded only after first user interaction
+- No external tracking scripts on initial load
+
+---
+
+## RESPONSIVE DESIGN
+
+### Breakpoints
+
+| Name | Range | Layout Notes | Mobile S | 320-374px | Compact spacing, smaller fonts, 1-col gallery |
+| --- | --- | --- | --- | --- | --- |
+| Mobile M | 375-424px | Primary mobile target, all features work here | Mobile L | 425-767px | Slightly more breathing room |
+| Tablet | 768-1023px | 2-col gallery, wider event cards | Desktop | 1024px+ | Max-width 800px container, progress dots visible |
+
+### Mobile-First Rules
+
+- Design mobile-first, enhance for larger screens
+- Touch targets minimum 48x48px
+- No hover-dependent functionality (hover is enhancement only)
+- Swipe gestures: optional enhancement for section navigation
+- Palace door transition: 3D on desktop, golden fade on mobile (performance)
+- Gallery: 1 column mobile, 2 columns tablet+
+- Event cards: full-width stack on mobile
+- Floating nav: bottom-right on mobile, top-right on desktop
+- Progress dots: desktop only
+
+---
+
+## ACCESSIBILITY (WCAG 2.1 AA)
+
+### Color Contrast
+
+| Pair | Ratio | Status | Cream (#D4CFC5) on Midnight (#0A1628) | 11.2:1 | AAA Pass |
+| --- | --- | --- | --- | --- | --- |
+| Gold (#C9A96E) on Midnight (#0A1628) | 6.8:1 | AA Pass | Midnight (#0A1628) on Gold (#C9A96E) | 6.8:1 | AA Pass (primary button) |
+| Muted (#8B7340) on Midnight (#0A1628) | 4.0:1 | AA Pass (large text only) |  |  |  |
+
+### Motion & Animations
+
+- All animations respect prefers-reduced-motion media query
+- Reduced motion: all transitions become simple 0.3s cross-fade
+- Reduced motion: floating petals hidden entirely
+- Reduced motion: shimmer effects become static gold
+- Reduced motion: countdown uses simple number swap, no flip
+- No auto-playing video or flashing content
+
+### Keyboard & Screen Reader
+
+- Full keyboard navigation through all sections and interactive elements
+- Logical tab order follows visual flow (Section 0 through 5)
+- All buttons have descriptive aria-labels
+- Decorative elements (petals, dividers, jaali) have aria-hidden="true"
+- Gallery images have meaningful alt text
+- Section landmarks with appropriate ARIA roles
+- Focus indicators: 2px gold outline, visible on all interactive elements
+- Skip-to-content link for keyboard users
+
+### Semantic HTML
+
+- Use semantic elements: main, section, nav, header, footer
+- Each section wrapped in section element with aria-labelledby
+- Headings follow proper hierarchy (h1 once, h2 per section)
+- Event cards use article elements
+- Form inputs have associated labels
+- Language attribute: lang="en" with lang="hi" on Hindi text spans
+
+---
+
+## SEO & SHARING
+
+### Meta Tags
+
+- Title: "Harsh & Anshika Wedding Invitation | 24-26 April 2026"
+- Description: "You are cordially invited to celebrate the union of Harsh and Anshika. Join us for three days of joy, love, and festivities."
+- Open Graph image: Custom designed 1200x630px card with couple names, date, gold-on-midnight design
+- Twitter Card: summary_large_image
+- Canonical URL set
+- robots: index, follow
+
+### Structured Data
+
+- JSON-LD Event schema for each ceremony (helps Google understand event details)
+- Person schema for couple
+
+---
+
+## RSVP FORM SPECIFICATION
+
+### Fields
+
+| Field | Type | Required | Validation | Full Name | Text input | Yes | Min 2 chars, max 100 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Phone Number | Tel input | Yes | 10-digit Indian mobile format | Number of Guests | Number stepper | Yes | 1-10, default 1 |
+| Attending Events | Multi-select checkboxes | Yes (min 1) | All events listed, all checked by default | Blessings/Message | Textarea | No | Max 500 chars, gold char counter |
+
+### Form Behavior
+
+- Submit triggers gold confetti burst (canvas-confetti library)
+- Success state: form replaced with "Thank you" message + gold checkmark animation
+- Error state: inline validation, gold-tinted error messages below fields
+- Double-submit prevention: button disabled after first click
+- Data stored in Google Sheets or Supabase (simple, no auth needed)
+- No login required. No email verification.
+
+### Form Styling
+
+- Input fields: transparent bg, 1px `#C9A96E` 40% border, cream text
+- Focus: border brightens to `#C9A96E` 100%, subtle gold glow
+- Labels: Inter 500, 14px, `#D4CFC5`
+- Placeholder text: `#8B7340` at 50%
+- Checkbox: custom gold checkmark on midnight bg
+- All inputs have 48px min height for touch
+
+---
+
+## AI ASSET GENERATION DESCRIPTIONS
+
+For AI image tools (Midjourney, DALL-E, Firefly) to generate custom assets.
+
+### Ganesha Illustration
+
+Prompt: "Minimalist Lord Ganesha illustration, single continuous gold line art on deep midnight blue background (#0A1628). Seated Ganesha in traditional pose, delicate ornamental details, no fill colors, only elegant gold (#C9A96E) outlines. Style: modern minimalist meets traditional Indian art. Clean, centered composition, suitable for web hero section. Aspect ratio 1:1, high detail line work."
+
+### Marigold Petal SVGs
+
+Prompt: "Single marigold flower petal, top-down view, realistic but slightly stylized. Warm gold and orange tones (#D4A017, #C9A96E). Transparent background. Soft edges, slight curl. For use as floating animation element on dark background. Multiple variations needed (5-6 different petal shapes). SVG-friendly simple shapes."
+
+### Palace Door Texture
+
+Prompt: "Ornate Indian palace door panel, Rajasthani style, intricate carved patterns. Gold (#C9A96E) on midnight blue (#0A1628). Jharokha window patterns, floral motifs, geometric borders. Flat 2D illustration style suitable for web animation overlay. Two symmetrical panels that open from center. Aspect ratio 1:2 each panel."
+
+### Jaali Pattern Overlay
+
+Prompt: "Traditional Rajasthani jaali (lattice screen) pattern, geometric interlocking shapes. Extremely subtle, designed to be used at 5-8% opacity as background texture. Gold tinted lines on transparent background. Seamless tileable pattern. Clean vector style. Resolution: high detail for SVG conversion."
+
+### Wax Seal
+
+Prompt: "Traditional Indian wax seal stamp design, circular, featuring intertwined H and A letters in elegant Devanagari-inspired calligraphy. Deep maroon/burgundy (#8B0000) wax texture with gold (#C9A96E) embossed details. Realistic wax seal look with slightly irregular edges. Top-down view, transparent background. For use as decorative element on dark web background."
+
+### Open Graph Social Card
+
+Prompt: "Wedding invitation social media card, 1200x630px. Midnight blue (#0A1628) background with subtle gold jaali pattern. Center: 'Harsh & Anshika' in elegant gold text. Below: '24-26 April 2026'. Decorative gold borders, marigold accents in corners. Elegant, luxurious, Indian wedding aesthetic. Clean typography, suitable for WhatsApp/Instagram preview."

@@ -1,0 +1,242 @@
+# 03 — Gallery, Countdown & RSVP (Sections 3-5)
+
+# Sections 3-5: Gallery, Countdown + Blessings, RSVP & Contact
+
+Covers the final three sections of the invitation.
+
+---
+
+## SECTION 3: GALLERY
+
+### Purpose
+
+Visual showcase of the couple through photos and AI-generated images. A lighter breathing section between the event-heavy Section 2 and interactive Section 4.
+
+### Layout
+
+```
++----------------------------------------------------------+
+|                                                          |
+|    [Diya]  Our Moments                                   |
+|               -- gold divider --                         |
+|                                                          |
+|   +----------------------------------------------+       |
+|   |          ╭─── Jharokha Arch ───╮             |       |
+|   |         /    PRE-WEDDING VIDEO   \           |       |
+|   |        |    ┌────────────────┐    |           |       |
+|   |        |    |  ▶  Video      |    |           |       |
+|   |        |    |   (16:9)       |    |           |       |
+|   |        |    └────────────────┘    |           |       |
+|   |         \________________________/           |       |
+|   |          Gold ornate border frame             |       |
+|   +----------------------------------------------+       |
+|          "हमारी कहानी · Our Journey Together"            |
+|                                                          |
+|         ── marigold motif gold divider ──                |
+|                                                          |
+|   +--------+  +--------+  +--------+  +--------+        |
+|   | Photo  |  | Photo  |  | Photo  |  | Photo  |        |
+|   |   1    |  |   2    |  |   3    |  |   4    |        |
+|   +--------+  +--------+  +--------+  +--------+        |
+|                                                          |
+|                  [dot indicators]                         |
+|                                                          |
+|       [ Next: Countdown -> ]                             |
+|                                                          |
++----------------------------------------------------------+
+```
+
+Note: Section 3 uses internal scrolling (video at top, photos below) since both elements share one full-viewport section.
+
+### Pre-Wedding Video — Jharokha Arch Frame
+
+The pre-wedding video sits at the very top of the Gallery section as the hero element, framed inside a Rajasthani Jharokha (palace window) arch.
+
+**Frame Design: Jharokha Arch (Option A)**
+
+- Shape: Pointed Rajasthani arch at top, straight gold borders on sides, flat bottom
+- Border: 3px solid `#C9A96E` with inner shadow for carved depth effect
+- Arch detail: SVG or CSS clip-path creating traditional pointed arch silhouette
+- Corner ornaments: Small gold floral/leaf motifs at the two bottom corners where arch meets straight sides
+- Inner padding: 8px between gold border and video (filled with `#111E36`)
+- Outer glow: Subtle `#C9A96E` at 6% box-shadow (0 0 40px) — like lamplight on palace stone
+
+**Video Player Specs**
+
+| Property | Value | Aspect Ratio | 16:9 |
+| --- | --- | --- | --- |
+| Width | 90% container (mobile), 70% container (desktop), max 640px | Thumbnail | First frame of video or custom poster with gold play button overlay |
+| Play Button | 60px gold circle (#C9A96E), white ▶ icon centered, 50% opacity idle → 100% on hover/tap | Play Behavior | Inline playback (no modal). Tap play → video plays within the jharokha frame |
+| Controls | Custom minimal: play/pause, progress bar (gold), mute toggle. No fullscreen, no download | Progress Bar | Thin 2px gold line below video inside frame |
+| Autoplay | No. Poster image shown until guest taps play | Loading | Lazy — video loads only when Section 3 is entered |
+| File Size Target | Under 8MB (compressed MP4, 720p) |  |  |
+
+**Caption Below Frame**
+
+- Text: "हमारी कहानी · Our Journey Together"
+- Font: Cormorant Garamond 500 italic, 16px/18px
+- Color: `#8A8578` (text-muted)
+- Spacing: 16px below frame, 32px above photo divider
+
+**Divider Between Video and Photos**
+
+- Thin gold line (1px, `#C9A96E` at 25%) with a small centered marigold flower SVG motif (24px)
+- 24px margin above and below divider
+
+**Animation on Section Enter**
+
+- Jharokha frame fades in first (0→1 opacity, 0.6s)
+- Video thumbnail scales from 0.95→1.0 inside frame (0.4s, 0.2s delay)
+- Caption fades in (0.3s, 0.5s delay)
+- Photo grid loads after video frame is settled (0.8s delay)
+
+---
+
+### Gallery Specs
+
+| Property | Mobile | Desktop | Layout | Swipeable carousel, 1 image | Masonry grid 2-3 columns |
+| --- | --- | --- | --- | --- | --- |
+| Image Frame | 12px radius, 1px gold border 15% | Same + subtle shadow | Hover/Tap | Tap opens lightbox | Zoom 1.03, gold glow |
+| Lightbox | Full screen, swipe nav | Centered modal, arrow nav | Navigation | Swipe + gold dots | Gold arrows + dots |
+
+### Image Optimization
+
+- Format: WebP with JPEG fallback
+- Thumbnail: 400x400 or 800x500, max 200KB
+- Full: max 1920px width, max 500KB
+- Loading: lazy load with golden shimmer placeholder
+
+### AI Generated Gallery Placeholders
+
+Until client provides photos, generate these images matching Royal Midnight Rajasthan aesthetic:
+
+**Image 1 - Palace Courtyard Night:**
+
+Rajasthani palace courtyard at night, deep midnight blue sky with stars, warm golden lamplight from ornate brass lamps, marigold garlands hanging from carved stone arches, rose petals on marble floor, cinematic lighting. Colors: midnight blue and antique gold.
+
+**Image 2 - Couple Silhouette:**
+
+Elegant silhouette of Indian couple under ornate Rajasthani arch doorway, deep blue and gold palette, woman in lehenga man in sherwani, warm golden backlight creating halo, romantic cinematic minimal.
+
+**Image 3 - Marigold and Gold Details:**
+
+Close-up of fresh marigold flowers and golden bangles on deep midnight blue velvet fabric, scattered rose petals, antique gold jewelry, soft warm lighting, Indian wedding aesthetic.
+
+**Image 4 - Haveli Doorway:**
+
+Rajasthani haveli ornate doorway at twilight, two brass diyas lit on carved stone pedestals, warm golden glow against deep blue sky, jaali pattern above door.
+
+**Image 5 - Wedding Mandap:**
+
+Indian wedding mandap with white and orange marigold garlands, fairy lights, deep blue night sky, four ornate pillars with gold fabric, sacred fire in center.
+
+**Image 6 - Mehndi Hands:**
+
+Two hands with intricate mehndi design holding each other, gold rings and bangles, deep midnight blue background with bokeh gold lights, elegant portrait style.
+
+### Section 3 Specs
+
+- Height: 100vh with internal vertical scroll (video + photos exceed single viewport)
+- Internal scroll: smooth, snap optional
+- Background: `#0A1628`
+- Button: "Next: Countdown" appears 0.5s after gallery loads
+- Transition In: Soft cross-fade + gold shimmer border (0.6s)
+
+---
+
+## SECTION 4: COUNTDOWN + BLESSINGS WALL
+
+### Purpose
+
+Live countdown with heartbeat golden glow + interactive blessings wall with guest photo upload.
+
+### Countdown Timer
+
+| Property | Value | Target | 10th May 2026 |
+| --- | --- | --- | --- |
+| Display | 4 boxes: Days, Hours, Minutes, Seconds | Box Style | `#111E36` bg, 1px `#C9A96E` border 20%, 12px radius |
+| Numbers | Cinzel Decorative 700, 40px/56px, `#C9A96E` | Labels | Inter 500, 10px, uppercase, 3px spacing, `#8A8578` |
+| Tick | Subtle CSS flip on digit change |  |  |
+
+### Heartbeat Glow Effect
+
+Subtle pulsing golden glow behind countdown -- like two hearts beating before the big day.
+
+| Property | Value | Type | Radial gradient glow behind countdown boxes |
+| --- | --- | --- | --- |
+| Color | `#C9A96E` at 8-12% opacity | Pulse | Heartbeat: double-pulse (0.15s expand, 0.1s contract, 0.15s expand, 1.6s rest). 2s total cycle |
+| Radius | 60% container expanding to 100% on pulse | Implementation | CSS box-shadow or radial-gradient on ::before pseudo |
+| Reduced Motion | Static glow, no pulsing |  |  |
+
+### Countdown States
+
+- Before Wedding: Live countdown with heartbeat glow
+- During Wedding (9-11 May): "The celebrations have begun!"
+- After Wedding: "Thank you for celebrating with us!"
+
+### Blessings Wall with Photo Upload
+
+Design template only. Platform handles actual upload after integration.
+
+| Property | Value | Card Style | `#111E36` bg, 2px gold top accent, 12px radius |
+| --- | --- | --- | --- |
+| Layout | Flex: [48px photo circle] + [Name + Message] | Photo | 48px circle, 2px `#C9A96E` border 30% |
+| Placeholder | Gold user silhouette on `#1A2A4A` | Upload | 16px camera icon at bottom-right of circle |
+| Message | Lora 400, 14px, `#D4CFC5` | Name | Inter 500, 12px, `#C9A96E` |
+| Display | Auto-scrolling carousel of wish cards | Form | Name (req), Message (req, 10-300), Photo (opt) |
+| Submit | Gold filled "Send Blessing" | Success | Gold checkmark toast |
+
+### Section 4 Specs
+
+- Min height: 100vh, internal scroll if needed
+- Button: "Next: RSVP" appears after 0.8s
+- Transition In: Fade-in from bottom (0.5s)
+
+---
+
+## SECTION 5: RSVP & CONTACT
+
+### Purpose
+
+Final section. Simple RSVP + contact. One button, confetti, personalized thank you.
+
+### Accept Invitation Button
+
+The ONLY primary (gold filled) button in the entire invitation. All others are secondary (outlined). Full specs in "04 - Navigation & Buttons" sub-page.
+
+### Confetti Celebration
+
+| Property | Value | Trigger | On Accept click |
+| --- | --- | --- | --- |
+| Type | Circles, rectangles, stars, ribbons | Colors | `#C9A96E`, `#D4B87A`, `#F5F0E8`, `#6B1A2A`, `#D4CFC5` |
+| Particles | 150-200 | Origin | Center-top burst, fall with gravity + wind |
+| Duration | 3s burst + 5s gentle fall | Library | canvas-confetti (~6KB) |
+
+### Thank You Overlay
+
+- Background: `#0A1628` at 95% + golden radial glow
+- "Thank You, [Guest Name]!" -- Cormorant Garamond 600, 28px/40px, `#C9A96E`
+- Guest name: Cinzel Decorative 700 with shimmer
+- "We can't wait to celebrate with you!" -- Lora 400, 16px, `#D4CFC5`
+- HARSHIT & ANSHIKHA / 10th May 2026 / #HarAnshTera
+- Entry: Name first (0.5s), text (0.3s delay), couple (0.5s delay)
+
+### Contact Section
+
+- Two cards side by side: Groom Side + Bride Side
+- `#111E36` bg, 1px gold border, phone + WhatsApp icons
+- Phone: tel: link, WhatsApp: [wa.me](http://wa.me) link
+- Numbers: pending from client
+
+### Footer
+
+- "Made with love for HARSHIT & ANSHIKHA"
+- #HarAnshTera gold italic, 10th May 2026
+- Subtle jaali border at bottom
+
+### Section 5 Specs
+
+- Height: 100vh, scroll disabled
+- FINAL section -- no next button
+- "Accept Invitation" is the primary CTA action
+- Transition In: Golden reveal sweep (0.7s)

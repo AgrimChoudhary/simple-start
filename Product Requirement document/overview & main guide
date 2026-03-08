@@ -1,0 +1,154 @@
+# Harshit & Anshikha — Wedding PRD Guide & Overview
+
+# Wedding Invitation Website 
+
+> **Product:** Harshit & Anshikha Wedding Invitation Website
+> 
+
+> 
+
+> **Theme:** Royal Midnight Rajasthan
+> 
+
+> **Wedding Date:** 10th May 2026
+> 
+
+> **Events:** 9-11 May 2026 (3-day celebration)
+> 
+
+> **Hashtag:** #HarAnshTera
+> 
+
+> **Type:** Frontend-Only Template (Platform-Ready)
+> 
+
+> **Status:** Ready for Development
+> 
+
+---
+
+## HOW TO READ THIS PRD
+
+This PRD is organized as a folder of focused documents. **Read ALL sub-pages** for complete specifications. Each sub-page is self-contained but references the Design System below.
+
+**If you are an AI tool building this project:** Read this page first for the Design System, then read each sub-page in order.
+
+**Sub-pages in this folder:**
+
+1. **Ganesha & Opening Screen (Sections 0-1)** — Curtain reveal, palace door transition, Ganesha shlok, hero screen, couple names, guest personalization
+2. **Wedding Celebrations (Section 2)** — 3-day event timeline, day tabs, royal scroll event cards with venue + address + Google Maps
+3. **Gallery, Countdown & RSVP (Sections 3-5)** — Pre-wedding video in Jharokha arch frame (hero), photo gallery with lightbox, live countdown with heartbeat glow, blessings wall with photo upload, RSVP with confetti celebration
+4. **Navigation, Buttons & Page Transitions** — Per-section navigation buttons, visibility algorithm, button design system, content-behind reveal transitions (curtain + palace doors)
+5. **Global Components & Animations** — Floating marigold petals, diya lighting, gold shimmer text, background music, all animation specs and micro-interactions
+6. **Technical, Assets & Development** — Tech stack, project structure, responsive design, performance targets, AI-generated asset descriptions, enhancements summary, development phases
+
+---
+
+## EXECUTIVE SUMMARY
+
+A premium, immersive, section-based wedding invitation website continuing the Royal Midnight Rajasthan visual language from the Save The Date video. The experience feels like walking through a Rajasthani palace — deep midnight blue backgrounds, antique matte gold accents, cinematic animations, and interactive click-to-proceed navigation across 6 full-viewport "rooms."
+
+**Template Scope:** This is a frontend-only invitation template. No backend, admin panel, or database. After development, it integrates into the platform where all backend systems (RSVP tracking, guest management, analytics) are already available. Focus is 100% on design, animations, and user experience.
+
+**Core Experience:**
+
+- 6 sections (0-5), each a full-viewport room — click to proceed, no scrolling
+- Curtain reveal opens to Lord Ganesha with shlok (content pre-rendered behind curtain)
+- Palace doors swing open to reveal hero screen (content pre-rendered behind doors)
+- Self-contained royal scroll event cards with venue + address + map in each card
+- Floating marigold petals + diya lighting create living palace atmosphere
+- Heartbeat countdown glow + confetti RSVP celebration
+- Guest personalization via URL parameter
+- Mobile-first — 80%+ guests via WhatsApp on mobile
+
+---
+
+## DESIGN SYSTEM
+
+All sub-pages reference these shared design tokens.
+
+### Color Palette
+
+| Token | Hex | Usage |
+| --- | --- | --- |
+| bg-primary | `#0A1628` | Deep Midnight Blue — main backgrounds |
+| bg-secondary | `#111E36` | Royal Navy — cards, elevated surfaces |
+| bg-tertiary | `#1A2A4A` | Palace Blue — hover states, active |
+| gold-primary | `#C9A96E` | Antique Gold — headings, borders, CTAs, icons |
+| gold-secondary | `#D4B87A` | Light Gold — hover states |
+| gold-tertiary | `#8B7340` | Deep Bronze — subtle borders, diya idle |
+| text-primary | `#F5F0E8` | Warm Ivory — main headings |
+| text-secondary | `#D4CFC5` | Soft Cream — body text |
+| text-muted | `#8A8578` | Muted Sand — captions, labels |
+| curtain-red | `#6B1A2A` | Royal Maroon — curtain only |
+| curtain-dark | `#4A1220` | Deep Maroon — curtain shadows |
+| petal-gold | `#D4A017` | Marigold — floating petals (25-35% opacity) |
+| gold-shimmer | `#8B7340 → #C9A96E → #D4B87A → #C9A96E → #8B7340` | Animated gradient for matte gold shimmer text |
+
+### Typography
+
+| Usage | Font | Weight | Fallback |
+| --- | --- | --- | --- |
+| Display / Couple Names | Cinzel Decorative | 700 | Georgia, serif |
+| Section Headings | Cormorant Garamond | 500, 600 | Georgia, serif |
+| Body Text | Lora | 400, 500 | Georgia, serif |
+| UI / Buttons | Inter | 400, 500, 600 | system-ui |
+| Hindi Shloka | Noto Sans Devanagari | 500, 600 | Mukta Vaani |
+| Hindi Event Names | Mukta Vaani | 400, 500 | Noto Sans Devanagari |
+| Hashtag / Accent | Playfair Display | 400 italic | Georgia |
+
+### Font Sizes (Mobile / Desktop)
+
+| Element | Mobile | Desktop | Line Height |
+| --- | --- | --- | --- |
+| Couple Names | 36px | 64px | 1.1 |
+| Section Heading | 24px | 40px | 1.3 |
+| Event Card Title | 18px | 24px | 1.3 |
+| Body Text | 14px | 16px | 1.6 |
+| Caption / Label | 11px | 13px | 1.5 |
+| Countdown Numbers | 40px | 56px | 1.0 |
+| Button Text | 14px | 16px | 1.0 |
+
+### Gold Shimmer Text Effect (Matte Antique)
+
+Applied to couple names (4s loop) and section headings (6s loop). CSS `background-clip: text` with animated linear gradient. Gradient: `#8B7340 → #C9A96E → #D4B87A → #C9A96E → #8B7340`. `background-size: 200% 100%`. MATTE feel only — no sparkle, no glitter, no bright flashes. Fallback: static `#C9A96E`.
+
+---
+
+## SECTION STRUCTURE (6 Sections)
+
+```
+Section 0: Lord Ganesha ── Curtain Reveal (content behind) ──▶
+Section 1: Opening Hero ── Palace Door Opening (content behind) ──▶
+Section 2: Wedding Celebrations ── Fade + gold sweep ──▶
+Section 3: Gallery ── Soft cross-fade ──▶
+Section 4: Countdown + Blessings ── Smooth fade-in ──▶
+Section 5: RSVP & Contact ── Golden reveal
+```
+
+| Section | Name | Navigation Button | Transition In |
+| --- | --- | --- | --- |
+| 0 | Lord Ganesha | "शुभ आरंभ · Begin" (appears after shlok) | Curtain reveal (content behind) |
+| 1 | Opening Screen | "View Celebrations →" (appears after names animate) | Palace door opening (content behind) |
+| 2 | Wedding Celebrations | "Next: Gallery →" (always visible) | Fade + gold particle sweep |
+| 3 | Gallery | "Next: Countdown →" (appears after gallery loads) | Soft cross-fade + gold shimmer |
+| 4 | Countdown + Blessings | "Next: RSVP →" (appears after countdown loads) | Smooth fade-in from bottom |
+| 5 | RSVP & Contact | "Accept Invitation" (FINAL action — gold filled primary button) | Golden reveal sweep |
+
+**Persistent Global Elements (all sections):** Floating marigold petals, diya icon on headings, floating nav menu (6 items), music toggle, progress dots (6 dots, desktop only).
+
+---
+
+## CONTENT PENDING FROM CLIENT
+
+- Event timings for each ceremony
+- Gallery photos / AI images
+- RSVP contact phone numbers (Groom side + Bride side)
+- Couple photo for hero section (or AI-generated)
+- Full venue addresses for Bliss Resort and Bhairav Bagh Palace
+- Google Maps links for both venues
+- Save The Date video assets
+- Approval on dress code suggestions
+- Background music file (Raabta instrumental) or approval to source
+
+---
