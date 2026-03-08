@@ -2,23 +2,53 @@ import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
-import { weddingEvents } from '@/data/events';
 
 interface RSVPSectionProps {
   active: boolean;
   guestName: string;
 }
 
+/* ═══ Ornate Invitation Seal ═══ */
+const InvitationSeal = () => (
+  <div className="relative w-24 h-24 mx-auto mb-8" aria-hidden="true">
+    {/* Outer glow */}
+    <div className="absolute inset-0 rounded-full" style={{
+      background: 'radial-gradient(circle, hsl(var(--primary) / 0.12) 0%, transparent 70%)',
+      transform: 'scale(2)',
+    }} />
+    {/* Seal */}
+    <div className="relative w-full h-full rounded-full flex items-center justify-center"
+      style={{
+        background: 'radial-gradient(circle at 40% 35%, hsl(var(--card)) 0%, hsl(218 50% 11%) 100%)',
+        border: '2px solid hsl(var(--primary) / 0.4)',
+        boxShadow: '0 4px 24px hsl(var(--primary) / 0.15), inset 0 2px 8px hsl(var(--primary) / 0.08)',
+      }}
+    >
+      {/* Mandala rings */}
+      <svg className="absolute inset-0 w-full h-full animate-spin" style={{ animationDuration: '40s' }} viewBox="0 0 96 96">
+        <circle cx="48" cy="48" r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.2" strokeDasharray="3 4" />
+        <circle cx="48" cy="48" r="34" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.15" strokeDasharray="2 5" />
+        <circle cx="48" cy="48" r="28" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.2" opacity="0.1" />
+      </svg>
+      <span className="text-4xl relative z-10">💌</span>
+    </div>
+  </div>
+);
+
+/* ═══ Decorative Corner ═══ */
+const CornerOrnament: React.FC<{ position: string; transform: string }> = ({ position, transform }) => (
+  <div className={`absolute ${position} w-12 h-12 pointer-events-none opacity-20`} aria-hidden="true">
+    <svg viewBox="0 0 48 48" className="w-full h-full" style={{ transform }}>
+      <path d="M4,44 C4,28 12,16 28,8" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.2" />
+      <path d="M4,44 C8,32 16,22 24,16" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.7" />
+      <circle cx="6" cy="42" r="2.5" fill="hsl(var(--primary))" opacity="0.4" />
+      <circle cx="26" cy="10" r="1.5" fill="hsl(var(--primary))" opacity="0.3" />
+    </svg>
+  </div>
+);
+
 const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    guests: 1,
-    events: weddingEvents.map(e => e.eventName),
-    message: '',
-  });
-  const [submitting, setSubmitting] = useState(false);
+  const [accepted, setAccepted] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
 
   useEffect(() => {
@@ -28,219 +58,167 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
     }
   }, [active]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (submitting) return;
-    setSubmitting(true);
+  const handleAccept = () => {
+    if (accepted) return;
 
-    // Fire confetti burst
-    const fire = (opts: confetti.Options) => {
-      confetti({
-        ...opts,
-        colors: ['#C9A96E', '#D4B87A', '#F5F0E8', '#6B1A2A', '#D4CFC5'],
-      });
-    };
+    // Multi-wave confetti
+    const colors = ['#C9A96E', '#D4B87A', '#F5F0E8', '#6B1A2A', '#D4CFC5'];
+    const fire = (opts: confetti.Options) => confetti({ ...opts, colors });
 
-    fire({ particleCount: 100, spread: 70, origin: { x: 0.3, y: 0.3 } });
-    fire({ particleCount: 100, spread: 70, origin: { x: 0.7, y: 0.3 } });
-    setTimeout(() => {
-      fire({ particleCount: 80, spread: 100, origin: { y: 0.4 } });
-    }, 200);
+    fire({ particleCount: 80, spread: 60, origin: { x: 0.3, y: 0.25 } });
+    fire({ particleCount: 80, spread: 60, origin: { x: 0.7, y: 0.25 } });
+    setTimeout(() => fire({ particleCount: 120, spread: 100, origin: { y: 0.35 } }), 250);
+    setTimeout(() => fire({ particleCount: 60, spread: 120, origin: { y: 0.5 } }), 500);
 
-    setTimeout(() => {
-      setSubmitted(true);
-      setSubmitting(false);
-    }, 600);
-  };
-
-  const toggleEvent = (eventName: string) => {
-    setFormData(prev => ({
-      ...prev,
-      events: prev.events.includes(eventName)
-        ? prev.events.filter(e => e !== eventName)
-        : [...prev.events, eventName],
-    }));
+    setTimeout(() => setAccepted(true), 700);
   };
 
   return (
     <section className="rsvp-section" aria-labelledby="rsvp-heading">
-      {/* ── Layered background ── */}
+      {/* ── Background ── */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute inset-0" style={{
           background: `
-            radial-gradient(ellipse 70% 50% at 50% 15%, hsl(var(--card) / 0.5) 0%, transparent 60%),
-            radial-gradient(ellipse 50% 30% at 80% 80%, hsl(218 48% 12% / 0.4) 0%, transparent 50%),
+            radial-gradient(ellipse 80% 50% at 50% 30%, hsl(var(--card) / 0.5) 0%, transparent 60%),
+            radial-gradient(ellipse 50% 40% at 20% 80%, hsl(218 48% 12% / 0.4) 0%, transparent 50%),
+            radial-gradient(ellipse 50% 40% at 85% 60%, hsl(218 45% 13% / 0.3) 0%, transparent 50%),
             hsl(var(--background))
           `,
         }} />
         <div className="jaali-overlay" />
+        <div className="celebrations-particles" />
       </div>
 
-      <div className="relative z-10 w-full max-w-lg mx-auto px-5 md:px-6 pt-10 pb-16">
-        {/* ── Heading ── */}
-        <div className="text-center mb-8" style={{ animation: active ? 'fade-slide-up 0.5s ease-out' : 'none' }}>
-          <div className="flex items-center justify-center gap-3 mb-1">
-            <DiyaIcon lit={active} />
-            <h2 id="rsvp-heading" className="font-heading text-[28px] md:text-[42px] gold-shimmer-slow leading-none">
-              RSVP
-            </h2>
-          </div>
-          <GoldDivider />
-          <p className="font-body text-sm mt-3" style={{ color: 'hsl(var(--text-cream) / 0.8)' }}>
-            We would be honoured by your presence
-          </p>
-          <p className="font-hindi text-sm text-muted mt-1" lang="hi">आपकी उपस्थिति हमारा सम्मान</p>
-        </div>
+      {/* Corner ornaments */}
+      <CornerOrnament position="top-4 left-4" transform="" />
+      <CornerOrnament position="top-4 right-4" transform="scaleX(-1)" />
+      <CornerOrnament position="bottom-4 left-4" transform="scaleY(-1)" />
+      <CornerOrnament position="bottom-4 right-4" transform="scale(-1)" />
 
-        {!submitted ? (
-          <form onSubmit={handleSubmit} className="space-y-5" style={{ animation: active ? 'fade-slide-up 0.5s ease-out 0.2s both' : 'none' }}>
-            {/* Name */}
-            <div>
-              <label className="rsvp-label">Full Name *</label>
-              <input
-                type="text"
-                required
-                minLength={2}
-                maxLength={100}
-                value={formData.name}
-                onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
-                className="rsvp-input"
-                placeholder="Enter your name"
-              />
-            </div>
+      <div className="relative z-10 w-full max-w-lg mx-auto px-5 md:px-6 flex flex-col items-center justify-center min-h-full py-12">
 
-            {/* Phone */}
-            <div>
-              <label className="rsvp-label">Phone Number *</label>
-              <input
-                type="tel"
-                required
-                pattern="[0-9]{10}"
-                value={formData.phone}
-                onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
-                className="rsvp-input"
-                placeholder="10-digit mobile number"
-              />
-            </div>
-
-            {/* Guests */}
-            <div>
-              <label className="rsvp-label">Number of Guests *</label>
-              <div className="flex items-center gap-4 mt-1">
-                <button
-                  type="button"
-                  onClick={() => setFormData(p => ({ ...p, guests: Math.max(1, p.guests - 1) }))}
-                  className="rsvp-stepper-btn"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                </button>
-                <span className="font-display text-3xl text-primary w-10 text-center">{formData.guests}</span>
-                <button
-                  type="button"
-                  onClick={() => setFormData(p => ({ ...p, guests: Math.min(10, p.guests + 1) }))}
-                  className="rsvp-stepper-btn"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                </button>
+        {!accepted ? (
+          /* ═══ Invitation View ═══ */
+          <div className="w-full text-center">
+            {/* Heading */}
+            <div style={{ animation: active ? 'fade-slide-up 0.5s ease-out' : 'none' }}>
+              <div className="flex items-center justify-center gap-3 mb-1">
+                <DiyaIcon lit={active} />
+                <h2 id="rsvp-heading" className="font-heading text-[28px] md:text-[42px] gold-shimmer-slow leading-none">
+                  You're Invited
+                </h2>
               </div>
+              <GoldDivider />
             </div>
 
-            {/* Events */}
-            <div>
-              <label className="rsvp-label">Attending Events *</label>
-              <div className="space-y-2 mt-1">
-                {weddingEvents.map(event => {
-                  const checked = formData.events.includes(event.eventName);
-                  return (
-                    <label key={event.eventName} className="rsvp-event-row group/ev">
-                      <div className={`rsvp-checkbox ${checked ? 'rsvp-checkbox--checked' : ''}`}>
-                        {checked && (
-                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <path d="M2 6l3 3 5-5" stroke="hsl(var(--primary-foreground))" strokeWidth="2" strokeLinecap="round" />
-                          </svg>
-                        )}
-                      </div>
-                      <input type="checkbox" className="sr-only" checked={checked} onChange={() => toggleEvent(event.eventName)} />
-                      <div className="flex-1 flex items-center justify-between">
-                        <span className="font-ui text-sm" style={{ color: 'hsl(var(--text-cream))' }}>{event.eventName}</span>
-                        <span className="text-xs text-muted">{event.eventDate}</span>
-                      </div>
-                    </label>
-                  );
-                })}
-              </div>
+            {/* Seal */}
+            <div style={{ animation: active ? 'scale-fade-in 0.6s ease-out 0.3s both' : 'none' }}>
+              <InvitationSeal />
             </div>
 
-            {/* Message */}
-            <div>
-              <label className="rsvp-label">Blessings / Message</label>
-              <div className="relative">
-                <textarea
-                  maxLength={500}
-                  rows={3}
-                  value={formData.message}
-                  onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
-                  className="rsvp-input resize-none"
-                  placeholder="Write your blessings..."
-                />
-                <span className="absolute bottom-2.5 right-3 text-[10px] text-muted font-ui">
-                  {formData.message.length}/500
+            {/* Personal invitation text */}
+            <div style={{ animation: active ? 'fade-slide-up 0.5s ease-out 0.4s both' : 'none' }}>
+              <p className="font-body text-base md:text-lg leading-relaxed mb-2" style={{ color: 'hsl(var(--text-cream) / 0.85)' }}>
+                Dear <span className="font-heading font-semibold text-primary text-lg md:text-xl">{guestName}</span>,
+              </p>
+              <p className="font-body text-sm md:text-base leading-relaxed mb-1" style={{ color: 'hsl(var(--text-cream) / 0.7)' }}>
+                We would be truly honoured by your gracious presence
+              </p>
+              <p className="font-body text-sm md:text-base leading-relaxed mb-1" style={{ color: 'hsl(var(--text-cream) / 0.7)' }}>
+                at the wedding celebrations of
+              </p>
+              <p className="font-display text-xl md:text-2xl text-primary tracking-wider my-4">
+                HARSHIT & ANSHIKHA
+              </p>
+              <p className="font-body text-sm" style={{ color: 'hsl(var(--text-cream) / 0.6)' }}>
+                9th – 11th May 2026 · Bhilwara & Udaipur
+              </p>
+            </div>
+
+            {/* Divider */}
+            <div className="my-8 mx-auto w-32 h-px" style={{
+              background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent)',
+            }} />
+
+            {/* Hindi invitation */}
+            <p className="font-hindi text-sm text-muted mb-10" lang="hi"
+              style={{ animation: active ? 'fade-in 0.5s ease-out 0.6s both' : 'none' }}>
+              आपकी उपस्थिति हमारा सम्मान होगा
+            </p>
+
+            {/* ═══ THE ONLY GOLD-FILLED BUTTON ═══ */}
+            <div style={{
+              opacity: buttonVisible ? 1 : 0,
+              transform: buttonVisible ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.95)',
+              transition: 'all 0.5s cubic-bezier(0.22,0.61,0.36,1)',
+            }}>
+              <button onClick={handleAccept} className="rsvp-accept-btn group/accept">
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <span>Accept Invitation</span>
+                  <span className="text-lg transition-transform duration-300 group-hover/accept:scale-125">💌</span>
                 </span>
-              </div>
-            </div>
-
-            {/* Submit — THE ONLY PRIMARY GOLD BUTTON */}
-            <div style={{ animation: active ? 'fade-slide-up 0.4s ease-out 0.5s both' : 'none' }}>
-              <button
-                type="submit"
-                disabled={submitting || formData.events.length === 0}
-                className="rsvp-accept-btn"
-              >
-                <span className="relative z-10">{submitting ? 'Sending...' : 'Accept Invitation 💌'}</span>
-                {/* Gold shimmer sweep */}
                 <div className="rsvp-accept-shimmer" />
               </button>
             </div>
-          </form>
+
+            {/* Hashtag */}
+            <p className="font-hashtag text-primary/50 text-sm mt-6"
+              style={{ animation: active ? 'fade-in 0.5s ease-out 0.8s both' : 'none' }}>
+              #HarAnshTera
+            </p>
+          </div>
         ) : (
-          /* ═══ Thank You Overlay ═══ */
-          <div className="rsvp-thank-you">
-            {/* Golden radial glow */}
-            <div className="absolute inset-0 pointer-events-none" style={{
-              background: 'radial-gradient(ellipse at 50% 40%, hsl(var(--primary) / 0.08) 0%, transparent 60%)',
-            }} />
+          /* ═══ Thank You State ═══ */
+          <div className="w-full">
+            <div className="rsvp-thank-you">
+              {/* Golden radial glow */}
+              <div className="absolute inset-0 pointer-events-none rounded-2xl overflow-hidden">
+                <div className="absolute inset-0" style={{
+                  background: 'radial-gradient(ellipse at 50% 30%, hsl(var(--primary) / 0.1) 0%, transparent 60%)',
+                }} />
+              </div>
 
-            <div className="relative text-center py-12">
-              <div className="text-6xl mb-6" style={{ animation: 'scale-fade-in 0.4s ease-out' }}>🎉</div>
+              <div className="relative text-center py-14 px-6">
+                <div className="text-6xl mb-6" style={{ animation: 'scale-fade-in 0.4s ease-out' }}>🎉</div>
 
-              <h3 className="font-heading font-semibold text-2xl md:text-[36px] text-primary mb-2"
-                style={{ animation: 'fade-slide-up 0.5s ease-out' }}>
-                Thank You, <span className="font-display gold-shimmer">{guestName}</span>!
-              </h3>
+                <h3 className="font-heading font-semibold text-[26px] md:text-[38px] text-primary mb-3 leading-tight"
+                  style={{ animation: 'fade-slide-up 0.5s ease-out 0.15s both' }}>
+                  Thank You,
+                </h3>
+                <p className="font-display text-2xl md:text-3xl gold-shimmer mb-4"
+                  style={{ animation: 'fade-slide-up 0.5s ease-out 0.3s both' }}>
+                  {guestName}!
+                </p>
 
-              <p className="font-body text-base mb-10" style={{ color: 'hsl(var(--text-cream) / 0.8)', animation: 'fade-in 0.5s ease-out 0.3s both' }}>
-                We can't wait to celebrate with you!
-              </p>
+                <p className="font-body text-base mb-10 leading-relaxed"
+                  style={{ color: 'hsl(var(--text-cream) / 0.8)', animation: 'fade-in 0.5s ease-out 0.5s both' }}>
+                  We can't wait to celebrate with you!
+                </p>
 
-              <div style={{ animation: 'fade-slide-up 0.5s ease-out 0.5s both' }}>
-                <div className="w-16 h-px mx-auto mb-4" style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4), transparent)' }} />
-                <p className="font-display text-lg text-primary tracking-wider mb-1">HARSHIT & ANSHIKHA</p>
-                <p className="font-body text-sm" style={{ color: 'hsl(var(--text-cream))' }}>10th May 2026</p>
-                <p className="font-hashtag text-primary/70 text-sm mt-1">#HarAnshTera</p>
+                <div style={{ animation: 'fade-slide-up 0.5s ease-out 0.7s both' }}>
+                  <div className="w-20 h-px mx-auto mb-5" style={{
+                    background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4), transparent)',
+                  }} />
+                  <p className="font-display text-lg text-primary tracking-wider mb-1">HARSHIT & ANSHIKHA</p>
+                  <p className="font-body text-sm" style={{ color: 'hsl(var(--text-cream))' }}>10th May 2026</p>
+                  <p className="font-hashtag text-primary/60 text-sm mt-2">#HarAnshTera</p>
+                </div>
               </div>
             </div>
           </div>
         )}
 
         {/* ── Contact Cards ── */}
-        <div className="mt-12 grid grid-cols-2 gap-4" style={{ animation: active ? 'fade-slide-up 0.5s ease-out 0.6s both' : 'none' }}>
+        <div className="w-full mt-12 grid grid-cols-2 gap-4"
+          style={{ animation: active ? 'fade-slide-up 0.5s ease-out 0.8s both' : 'none' }}>
           {[
-            { side: "Groom's Side", icon: '🤵' },
-            { side: "Bride's Side", icon: '👰' },
+            { side: "Groom's Side", icon: '🤵', name: 'Family Contact' },
+            { side: "Bride's Side", icon: '👰', name: 'Family Contact' },
           ].map((c) => (
             <div key={c.side} className="rsvp-contact-card">
               <span className="text-2xl mb-2 block">{c.icon}</span>
-              <p className="font-heading text-sm mb-3" style={{ color: 'hsl(var(--text-cream))' }}>{c.side}</p>
+              <p className="font-heading text-sm mb-1" style={{ color: 'hsl(var(--text-cream))' }}>{c.side}</p>
+              <p className="font-ui text-[10px] text-muted mb-3">{c.name}</p>
               <div className="flex items-center justify-center gap-3">
                 <a href="tel:+919999999999" className="rsvp-contact-link" aria-label={`Call ${c.side}`}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -258,18 +236,20 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
         </div>
 
         {/* ── Footer ── */}
-        <footer className="rsvp-footer" style={{ animation: active ? 'fade-in 0.5s ease-out 0.8s both' : 'none' }}>
-          <div className="w-20 h-px mx-auto mb-4" style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent)' }} />
+        <footer className="rsvp-footer w-full" style={{ animation: active ? 'fade-in 0.5s ease-out 1s both' : 'none' }}>
+          <div className="w-20 h-px mx-auto mb-4" style={{
+            background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent)',
+          }} />
           <p className="font-body text-xs text-muted mb-2">Made with love for</p>
           <p className="font-display text-sm text-primary tracking-wider mb-1">HARSHIT & ANSHIKHA</p>
           <p className="font-hashtag text-primary/50 text-xs">#HarAnshTera</p>
           <p className="font-body text-[10px] text-muted mt-1">10th May 2026</p>
 
-          {/* Bottom jaali border */}
+          {/* Bottom jaali */}
           <div className="mt-6 mx-auto max-w-[200px] h-4 opacity-10" aria-hidden="true">
             <svg viewBox="0 0 200 16" className="w-full h-full" preserveAspectRatio="none">
               {[0, 20, 40, 60, 80, 100, 120, 140, 160, 180].map(x => (
-                <path key={x} d={`M${x},8 L${x + 10},0 L${x + 20},8 L${x + 10},16 Z`} fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5" />
+                <path key={x} d={`M${x},8 L${x+10},0 L${x+20},8 L${x+10},16 Z`} fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5" />
               ))}
             </svg>
           </div>
