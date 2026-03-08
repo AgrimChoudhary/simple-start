@@ -356,34 +356,174 @@
   outline-offset: 2px;
 }
 
-/* ===== CELEBRATIONS CARD ANIMATION ===== */
+/* ═══════════════════════════════════════════════
+   CELEBRATIONS SECTION — Premium Styles
+   ═══════════════════════════════════════════════ */
+
+/* Section container — SCROLLABLE */
+.celebrations-section {
+  @apply relative w-full flex flex-col items-center;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: hsl(var(--background));
+  scroll-behavior: smooth;
+}
+
+/* Floating gold dust effect */
+.celebrations-particles {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, hsl(var(--primary) / 0.15), transparent),
+    radial-gradient(1px 1px at 30% 50%, hsl(var(--primary) / 0.1), transparent),
+    radial-gradient(1.5px 1.5px at 55% 15%, hsl(var(--primary) / 0.12), transparent),
+    radial-gradient(1px 1px at 70% 70%, hsl(var(--primary) / 0.08), transparent),
+    radial-gradient(1px 1px at 85% 35%, hsl(var(--primary) / 0.1), transparent),
+    radial-gradient(1.5px 1.5px at 45% 85%, hsl(var(--primary) / 0.12), transparent),
+    radial-gradient(1px 1px at 15% 65%, hsl(var(--primary) / 0.08), transparent),
+    radial-gradient(1px 1px at 90% 90%, hsl(var(--primary) / 0.1), transparent);
+  animation: celebrations-dust-drift 20s linear infinite;
+}
+
+@keyframes celebrations-dust-drift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-30px); }
+}
+
+/* Paisley borders */
+.celebrations-border-left,
+.celebrations-border-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    hsl(var(--primary) / 0.3) 60px,
+    transparent 120px
+  );
+  mask-image: linear-gradient(180deg, transparent, white 20%, white 80%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, white 20%, white 80%, transparent);
+}
+.celebrations-border-left { left: 0; }
+.celebrations-border-right { right: 0; }
+
+/* ── Glass Tabs ── */
+.celebrations-tabs-wrapper {
+  @apply sticky top-0 z-20 mb-8 rounded-xl mx-auto max-w-md;
+  background: hsl(var(--bg-card) / 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--primary) / 0.12);
+  box-shadow: 0 8px 32px hsl(var(--background) / 0.5);
+}
+
+.celebrations-tab {
+  @apply flex-1 relative py-3 px-3 rounded-lg font-ui text-sm font-medium transition-all duration-300 cursor-pointer;
+  color: hsl(var(--muted));
+}
+.celebrations-tab:hover { color: hsl(var(--foreground) / 0.7); }
+.celebrations-tab--active { color: hsl(var(--primary)); }
+
+.celebrations-tab-bg {
+  background: hsl(var(--secondary) / 0.6);
+  animation: scale-fade-in 0.25s ease-out;
+}
+
+/* ── Event Card — Royal Farmaan ── */
+.celebrations-card {
+  @apply relative rounded-2xl p-7 md:p-9 transition-all duration-500;
+  background: linear-gradient(
+    165deg,
+    hsl(var(--card)) 0%,
+    hsl(218 50% 13%) 50%,
+    hsl(var(--card)) 100%
+  );
+  border: 1px solid hsl(var(--primary) / 0.15);
+  box-shadow:
+    0 4px 24px hsl(var(--primary) / 0.04),
+    0 1px 3px hsl(var(--background) / 0.3);
+  animation: celebrations-card-in 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.celebrations-card:hover {
+  border-color: hsl(var(--primary) / 0.35);
+  box-shadow:
+    0 8px 40px hsl(var(--primary) / 0.1),
+    0 2px 8px hsl(var(--primary) / 0.06),
+    inset 0 1px 0 hsl(var(--primary) / 0.05);
+  transform: translateY(-2px);
+}
+
+/* Card inner glow line at top */
+.celebrations-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, hsl(var(--primary) / 0.3) 30%, hsl(var(--primary) / 0.5) 50%, hsl(var(--primary) / 0.3) 70%, transparent 100%);
+}
+
+.celebrations-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 30px;
+  right: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.15), transparent);
+}
+
 @keyframes celebrations-card-in {
   0% {
     opacity: 0;
-    transform: translateY(24px) scale(0.98);
+    transform: translateY(30px) scale(0.97);
+    filter: blur(4px);
+  }
+  60% {
+    filter: blur(0px);
   }
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
+    filter: blur(0px);
   }
 }
 
-.card-farmaan {
+/* ── Map Button ── */
+.celebrations-map-btn {
+  @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-ui font-medium transition-all duration-300;
+  border: 1px solid hsl(var(--primary) / 0.35);
+  color: hsl(var(--text-cream));
   position: relative;
+  overflow: hidden;
 }
 
-.card-farmaan::before,
-.card-farmaan::after {
+.celebrations-map-btn:hover {
+  border-color: hsl(var(--accent));
+  background: hsl(var(--primary) / 0.08);
+  box-shadow: 0 2px 12px hsl(var(--primary) / 0.12);
+}
+
+.celebrations-map-btn::before {
   content: '';
   position: absolute;
-  left: 16px;
-  right: 16px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.12), transparent);
+  inset: 0;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.06), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
 }
 
-.card-farmaan::before { top: 0; }
-.card-farmaan::after { bottom: 0; }
+.celebrations-map-btn:hover::before {
+  transform: translateX(100%);
+}
 
 /* ===== UTILITY ===== */
 .section-container {
