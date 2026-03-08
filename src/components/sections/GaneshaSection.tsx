@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import GoldDivider from '@/components/global/GoldDivider';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 import ganeshaImg from '@/assets/ganesha.png';
 
 interface GaneshaSectionProps {
