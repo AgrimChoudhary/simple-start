@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { weddingEvents, dayTabs } from '@/data/events';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
@@ -8,172 +8,211 @@ interface CelebrationsSectionProps {
   onNext: () => void;
 }
 
-/* ── Ornate SVG Elements ── */
+/* ═══════════════════════════════════════════════
+   ORNATE SVG COMPONENTS
+   ═══════════════════════════════════════════════ */
 
 const WaxSeal: React.FC<{ icon: string }> = ({ icon }) => (
-  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-    {/* Outer glow ring */}
-    <div className="absolute inset-0 rounded-full bg-primary/10 blur-md scale-150 group-hover:bg-primary/20 transition-colors duration-500" />
+  <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
+    {/* Glow aura */}
+    <div
+      className="absolute -inset-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+      style={{
+        background: 'radial-gradient(circle, hsl(var(--primary) / 0.25) 0%, transparent 70%)',
+      }}
+    />
     {/* Seal body */}
-    <div className="relative w-9 h-9 rounded-full border-2 border-primary/50 flex items-center justify-center group-hover:border-primary/80 transition-all duration-500"
-      style={{ background: 'radial-gradient(circle at 40% 35%, hsl(var(--card)) 0%, hsl(var(--background)) 100%)' }}
+    <div
+      className="relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110"
+      style={{
+        background: 'radial-gradient(circle at 35% 30%, hsl(var(--card)) 0%, hsl(218 55% 11%) 100%)',
+        border: '2px solid hsl(var(--primary) / 0.5)',
+        boxShadow: '0 2px 12px hsl(var(--primary) / 0.15), inset 0 1px 4px hsl(var(--primary) / 0.1)',
+      }}
     >
-      {/* Inner mandala ring */}
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
-        <circle cx="18" cy="18" r="14" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.3" strokeDasharray="2 3" />
-        <circle cx="18" cy="18" r="10" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.2" />
+      {/* Mandala rings */}
+      <svg className="absolute inset-0 w-full h-full animate-spin" style={{ animationDuration: '30s' }} viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="16" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.25" strokeDasharray="1.5 2.5" />
+        <circle cx="20" cy="20" r="13" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.2" opacity="0.15" strokeDasharray="1 3" />
       </svg>
-      <span className="text-sm relative z-10">{icon}</span>
+      <span className="text-base relative z-10 drop-shadow-sm">{icon}</span>
     </div>
   </div>
 );
 
+/* Ornate corner flourish */
+const CornerFlourish: React.FC<{ position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' }> = ({ position }) => {
+  const transforms: Record<string, string> = {
+    'top-left': '',
+    'top-right': 'scaleX(-1)',
+    'bottom-left': 'scaleY(-1)',
+    'bottom-right': 'scale(-1)',
+  };
+  const positions: Record<string, string> = {
+    'top-left': 'top-1 left-1',
+    'top-right': 'top-1 right-1',
+    'bottom-left': 'bottom-1 left-1',
+    'bottom-right': 'bottom-1 right-1',
+  };
+
+  return (
+    <div className={`absolute ${positions[position]} w-8 h-8 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-500`} aria-hidden="true">
+      <svg viewBox="0 0 32 32" className="w-full h-full" style={{ transform: transforms[position] }}>
+        <path d="M2,2 C2,2 2,14 8,20 C14,26 26,28 28,28" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8" />
+        <path d="M2,2 C2,2 6,10 12,14" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5" />
+        <circle cx="4" cy="4" r="1.5" fill="hsl(var(--primary))" opacity="0.4" />
+      </svg>
+    </div>
+  );
+};
+
+/* Scroll ornament — top */
 const ScrollOrnamentTop = () => (
-  <div className="absolute top-0 left-4 right-4 overflow-hidden" aria-hidden="true">
-    <svg className="w-full h-3" viewBox="0 0 400 12" preserveAspectRatio="none">
-      <path
-        d="M0,6 C50,2 100,10 150,6 C200,2 250,10 300,6 C350,2 400,10 400,6"
-        fill="none" stroke="hsl(var(--primary))" strokeWidth="0.6" opacity="0.15"
-      />
-      <path
-        d="M0,8 C80,4 160,12 200,6 C240,0 320,8 400,4"
-        fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.08"
-      />
-    </svg>
+  <div className="absolute top-0 left-6 right-6 h-[2px]" aria-hidden="true">
+    <div className="w-full h-full" style={{
+      background: 'linear-gradient(90deg, transparent 0%, hsl(var(--primary) / 0.2) 20%, hsl(var(--primary) / 0.35) 50%, hsl(var(--primary) / 0.2) 80%, transparent 100%)',
+    }} />
   </div>
 );
 
+/* Scroll ornament — bottom */
 const ScrollOrnamentBottom = () => (
-  <div className="absolute bottom-0 left-4 right-4 overflow-hidden" aria-hidden="true">
-    <svg className="w-full h-3" viewBox="0 0 400 12" preserveAspectRatio="none">
-      <path
-        d="M0,6 C50,10 100,2 150,6 C200,10 250,2 300,6 C350,10 400,2 400,6"
-        fill="none" stroke="hsl(var(--primary))" strokeWidth="0.6" opacity="0.15"
-      />
-      <path
-        d="M0,4 C80,8 160,0 200,6 C240,12 320,4 400,8"
-        fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.08"
-      />
-    </svg>
+  <div className="absolute bottom-0 left-6 right-6 h-[2px]" aria-hidden="true">
+    <div className="w-full h-full" style={{
+      background: 'linear-gradient(90deg, transparent 0%, hsl(var(--primary) / 0.15) 20%, hsl(var(--primary) / 0.25) 50%, hsl(var(--primary) / 0.15) 80%, transparent 100%)',
+    }} />
   </div>
 );
 
-/* ── Paisley Side Borders ── */
-const PaisleyBorder: React.FC<{ side: 'left' | 'right' }> = ({ side }) => (
-  <div
-    className={`fixed top-0 bottom-0 w-16 pointer-events-none z-0 ${side === 'left' ? 'left-0' : 'right-0'}`}
-    style={{ opacity: 0.04 }}
-    aria-hidden="true"
-  >
-    <svg className="w-full h-full" viewBox="0 0 64 800" preserveAspectRatio="none">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <g key={i} transform={`translate(32, ${40 + i * 65}) ${side === 'right' ? 'scale(-1,1)' : ''}`}>
-          <path
-            d="M0,-20 C15,-18 20,-5 15,5 C10,15 -5,18 -15,10 C-10,5 -5,-5 0,-20Z"
-            fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8"
-          />
-          <circle cx="0" cy="-5" r="2" fill="hsl(var(--primary))" opacity="0.3" />
-        </g>
-      ))}
+/* Center ornament between venue and map */
+const VenueDivider = () => (
+  <div className="flex items-center justify-center gap-3 my-4" aria-hidden="true">
+    <div className="h-px flex-1 max-w-[60px]" style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2))' }} />
+    <svg width="12" height="12" viewBox="0 0 12 12" className="text-primary opacity-30">
+      <path d="M6 0L7.5 4.5L12 6L7.5 7.5L6 12L4.5 7.5L0 6L4.5 4.5Z" fill="currentColor" />
     </svg>
+    <div className="h-px flex-1 max-w-[60px]" style={{ background: 'linear-gradient(90deg, hsl(var(--primary) / 0.2), transparent)' }} />
   </div>
 );
 
-/* ── Event Card ── */
+/* ═══════════════════════════════════════════════
+   EVENT CARD — Royal Farmaan
+   ═══════════════════════════════════════════════ */
 const EventCard: React.FC<{
   event: typeof weddingEvents[0];
   index: number;
   animKey: string;
-}> = ({ event, index, animKey }) => {
+}> = ({ event, index }) => {
   return (
     <article
-      key={animKey}
-      className="relative rounded-2xl border border-primary/20 p-6 md:p-8 transition-all duration-500 hover:border-primary/40 group card-farmaan"
+      className="celebrations-card group"
       style={{
-        background: 'hsl(var(--bg-card))',
-        boxShadow: '0 4px 20px rgba(201, 169, 110, 0.04)',
-        animation: `celebrations-card-in 0.5s cubic-bezier(0.22,0.61,0.36,1) ${index * 0.15}s both`,
+        animationDelay: `${index * 0.18}s`,
       }}
     >
       <WaxSeal icon={event.eventIcon} />
       <ScrollOrnamentTop />
+      <CornerFlourish position="top-left" />
+      <CornerFlourish position="top-right" />
+      <CornerFlourish position="bottom-left" />
+      <CornerFlourish position="bottom-right" />
 
-      {/* Content */}
-      <div className="text-center pt-4">
-        {/* Event Name */}
-        <h3 className="font-heading font-semibold text-xl md:text-2xl text-primary mb-0.5 tracking-wide">
+      {/* Inner content */}
+      <div className="relative text-center pt-5 pb-2 px-2">
+        {/* Event Name — gold heading */}
+        <h3 className="font-heading font-semibold text-[22px] md:text-[26px] text-primary mb-1 tracking-wide leading-tight">
           {event.eventName}
         </h3>
-        <p className="font-hindi-event text-sm text-muted mb-4" lang="hi">
+        <p className="font-hindi-event text-[13px] md:text-sm text-muted mb-5" lang="hi">
           {event.eventNameHindi}
         </p>
 
-        {/* Date & Time */}
-        <div className="flex items-center justify-center gap-3 text-sm font-body mb-3">
-          <span className="text-foreground/80">{event.eventDate}</span>
-          <span className="w-1 h-1 rounded-full bg-primary/40" />
-          <span className="text-foreground/80">{event.eventTime}</span>
+        {/* Date & Time row */}
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="flex items-center gap-2 text-[13px] md:text-sm font-body">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" className="opacity-60">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+            </svg>
+            <span className="text-foreground/85">{event.eventDate}</span>
+          </div>
+          <div className="w-px h-4 bg-primary/20" />
+          <div className="flex items-center gap-2 text-[13px] md:text-sm font-body">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" className="opacity-60">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span className="text-foreground/85">{event.eventTime}</span>
+          </div>
         </div>
 
         {/* Dress Code Badge */}
         {event.dressCode && (
-          <div className="mb-4">
+          <div className="mb-5">
             <span
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-[11px] font-ui font-medium border transition-colors duration-300"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-[11px] font-ui font-medium tracking-wide uppercase transition-all duration-300 group-hover:shadow-sm"
               style={{
-                borderColor: event.dressColor
-                  ? event.dressColor + '60'
-                  : 'hsl(var(--primary) / 0.3)',
+                border: `1px solid ${event.dressColor ? event.dressColor + '50' : 'hsl(var(--primary) / 0.25)'}`,
+                background: event.dressColor ? event.dressColor + '08' : 'hsl(var(--primary) / 0.04)',
                 color: 'hsl(var(--text-cream))',
               }}
             >
               {event.dressColor && (
                 <span
-                  className="w-2.5 h-2.5 rounded-full border border-white/20"
+                  className="w-3 h-3 rounded-full border border-white/15 shadow-inner"
                   style={{ backgroundColor: event.dressColor }}
                 />
               )}
-              {event.dressCode}
+              👗 {event.dressCode}
             </span>
           </div>
         )}
 
-        {/* Separator */}
-        <div className="h-px bg-primary/10 my-4 mx-auto max-w-[200px]" />
+        <VenueDivider />
 
-        {/* Venue */}
-        <p className="font-heading font-medium text-base md:text-lg text-foreground mb-1">
-          {event.venueName}
-        </p>
-        <p className="font-body text-xs md:text-sm text-muted mb-4">
-          {event.venueAddress}
-        </p>
+        {/* Venue Info */}
+        <div className="relative">
+          <p className="font-heading font-semibold text-[17px] md:text-lg text-foreground/90 mb-1 tracking-wide">
+            {event.venueName}
+          </p>
+          <p className="font-body text-xs md:text-[13px] text-muted leading-relaxed mb-5">
+            {event.venueAddress}
+          </p>
 
-        {/* Map Button */}
-        <a
-          href={event.mapsLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 text-[13px] font-ui font-medium transition-all duration-300 hover:border-accent group/map"
-          style={{ color: 'hsl(var(--text-cream))' }}
-        >
-          <span>📍</span>
-          <span>Open in Maps</span>
-          <span className="text-primary transition-transform duration-300 group-hover/map:translate-x-1">→</span>
-        </a>
+          {/* Map Button — pill style */}
+          <a
+            href={event.mapsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="celebrations-map-btn"
+          >
+            <span className="text-sm">📍</span>
+            <span>Open in Maps</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-primary transition-transform duration-300 group-hover/map:translate-x-1">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
       </div>
 
       <ScrollOrnamentBottom />
 
-      {/* Hover glow */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{ boxShadow: '0 4px 30px rgba(201, 169, 110, 0.08), inset 0 0 30px rgba(201, 169, 110, 0.02)' }}
+      {/* Hover glow overlay */}
+      <div
+        className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+        style={{
+          background: 'radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.06) 0%, transparent 60%)',
+        }}
       />
     </article>
   );
 };
 
-/* ── Main Component ── */
+/* ═══════════════════════════════════════════════
+   MAIN CELEBRATIONS SECTION
+   ═══════════════════════════════════════════════ */
 const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNext }) => {
   const [activeDay, setActiveDay] = useState('9');
   const [tabAnimKey, setTabAnimKey] = useState(0);
@@ -185,55 +224,53 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
     if (day === activeDay) return;
     setActiveDay(day);
     setTabAnimKey(prev => prev + 1);
-    // Scroll back to top of cards
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <section
-      className="section-container !justify-start"
+      className="celebrations-section"
       aria-labelledby="celebrations-heading"
-      style={{ overflowY: 'auto' }}
       ref={scrollRef}
     >
-      <div className="jaali-overlay" />
-      <PaisleyBorder side="left" />
-      <PaisleyBorder side="right" />
+      {/* ── Multi-layer background ── */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {/* Base gradient */}
+        <div className="absolute inset-0" style={{
+          background: `
+            radial-gradient(ellipse 80% 50% at 50% 0%, hsl(var(--card) / 0.6) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 40% at 20% 80%, hsl(218 50% 12% / 0.5) 0%, transparent 50%),
+            radial-gradient(ellipse 60% 40% at 80% 60%, hsl(218 50% 12% / 0.4) 0%, transparent 50%),
+            hsl(var(--background))
+          `,
+        }} />
+        {/* Jaali overlay */}
+        <div className="jaali-overlay" />
+        {/* Floating gold dust particles */}
+        <div className="celebrations-particles" />
+      </div>
 
-      {/* Subtle top-to-bottom gradient */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.97) 30%, hsl(var(--card) / 0.3) 100%)',
-        }}
-      />
+      {/* ── Paisley border columns ── */}
+      <div className="celebrations-border-left" aria-hidden="true" />
+      <div className="celebrations-border-right" aria-hidden="true" />
 
-      <div className="relative z-10 w-full max-w-2xl mx-auto px-4 py-12">
-        {/* Heading */}
-        <div className="text-center mb-6" style={{ animation: 'fade-slide-up 0.6s ease-out' }}>
-          <div className="flex items-center justify-center gap-3">
+      {/* ── Content ── */}
+      <div className="relative z-10 w-full max-w-2xl mx-auto px-5 md:px-6 pt-10 pb-16">
+
+        {/* Section Heading */}
+        <div className="text-center mb-8" style={{ animation: 'fade-slide-up 0.6s ease-out' }}>
+          <div className="flex items-center justify-center gap-3 mb-1">
             <DiyaIcon lit={active} />
-            <h2
-              id="celebrations-heading"
-              className="font-heading text-2xl md:text-[40px] gold-shimmer-slow leading-tight"
-            >
+            <h2 id="celebrations-heading" className="font-heading text-[28px] md:text-[42px] gold-shimmer-slow leading-none">
               Wedding Celebrations
             </h2>
           </div>
+          <p className="font-hindi text-sm text-muted mt-1" lang="hi">शुभ विवाह समारोह</p>
           <GoldDivider />
         </div>
 
-        {/* Day Tabs — Sticky glass panel */}
-        <div
-          className="sticky top-0 z-20 mb-8 rounded-xl mx-auto max-w-md"
-          style={{
-            background: 'hsl(var(--bg-card) / 0.92)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid hsl(var(--primary) / 0.1)',
-          }}
-          role="tablist"
-          aria-label="Wedding days"
-        >
+        {/* ── Day Tabs — glass-morphism sticky bar ── */}
+        <div className="celebrations-tabs-wrapper" role="tablist" aria-label="Wedding days">
           <div className="flex p-1.5 gap-1">
             {dayTabs.map((tab) => {
               const isActive = activeDay === tab.day;
@@ -243,32 +280,17 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => handleTabSwitch(tab.day)}
-                  className={`flex-1 relative py-3 px-3 rounded-lg font-ui text-sm font-medium transition-all duration-300 ${
-                    isActive
-                      ? 'text-primary'
-                      : 'text-muted hover:text-foreground/70'
-                  }`}
+                  className={`celebrations-tab ${isActive ? 'celebrations-tab--active' : ''}`}
                 >
-                  {/* Active background pill */}
                   {isActive && (
-                    <div
-                      className="absolute inset-0 rounded-lg"
-                      style={{
-                        background: 'hsl(var(--secondary) / 0.7)',
-                        animation: 'scale-fade-in 0.25s ease-out',
-                      }}
-                    />
+                    <div className="absolute inset-0 rounded-lg celebrations-tab-bg" />
                   )}
                   <span className="relative z-10 block text-[13px] md:text-sm font-semibold">{tab.label}</span>
-                  <span className="relative z-10 block text-[10px] uppercase tracking-[0.15em] opacity-60 mt-0.5">
+                  <span className="relative z-10 block text-[10px] uppercase tracking-[0.18em] opacity-50 mt-0.5">
                     {tab.subtitle}
                   </span>
-                  {/* Active gold underline */}
                   {isActive && (
-                    <div
-                      className="absolute bottom-1 left-1/2 -translate-x-1/2 h-[2px] w-8 rounded-full bg-primary"
-                      style={{ animation: 'draw-divider 0.4s ease-out forwards' }}
-                    />
+                    <div className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[2px] w-10 rounded-full bg-primary" style={{ animation: 'draw-divider 0.35s ease-out forwards' }} />
                   )}
                 </button>
               );
@@ -276,9 +298,9 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
           </div>
         </div>
 
-        {/* Event Cards */}
+        {/* ── Event Cards ── */}
         <div
-          className="space-y-8"
+          className="space-y-10 mt-2"
           role="tabpanel"
           aria-label={`Events on day ${activeDay}`}
           key={`panel-${activeDay}-${tabAnimKey}`}
@@ -293,12 +315,9 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
           ))}
         </div>
 
-        {/* Next button — always visible */}
-        <div className="text-center mt-12 pb-10">
-          <button
-            onClick={onNext}
-            className="nav-button-secondary"
-          >
+        {/* ── Next Button ── */}
+        <div className="text-center mt-14 pb-4">
+          <button onClick={onNext} className="nav-button-secondary">
             Next: Gallery →
           </button>
         </div>
