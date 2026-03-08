@@ -1,0 +1,149 @@
+# 02 — Wedding Celebrations (Section 2)
+
+# Section 2: Wedding Celebrations (3-Day Timeline)
+
+The heart of the invitation. A 3-day celebration timeline with all events organized by date. Each event is a self-contained royal scroll card with venue, address, and map link built in.
+
+---
+
+## Purpose
+
+Guests see what's happening, where, and how to get there — all in one place. Each day is a "chapter" with tab navigation. No separate venue section needed.
+
+## Layout
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│    [Diya]  Wedding Celebrations                        │
+│               ── gold divider ──                       │
+│                                                         │
+│   ┌─── DAY TABS ────────────────────────────────┐      │
+│   │  [9th May]  |  [10th May]  |  [11th May]    │      │
+│   └─────────────────────────────────────────────┘      │
+│                                                         │
+│   ┌─ ROYAL SCROLL EVENT CARD ───────────────────┐      │
+│   │  [wax seal motif — 16px gold circle]        │      │
+│   │  [scroll ornament top edge]                 │      │
+│   │                                             │      │
+│   │  HALDI CEREMONY                             │      │
+│   │  हल्दी                                       │      │
+│   │  ─────────────────────────                  │      │
+│   │  Date: 9th May 2026                         │      │
+│   │  Time: [TBD]                                │      │
+│   │  Dress: Yellow Traditional                  │      │
+│   │  ─────────────────────────                  │      │
+│   │  Venue: Bliss Resort                        │      │
+│   │  [Full address], Bhilwara                   │      │
+│   │  [ 📍 Open in Maps → ]                      │      │
+│   │                                             │      │
+│   │  [scroll ornament bottom edge]              │      │
+│   └─────────────────────────────────────────────┘      │
+│                                                         │
+│   [More event cards stacked below...]                  │
+│                                                         │
+│       [ Next: Gallery → ]                              │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Day Tab Navigation
+
+| Property | Value |
+| --- | --- |
+| Style | Horizontal tab bar with 3 tabs (one per day) |
+| Active Tab | Gold bottom border (2px `#C9A96E`), text `#C9A96E` |
+| Inactive Tab | No border, text `#8A8578` muted |
+| Tab Background | `#111E36` with subtle glass blur (backdrop-filter: blur 8px) |
+| Sticky | Yes — tabs stick to top of section on scroll |
+| Content Switch | Cross-fade between day contents (0.3s) |
+| Default | First day (9th May) selected on section enter |
+
+---
+
+## Complete Event List
+
+| Day | Event | Hindi | Icon | Venue | Dress Code |
+| --- | --- | --- | --- | --- | --- |
+| 9th May | Haldi Ceremony | हल्दी | Marigold flower | Bliss Resort, Bhilwara | Yellow Traditional |
+| 9th May | Engagement Ceremony | सगाई | Ring | Bliss Resort, Bhilwara | Semi-Formal Traditional |
+| 9th May | Sangeet Evening | संगीत | Musical notes | Bliss Resort, Bhilwara | Festive / Party Wear |
+| 10th May | Chaak / Bhaat Ceremony | चाक / भात | Diya lamp | Bliss Resort, Bhilwara | Traditional |
+| 10th May | Wedding Ceremony | विवाह | Sacred fire | Bliss Resort, Bhilwara | Grand Traditional |
+| 11th May | Wedding Reception | रिसेप्शन | Sparkle | Bhairav Bagh Palace, Udaipur | Indo-Western / Formal |
+
+**Note on Dress Codes:** Client didn't specify dress codes. These are our suggestions for guest convenience. Client to approve.
+
+---
+
+## Event Card Design (Royal Scroll / Farmaan Style)
+
+Each card looks like a royal farmaan (decree) — ornate scroll edges, wax seal, fully self-contained with venue + directions.
+
+| Property | Value |
+| --- | --- |
+| Card Background | `#111E36` with 1px `#C9A96E` border at 20% opacity |
+| Border Radius | 16px |
+| Shadow | `0 4px 20px rgba(201, 169, 110, 0.08)` |
+| Padding | 24px mobile, 32px desktop |
+| Scroll Top Edge | Curved SVG ornament resembling rolled parchment. `#C9A96E` at 12% opacity. Gentle curves (5-8px displacement), not dramatic |
+| Scroll Bottom Edge | Mirror of top ornament — creates farmaan silhouette |
+| Wax Seal Motif | 16px circular gold seal at top-center. SVG with mandala/lotus pattern. `#C9A96E` |
+| Implementation | CSS `::before`/`::after` pseudo-elements with SVG background, OR `border-image` with SVG source |
+
+### Card Content Layout
+
+| Element | Font / Style | Color |
+| --- | --- | --- |
+| Event Name | Cormorant Garamond 600, 20px | `#C9A96E` gold |
+| Hindi Name | Mukta Vaani 400, 14px | `#8A8578` muted |
+| Date & Time | Lora 400, 14px | `#D4CFC5` cream |
+| Dress Code | Small tag/badge — Inter 500, 11px, gold 1px border, 4px padding, 6px radius | `#D4CFC5` text, `#C9A96E` border |
+| Separator | 1px line, `#C9A96E` at 10% opacity | — |
+| Venue Name | Cormorant Garamond 500, 16px | `#D4CFC5` cream |
+| Full Address | Lora 400, 13px | `#8A8578` muted |
+| Map Button | Gold outlined pill — Inter 500, 13px, 1px `#C9A96E` border, 8px/16px padding, 20px radius | `#D4CFC5` text, arrow `#C9A96E` |
+
+### Map Button Behavior
+
+- Text: "📍 Open in Maps →"
+- Opens Google Maps link in new tab
+- Hover: arrow animates right 4px, border brightens to `#D4B87A`
+- Tap (mobile): immediate open, gold ripple feedback
+
+### Card Animation
+
+- On day tab switch: cards stagger in (0.15s delay between each card)
+- On first load: cards fade in + slide up 20px, staggered
+- Card hover (desktop): gold border brightens, shadow increases, wax seal gets subtle golden glow
+
+---
+
+## Event Card Data Schema
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `eventName` | string | Yes | English name |
+| `eventNameHindi` | string | Yes | Hindi name |
+| `eventIcon` | string | Yes | Emoji or SVG icon key |
+| `eventDate` | date | Yes | Date of event |
+| `eventTime` | string | Yes | "4:00 PM onwards" or "TBD" |
+| `venueName` | string | Yes | Venue name |
+| `venueAddress` | string | Yes | Full address including city |
+| `mapsLink` | URL | Yes | Google Maps link |
+| `dressCode` | string | Optional | Suggested attire |
+| `dressColor` | hex | Optional | Suggested color swatch |
+
+---
+
+## Section 2 Specs
+
+- Background: `#0A1628` with subtle gradient
+- This section allows INTERNAL scrolling (day tabs sticky at top, cards scroll vertically) — unlike other sections which are fixed 100vh
+- Min height: 100vh, can extend based on number of cards
+- Jaali texture: Faint paisley borders at left and right edges, 5% opacity
+- Navigation Button: "Next: Gallery →" — always visible at bottom of section (fixed position within section, above fold)
+- Transition In: Fade + gold particle sweep from left to right (0.8s, ease-in-out)
+- Transition Out: Soft cross-fade (0.6s) to Gallery
