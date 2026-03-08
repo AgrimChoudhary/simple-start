@@ -15,11 +15,14 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({ currentSection, onNavigate 
         <button
           key={id}
           onClick={() => onNavigate(id as SectionId)}
-          className={`rounded-full transition-all duration-300 ${
+          className={`rounded-full transition-all duration-300 hover:scale-125 ${
             currentSection === id
-              ? 'w-[10px] h-[10px] bg-primary shadow-[0_0_8px_hsl(38_36%_60%_/_0.4)]'
+              ? 'w-[10px] h-[10px] bg-primary'
               : 'w-[6px] h-[6px] bg-gold-tertiary hover:bg-primary/60'
           }`}
+          style={currentSection === id ? {
+            boxShadow: '0 0 10px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary) / 0.2)',
+          } : undefined}
           aria-label={`Go to ${sectionLabels[id]}`}
           aria-current={currentSection === id ? 'step' : undefined}
         />
