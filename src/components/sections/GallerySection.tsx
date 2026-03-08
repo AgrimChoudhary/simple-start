@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface GallerySectionProps {
   active: boolean;
