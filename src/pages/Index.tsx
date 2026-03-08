@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSectionNavigation, type SectionId } from '@/hooks/useSectionNavigation';
 import { useGuestName } from '@/hooks/useGuestName';
 
@@ -20,18 +20,25 @@ const Index = () => {
   const nav = useSectionNavigation();
   const guestName = useGuestName();
 
-  const [showDoors, setShowDoors] = React.useState(false);
+  // Palace door transition state machine
+  const [doorPhase, setDoorPhase] = useState<'none' | 'ganesha-fading' | 'doors-visible' | 'complete'>('none');
 
   const handleCurtainComplete = useCallback(() => {
     nav.setCurtainOpen(true);
   }, [nav]);
 
   const handleBeginClick = useCallback(() => {
-    setShowDoors(true);
+    // Step 1: Fade out Ganesha content (0.3s)
+    setDoorPhase('ganesha-fading');
+
+    // Step 2: After fade-out, show doors (Section 1 is already behind at z-index 1)
+    setTimeout(() => {
+      setDoorPhase('doors-visible');
+    }, 350);
   }, []);
 
   const handleDoorsComplete = useCallback(() => {
-    setShowDoors(false);
+    setDoorPhase('complete');
     nav.setDoorsOpen(true);
     nav.navigateTo(1, 'idle');
   }, [nav]);
@@ -46,6 +53,10 @@ const Index = () => {
     setTimeout(() => nav.completeTransition(), 600);
   }, [nav]);
 
+  // Is Section 0 or the door transition still active?
+  const isGaneshaPhase = nav.currentSection === 0 && doorPhase !== 'complete';
+  const showSection1Behind = doorPhase === 'doors-visible' || doorPhase === 'complete';
+
   return (
     <main className="relative w-full h-screen overflow-hidden bg-background">
       {/* Skip to content */}
@@ -59,8 +70,8 @@ const Index = () => {
       {/* Curtain Reveal */}
       {!nav.curtainOpen && <CurtainReveal onComplete={handleCurtainComplete} />}
 
-      {/* Palace Doors */}
-      {showDoors && <PalaceDoors onComplete={handleDoorsComplete} />}
+      {/* Palace Doors — z-index 40, over Section 1 content at z-index 1 */}
+      {doorPhase === 'doors-visible' && <PalaceDoors onComplete={handleDoorsComplete} />}
 
       {/* Navigation (show after curtain) */}
       {nav.curtainOpen && (
@@ -73,28 +84,35 @@ const Index = () => {
 
       {/* Section Renderer */}
       <div id="main-content" className="relative w-full h-full">
-        {/* Section transitions via opacity */}
+
+        {/* Section 0: Ganesha — visible during ganesha phase, fades out when doors triggered */}
         <div
-          className="absolute inset-0 transition-opacity duration-500"
+          className="absolute inset-0"
           style={{
-            opacity: nav.currentSection === 0 && !showDoors ? 1 : 0,
-            pointerEvents: nav.currentSection === 0 && !showDoors ? 'auto' : 'none',
-            zIndex: nav.currentSection === 0 ? 10 : 1,
+            zIndex: isGaneshaPhase ? 10 : 1,
+            opacity: (isGaneshaPhase && doorPhase !== 'ganesha-fading' && doorPhase !== 'doors-visible') ? 1 : 0,
+            pointerEvents: (nav.currentSection === 0 && doorPhase === 'none') ? 'auto' : 'none',
+            transition: 'opacity 0.3s ease-out',
           }}
         >
           <GaneshaSection
             curtainOpen={nav.curtainOpen}
             onBeginClick={handleBeginClick}
             visited={nav.visitedSections.has(0) && nav.currentSection !== 0}
+            fading={doorPhase === 'ganesha-fading'}
           />
         </div>
 
+        {/* Section 1: Opening — pre-rendered behind palace doors at z-index 1 during transition,
+            then promoted to z-index 10 after doors complete */}
         <div
-          className="absolute inset-0 transition-opacity duration-500"
+          className="absolute inset-0"
           style={{
-            opacity: nav.currentSection === 1 ? 1 : 0,
+            zIndex: (showSection1Behind && doorPhase !== 'complete' && nav.currentSection === 0) ? 1 :
+                   nav.currentSection === 1 ? 10 : 1,
+            opacity: (showSection1Behind || nav.currentSection === 1) ? 1 : 0,
             pointerEvents: nav.currentSection === 1 ? 'auto' : 'none',
-            zIndex: nav.currentSection === 1 ? 10 : 1,
+            transition: doorPhase === 'doors-visible' ? 'none' : 'opacity 0.5s ease-out',
           }}
         >
           <OpeningSection
@@ -105,61 +123,25 @@ const Index = () => {
           />
         </div>
 
-        <div
-          className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            opacity: nav.currentSection === 2 ? 1 : 0,
-            pointerEvents: nav.currentSection === 2 ? 'auto' : 'none',
-            zIndex: nav.currentSection === 2 ? 10 : 1,
-          }}
-        >
-          <CelebrationsSection
-            active={nav.currentSection === 2}
-            onNext={() => handleNextSection(3)}
-          />
-        </div>
-
-        <div
-          className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            opacity: nav.currentSection === 3 ? 1 : 0,
-            pointerEvents: nav.currentSection === 3 ? 'auto' : 'none',
-            zIndex: nav.currentSection === 3 ? 10 : 1,
-          }}
-        >
-          <GallerySection
-            active={nav.currentSection === 3}
-            onNext={() => handleNextSection(4)}
-          />
-        </div>
-
-        <div
-          className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            opacity: nav.currentSection === 4 ? 1 : 0,
-            pointerEvents: nav.currentSection === 4 ? 'auto' : 'none',
-            zIndex: nav.currentSection === 4 ? 10 : 1,
-          }}
-        >
-          <CountdownSection
-            active={nav.currentSection === 4}
-            onNext={() => handleNextSection(5)}
-          />
-        </div>
-
-        <div
-          className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            opacity: nav.currentSection === 5 ? 1 : 0,
-            pointerEvents: nav.currentSection === 5 ? 'auto' : 'none',
-            zIndex: nav.currentSection === 5 ? 10 : 1,
-          }}
-        >
-          <RSVPSection
-            active={nav.currentSection === 5}
-            guestName={guestName}
-          />
-        </div>
+        {/* Sections 2-5: Standard fade transitions */}
+        {[
+          { id: 2 as SectionId, el: <CelebrationsSection active={nav.currentSection === 2} onNext={() => handleNextSection(3)} /> },
+          { id: 3 as SectionId, el: <GallerySection active={nav.currentSection === 3} onNext={() => handleNextSection(4)} /> },
+          { id: 4 as SectionId, el: <CountdownSection active={nav.currentSection === 4} onNext={() => handleNextSection(5)} /> },
+          { id: 5 as SectionId, el: <RSVPSection active={nav.currentSection === 5} guestName={guestName} /> },
+        ].map(({ id, el }) => (
+          <div
+            key={id}
+            className="absolute inset-0 transition-opacity duration-500"
+            style={{
+              opacity: nav.currentSection === id ? 1 : 0,
+              pointerEvents: nav.currentSection === id ? 'auto' : 'none',
+              zIndex: nav.currentSection === id ? 10 : 1,
+            }}
+          >
+            {el}
+          </div>
+        ))}
       </div>
     </main>
   );
