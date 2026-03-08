@@ -177,6 +177,9 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ active, onNext }) =
         <div className="celebrations-particles" />
       </div>
 
+      {/* Border frame */}
+      <SectionBorderFrame active={active} variant="standard" />
+
       <div className="relative z-10 w-full max-w-2xl mx-auto px-5 md:px-6 pt-10 pb-16">
         {/* ── Heading ── */}
         <div className="text-center mb-10" style={{ animation: active ? 'fade-slide-up 0.5s ease-out' : 'none' }}>

@@ -238,8 +238,9 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
       {/* Section-specific gold dust */}
       <GoldDust />
 
-      {/* Ornate border frame */}
+      {/* Ornate border frame — enhanced with SectionBorderFrame */}
       <OrnateFrame />
+      <SectionBorderFrame active={active} variant="royal" />
 
       {/* Background rangoli — top right */}
       <div className="absolute -top-10 -right-10 opacity-[0.04] pointer-events-none" aria-hidden="true"

@@ -255,6 +255,9 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
       <div className="celebrations-border-left" aria-hidden="true" />
       <div className="celebrations-border-right" aria-hidden="true" />
 
+      {/* Border frame */}
+      <SectionBorderFrame active={active} variant="standard" />
+
       {/* ── Content ── */}
       <div className="relative z-10 w-full max-w-2xl mx-auto px-5 md:px-6 pt-10 pb-16">
 

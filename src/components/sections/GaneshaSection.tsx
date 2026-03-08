@@ -74,6 +74,9 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
         transition: 'opacity 0.3s ease-out',
       }}
     >
+      {/* Royal border frame */}
+      <SectionBorderFrame active={curtainOpen} variant="royal" />
+
       {/* Background glow */}
       <div className="absolute inset-0" style={{
         background: 'radial-gradient(ellipse at center, hsl(var(--gold-primary) / 0.10) 0%, hsl(var(--gold-primary) / 0.03) 40%, transparent 70%)',

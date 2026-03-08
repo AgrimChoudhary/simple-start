@@ -317,6 +317,13 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
         <div className="celebrations-particles" />
       </div>
 
+      {/* Border frame */}
+      <SectionBorderFrame active={active} variant="standard" />
+
+      {/* Duplicate bg close removed */}
+      <div className="absolute inset-0 pointer-events-none hidden" aria-hidden="true">
+      </div>
+
       {/* ── Content ── */}
       <div className="relative z-10 w-full max-w-3xl mx-auto px-4 md:px-6 pt-10 pb-16">
 
