@@ -20,7 +20,6 @@ const Index = () => {
   const nav = useSectionNavigation();
   const guestName = useGuestName();
 
-  // Palace door transition state machine
   const [doorPhase, setDoorPhase] = useState<'none' | 'ganesha-fading' | 'doors-visible' | 'complete'>('none');
 
   const handleCurtainComplete = useCallback(() => {
@@ -28,13 +27,8 @@ const Index = () => {
   }, [nav]);
 
   const handleBeginClick = useCallback(() => {
-    // Step 1: Fade out Ganesha content (0.3s)
     setDoorPhase('ganesha-fading');
-
-    // Step 2: After fade-out, show doors (Section 1 is already behind at z-index 1)
-    setTimeout(() => {
-      setDoorPhase('doors-visible');
-    }, 350);
+    setTimeout(() => setDoorPhase('doors-visible'), 350);
   }, []);
 
   const handleDoorsComplete = useCallback(() => {
@@ -53,27 +47,20 @@ const Index = () => {
     setTimeout(() => nav.completeTransition(), 600);
   }, [nav]);
 
-  // Is Section 0 or the door transition still active?
   const isGaneshaPhase = nav.currentSection === 0 && doorPhase !== 'complete';
   const showSection1Behind = doorPhase === 'doors-visible' || doorPhase === 'complete';
 
   return (
     <main className="relative w-full h-screen overflow-hidden bg-background">
-      {/* Skip to content */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg font-ui text-sm">
         Skip to content
       </a>
 
-      {/* Floating Petals */}
       <FloatingPetals />
 
-      {/* Curtain Reveal */}
       {!nav.curtainOpen && <CurtainReveal onComplete={handleCurtainComplete} />}
-
-      {/* Palace Doors — z-index 40, over Section 1 content at z-index 1 */}
       {doorPhase === 'doors-visible' && <PalaceDoors onComplete={handleDoorsComplete} />}
 
-      {/* Navigation (show after curtain) */}
       {nav.curtainOpen && (
         <>
           <FloatingNav currentSection={nav.currentSection} onNavigate={handleNavJump} />
@@ -82,10 +69,8 @@ const Index = () => {
         </>
       )}
 
-      {/* Section Renderer */}
       <div id="main-content" className="relative w-full h-full">
-
-        {/* Section 0: Ganesha — visible during ganesha phase, fades out when doors triggered */}
+        {/* Section 0: Ganesha */}
         <div
           className="absolute inset-0"
           style={{
@@ -93,6 +78,7 @@ const Index = () => {
             opacity: (isGaneshaPhase && doorPhase !== 'ganesha-fading' && doorPhase !== 'doors-visible') ? 1 : 0,
             pointerEvents: (nav.currentSection === 0 && doorPhase === 'none') ? 'auto' : 'none',
             transition: 'opacity 0.3s ease-out',
+            willChange: 'opacity',
           }}
         >
           <GaneshaSection
@@ -103,8 +89,7 @@ const Index = () => {
           />
         </div>
 
-        {/* Section 1: Opening — pre-rendered behind palace doors at z-index 1 during transition,
-            then promoted to z-index 10 after doors complete */}
+        {/* Section 1: Opening */}
         <div
           className="absolute inset-0"
           style={{
@@ -113,6 +98,7 @@ const Index = () => {
             opacity: (showSection1Behind || nav.currentSection === 1) ? 1 : 0,
             pointerEvents: nav.currentSection === 1 ? 'auto' : 'none',
             transition: doorPhase === 'doors-visible' ? 'none' : 'opacity 0.5s ease-out',
+            willChange: 'opacity',
           }}
         >
           <OpeningSection
@@ -123,7 +109,7 @@ const Index = () => {
           />
         </div>
 
-        {/* Sections 2-5: Standard fade transitions */}
+        {/* Sections 2-5 */}
         {[
           { id: 2 as SectionId, el: <CelebrationsSection active={nav.currentSection === 2} onNext={() => handleNextSection(3)} /> },
           { id: 3 as SectionId, el: <GallerySection active={nav.currentSection === 3} onNext={() => handleNextSection(4)} /> },
@@ -137,6 +123,7 @@ const Index = () => {
               opacity: nav.currentSection === id ? 1 : 0,
               pointerEvents: nav.currentSection === id ? 'auto' : 'none',
               zIndex: nav.currentSection === id ? 10 : 1,
+              willChange: 'opacity',
             }}
           >
             {el}

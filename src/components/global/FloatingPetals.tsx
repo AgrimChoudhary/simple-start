@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 const FloatingPetals: React.FC = () => {
-  const petals = Array.from({ length: 12 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    delay: `${Math.random() * 8}s`,
-    duration: `${8 + Math.random() * 7}s`,
-    size: `${8 + Math.random() * 7}px`,
-    driftX: `${-30 + Math.random() * 60}px`,
-    driftRotate: `${180 + Math.random() * 360}deg`,
-    swayX: `${15 + Math.random() * 30}px`,
-    opacity: 0.25 + Math.random() * 0.1,
-    color: Math.random() > 0.5 ? '#D4A017' : '#C9A96E',
-  }));
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const count = isMobile ? 8 : 12;
+
+  const petals = useMemo(() =>
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 8}s`,
+      duration: `${8 + Math.random() * 7}s`,
+      size: `${8 + Math.random() * 7}px`,
+      driftX: `${-30 + Math.random() * 60}px`,
+      driftRotate: `${180 + Math.random() * 360}deg`,
+      opacity: 0.2 + Math.random() * 0.12,
+      color: ['#D4A017', '#C9A96E', '#D4B87A'][Math.floor(Math.random() * 3)],
+    })),
+  [count]);
 
   return (
     <div className="floating-petal fixed inset-0 pointer-events-none z-[1]" aria-hidden="true">
       {petals.map((p) => (
         <div
           key={p.id}
-          className="absolute rounded-full"
+          className="absolute"
           style={{
             left: p.left,
             top: '-10px',
