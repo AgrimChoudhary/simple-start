@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GoldDivider from '@/components/global/GoldDivider';
 import DiyaIcon from '@/components/global/DiyaIcon';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface OpeningSectionProps {
   active: boolean;
@@ -43,6 +44,9 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, guestName, onVi
     >
       {/* Jaali overlay */}
       <div className="jaali-overlay" />
+
+      {/* Border frame */}
+      <SectionBorderFrame active={active} variant="standard" />
 
       {/* Jaali arches — top */}
       <div className="absolute top-0 left-0 right-0 h-28 pointer-events-none opacity-[0.05]" aria-hidden="true">

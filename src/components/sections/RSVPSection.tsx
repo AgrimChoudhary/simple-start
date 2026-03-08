@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import confetti from 'canvas-confetti';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface RSVPSectionProps {
   active: boolean;
@@ -237,8 +238,9 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
       {/* Section-specific gold dust */}
       <GoldDust />
 
-      {/* Ornate border frame */}
+      {/* Ornate border frame — enhanced with SectionBorderFrame */}
       <OrnateFrame />
+      <SectionBorderFrame active={active} variant="royal" />
 
       {/* Background rangoli — top right */}
       <div className="absolute -top-10 -right-10 opacity-[0.04] pointer-events-none" aria-hidden="true"

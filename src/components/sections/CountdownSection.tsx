@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface CountdownSectionProps {
   active: boolean;
@@ -175,6 +176,9 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ active, onNext }) =
         <div className="jaali-overlay" />
         <div className="celebrations-particles" />
       </div>
+
+      {/* Border frame */}
+      <SectionBorderFrame active={active} variant="standard" />
 
       <div className="relative z-10 w-full max-w-2xl mx-auto px-5 md:px-6 pt-10 pb-16">
         {/* ── Heading ── */}

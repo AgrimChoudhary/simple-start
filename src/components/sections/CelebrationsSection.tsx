@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { weddingEvents, dayTabs } from '@/data/events';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface CelebrationsSectionProps {
   active: boolean;
@@ -253,6 +254,9 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
       {/* ── Paisley border columns ── */}
       <div className="celebrations-border-left" aria-hidden="true" />
       <div className="celebrations-border-right" aria-hidden="true" />
+
+      {/* Border frame */}
+      <SectionBorderFrame active={active} variant="standard" />
 
       {/* ── Content ── */}
       <div className="relative z-10 w-full max-w-2xl mx-auto px-5 md:px-6 pt-10 pb-16">

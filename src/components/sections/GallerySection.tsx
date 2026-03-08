@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface GallerySectionProps {
   active: boolean;
@@ -314,6 +315,13 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
         }} />
         <div className="jaali-overlay" />
         <div className="celebrations-particles" />
+      </div>
+
+      {/* Border frame */}
+      <SectionBorderFrame active={active} variant="standard" />
+
+      {/* Duplicate bg close removed */}
+      <div className="absolute inset-0 pointer-events-none hidden" aria-hidden="true">
       </div>
 
       {/* ── Content ── */}
