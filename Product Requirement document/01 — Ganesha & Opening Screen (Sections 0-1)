@@ -1,0 +1,234 @@
+# 01 — Ganesha & Opening Screen (Sections 0-1)
+
+# Sections 0-1: Lord Ganesha & Opening Screen
+
+This document covers the first two sections of the invitation — the sacred Ganesha entry and the hero opening screen. These two sections are connected by the Palace Door transition.
+
+---
+
+## SECTION 0: LORD GANESHA (Auspicious Entry)
+
+### Purpose
+
+The FIRST thing guests see. A royal curtain reveals Lord Ganesha with the traditional shlok. Sets the spiritual and regal tone for the entire invitation journey.
+
+### Layout (Full Viewport — 100vh)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│  [CURTAIN LAYER — z-index: 50, full viewport]          │
+│  [Two maroon curtains covering everything below]       │
+│                                                         │
+│  ── BEHIND THE CURTAIN (pre-rendered, z-index: 1): ──  │
+│                                                         │
+│          OM Symbol (14px, muted gold)                  │
+│          [Lord Ganesha Line-Art — AI Generated]        │
+│                                                         │
+│          वक्रतुण्ड महाकाय                                │
+│          सूर्यकोटि समप्रभ।                                │
+│          निर्विघ्नं कुरु मे देव                             │
+│          सर्वकार्येषु सर्वदा॥                               │
+│                                                         │
+│          ── gold divider ──                             │
+│                                                         │
+│          [ शुभ आरंभ · Begin ]                           │
+│                                                         │
+│          [Music prompt toast — bottom center]          │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Content-Behind Curtain Model
+
+The Ganesha content (icon, shlok, divider, button) is rendered BEHIND the curtain from page load. The curtain is a full-viewport overlay at higher z-index. When the curtain parts, it naturally uncovers the content underneath — no separate fade-in needed. This creates the authentic feeling of a real curtain being drawn open.
+
+**Technical Implementation:**
+
+- Content layer: `z-index: 1`, fully rendered, opacity: 1, positioned normally
+- Curtain layer: `z-index: 50`, two absolutely positioned panels covering 100% viewport
+- On page load: 0.5s pause, then both curtain panels translate outward (left panel: `translateX(-100%)`, right panel: `translateX(100%)`)
+- Content is visible through the widening gap as curtains part
+- After curtain fully opens: curtain panels removed from DOM (or `display: none`)
+- Shlok lines animate AFTER curtain is fully open: line-by-line fade-in (0.3s stagger)
+- Begin button fades in AFTER shlok completes
+
+### Curtain Reveal Animation
+
+| Property | Value |
+| --- | --- |
+| Type | Two royal maroon panels parting from center |
+| Curtain Color | `#6B1A2A` (Royal Maroon) with `#4A1220` fold shadows via CSS gradients |
+| Gold Rope/Tassel | Antique gold rope detail at inner edges (SVG or CSS border-image) |
+| Duration | 2.5s total (0.5s pause then 2s curtain part) |
+| Easing | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` — smooth, regal |
+| Trigger | Auto-play on page load |
+| Reveal | Content is BEHIND curtain — naturally uncovered as panels move apart |
+
+### Lord Ganesha — AI Generated Image
+
+| Property | Value |
+| --- | --- |
+| Style | Ornate gold line-art on transparent background — like a temple brass engraving |
+| Size | 80px mobile, 120px desktop |
+| Color | Single color `#C9A96E` with varying stroke weights |
+| Animation | Subtle golden glow pulse after curtain opens |
+
+**AI Image Generation Prompt for Ganesha:**
+
+"Traditional Lord Ganesha line-art illustration, ornate gold outline on transparent background. Seated pose with one leg folded, trunk curved left, holding modak in one hand. Intricate crown/mukut with peacock feather motif. Prabhamandal (halo) behind head with subtle radial gold lines. Small Mushak (mouse) at feet. Clean detailed linework — similar to brass temple engraving style. Single color, no fill, varying stroke thickness for depth. Sacred and elegant, NOT cartoonish. Export as SVG."
+
+### Shlok Text
+
+- Text: वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ। निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
+- Font: Noto Sans Devanagari 500, 16px mobile / 20px desktop
+- Color: `#D4CFC5` (Soft Cream) — NOT gold, keeping shlok respectful
+- Each line on its own row, centered, 1.8 line-height
+- Animation: Fade in line by line (0.3s stagger), starts 0.5s AFTER curtain fully opens
+
+### Begin Button
+
+See "04 — Navigation, Buttons & Transitions" for complete button specs. Quick reference:
+
+- Text: "शुभ आरंभ · Begin"
+- Type: Secondary (gold outlined)
+- Appears: After shlok animation completes (~3.5s from page load)
+- Action: Triggers Palace Door transition → reveals Section 1
+
+### Music Permission
+
+- On first tap/click anywhere: small bottom-center toast "Tap to play music" in muted gold
+- After accept: Raabta instrumental fades in over 2s
+- Toggle always visible at fixed bottom-left
+
+### Section 0 Specs
+
+- Height: 100vh, scroll disabled
+- Background: `#0A1628` with subtle radial golden glow from center (10% opacity)
+- Jaali texture: Faint arch pattern at top and bottom edges, 5% opacity
+
+---
+
+## PALACE DOOR TRANSITION (Section 0 → Section 1)
+
+When guest clicks "Begin", the Ganesha content fades out (0.3s) and ornate golden Rajasthani palace doors APPEAR over the screen, then swing open to reveal Section 1 content already waiting behind them.
+
+### Content-Behind Door Model
+
+Section 1 content is pre-rendered BEHIND the door layer. As doors swing outward, guests see the Opening Screen content through the widening gap between the doors. Content does NOT animate or fade in separately — it is simply revealed.
+
+**Technical Implementation:**
+
+- Step 1: Ganesha content fades out (0.3s)
+- Step 2: Door overlay appears (z-index: 40) — two golden door panels covering viewport
+- Step 3: Section 1 content renders behind doors (z-index: 1)
+- Step 4: Doors swing outward using 3D `perspective(1200px)` + `rotateY` — left: `rotateY(-110deg)`, right: `rotateY(110deg)`
+- Step 5: Golden radial light pours from center gap as doors open
+- Step 6: 8-12 marigold petals drift from top of door frame
+- Step 7: Doors reach full open → removed from DOM
+- Section 1 content is now fully visible, static, ready for interaction
+
+### Palace Door Design
+
+| Property | Value |
+| --- | --- |
+| Door Panels | `#1A2A4A` base with `#C9A96E` jaali pattern overlay at 15% |
+| Door Frame | `#C9A96E` solid gold, arch-topped |
+| Jaali Pattern | SVG carved geometric pattern on each door panel |
+| Brass Knockers | Ring handles on each door — CSS/SVG, antique gold |
+| Animation | 3D `perspective(1200px)`  • `rotateY`. `transform-origin: left center` and `right center` |
+| Duration | 1.8s (0.3s pause then 1.5s swing) |
+| Easing | `cubic-bezier(0.22, 0.61, 0.36, 1)` — heavy doors feel |
+| Light Effect | Golden radial gradient from center gap, expanding as doors open |
+| Marigold Petals | 8-12 petals drift from top of frame during opening |
+| Mobile Fallback | Fade-through-golden-light (no 3D perspective on low-end devices) |
+
+---
+
+## SECTION 1: OPENING SCREEN (Hero)
+
+### Purpose
+
+The grand hero. After Ganesha + palace doors, guests enter the main courtyard. Grand, beautiful, emotionally resonant. This is where they meet the couple.
+
+### Layout (Full Viewport — 100vh)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│         [Subtle jaali texture at top edge, 5%]         │
+│                                                         │
+│       [Diya icon]  ── gold divider ──                  │
+│                                                         │
+│          Two Hearts, One Promise,                       │
+│              A Lifetime Together                        │
+│                                                         │
+│               ── gold divider ──                       │
+│                                                         │
+│                  HARSHIT                                │
+│                    &                                    │
+│                 ANSHIKHA                                │
+│            [gold shimmer text effect]                   │
+│                                                         │
+│               10th May 2026                             │
+│              #HarAnshTera                               │
+│                                                         │
+│               ── gold divider ──                       │
+│                                                         │
+│         Dear [Guest Name],                              │
+│     You are cordially invited to                        │
+│    celebrate our journey of forever                     │
+│                                                         │
+│       [ View Celebrations → ]                          │
+│                                                         │
+│         [Subtle jaali texture at bottom edge]           │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Components
+
+**Tagline:**
+
+- Text: "Two Hearts, One Promise, A Lifetime Together"
+- Font: Cormorant Garamond 500 italic, 16px mobile / 22px desktop
+- Color: `#D4CFC5`
+
+**Couple Names:**
+
+- "HARSHIT" (line 1) — "&" (line 2) — "ANSHIKHA" (line 3)
+- Font: Cinzel Decorative 700, 36px mobile / 64px desktop
+- Gold shimmer gradient effect (see main page Design System for specs)
+- Ampersand: Playfair Display 400 italic, 24px, `#D4B87A`
+- Letter spacing: 6px mobile, 10px desktop
+- Animation (AFTER palace doors fully open): "HARSHIT" slides in from left, "&" fades center, "ANSHIKHA" slides from right — 0.8s total
+
+**Wedding Date:**
+
+- "10th May 2026" — Cormorant Garamond 500, 18px mobile / 24px desktop, `#F5F0E8`
+
+**Hashtag:**
+
+- "#HarAnshTera" — Playfair Display 400 italic, 16px mobile / 20px desktop, `#C9A96E`
+- Click: copies hashtag to clipboard + gold pulse toast
+
+**Guest Personalization:**
+
+- URL: `?guest=Amit+Kumar` or `?g=base64encoded`
+- Text: "Dear [Guest Name], You are cordially invited to celebrate our journey of forever"
+- Fallback (no param): "Dear Guest, You are cordially invited..."
+- Guest Name Font: Cormorant Garamond 600, `#C9A96E` gold
+
+**CTA Button:**
+
+- Text: "View Celebrations →"
+- Type: Secondary (gold outlined)
+- Appears: After couple names animation completes (~1.5s after section visible)
+- Action: Fade + gold particle sweep → Section 2
+
+### Section 1 Specs
+
+- Height: 100vh, scroll disabled
+- Background: `#0A1628` with subtle vertical gradient `#0A1628 → #162040 → #0A1628`
+- Jaali texture: Top and bottom edge arches at 5% opacity
+- Content: Pre-rendered behind palace doors (visible through gap as doors open)
