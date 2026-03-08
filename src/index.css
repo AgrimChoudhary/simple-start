@@ -317,6 +317,74 @@
   border-radius: 2px;
 }
 
+/* ===== NAV BUTTON SYSTEM ===== */
+.nav-button-secondary {
+  @apply font-ui font-semibold text-sm md:text-base rounded-xl border-[1.5px] border-primary transition-all;
+  color: hsl(var(--text-cream));
+  padding: 14px 28px;
+  min-width: 180px;
+  min-height: 48px;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-button-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.15), transparent);
+  animation: button-shimmer 5s ease-in-out infinite;
+}
+
+.nav-button-secondary:hover {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transform: scale(1.03);
+  box-shadow: 0 4px 24px hsl(var(--primary) / 0.25);
+}
+
+.nav-button-secondary:active {
+  transform: scale(0.97);
+}
+
+.nav-button-secondary:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* ===== CELEBRATIONS CARD ANIMATION ===== */
+@keyframes celebrations-card-in {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-farmaan {
+  position: relative;
+}
+
+.card-farmaan::before,
+.card-farmaan::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.12), transparent);
+}
+
+.card-farmaan::before { top: 0; }
+.card-farmaan::after { bottom: 0; }
+
 /* ===== UTILITY ===== */
 .section-container {
   @apply relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden;
