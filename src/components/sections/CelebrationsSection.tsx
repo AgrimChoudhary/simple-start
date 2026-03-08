@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { weddingEvents, dayTabs } from '@/data/events';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
+import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 
 interface CelebrationsSectionProps {
   active: boolean;
