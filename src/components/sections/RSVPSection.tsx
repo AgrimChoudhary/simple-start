@@ -528,10 +528,31 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
           </div>
         )}
 
-        {/* ── Contact Cards ── */}
-        <div className="w-full mt-10 grid grid-cols-2 gap-4">
-          <ContactCard side="Groom's Side" icon="🤵" delay="0.9s" active={active} />
-          <ContactCard side="Bride's Side" icon="👰" delay="1.05s" active={active} />
+        {/* ── Family Contact Section ── */}
+        <div className="w-full mt-12 md:mt-16">
+          <FamilyContactHeading active={active} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <FamilyContactCard
+              side="Groom's Side"
+              icon="🤵"
+              name="Rajesh Sharma"
+              relation="Father of the Groom"
+              phone="+919999999999"
+              whatsapp="919999999999"
+              delay="1s"
+              active={active}
+            />
+            <FamilyContactCard
+              side="Bride's Side"
+              icon="👰"
+              name="Suresh Agarwal"
+              relation="Father of the Bride"
+              phone="+919999999998"
+              whatsapp="919999999998"
+              delay="1.15s"
+              active={active}
+            />
+          </div>
         </div>
 
         {/* ── Footer ── */}
