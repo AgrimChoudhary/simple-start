@@ -1192,3 +1192,157 @@
 .section-corner {
   animation: corner-bloom 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.4s both;
 }
+
+/* ═══════════════════════════════════════════════
+   OPENING SECTION — Royal Rajasthani Styles
+   ═══════════════════════════════════════════════ */
+
+/* Radial gold glow behind photo area */
+.opening-bg-glow {
+  background: radial-gradient(ellipse 40% 35% at 50% 40%, hsl(var(--gold-primary) / 0.06) 0%, transparent 70%);
+  animation: opening-glow-pulse 8s ease-in-out infinite;
+}
+
+@keyframes opening-glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Floating gold dust particles */
+.opening-gold-dust {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: hsl(var(--gold-primary));
+  animation: gold-dust-float 10s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes gold-dust-float {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  15% { opacity: 0.4; }
+  50% {
+    transform: translate3d(15px, -50vh, 0);
+    opacity: 0.25;
+  }
+  85% { opacity: 0.1; }
+  100% {
+    transform: translate3d(-10px, -100vh, 0);
+    opacity: 0;
+  }
+}
+
+/* Couple Photo Frame */
+.couple-photo-frame {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.6), hsl(var(--gold-secondary) / 0.3), hsl(var(--gold-primary) / 0.6));
+  box-shadow:
+    0 0 30px hsl(var(--gold-primary) / 0.12),
+    0 0 60px hsl(var(--gold-primary) / 0.06);
+  animation: photo-frame-glow 3s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .couple-photo-frame {
+    width: 180px;
+    height: 180px;
+    padding: 5px;
+  }
+}
+
+.couple-photo-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, hsl(218 55% 12%), hsl(218 50% 15%));
+  border: 1.5px solid hsl(var(--gold-primary) / 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.couple-photo-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+@keyframes photo-frame-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 30px hsl(var(--gold-primary) / 0.12),
+      0 0 60px hsl(var(--gold-primary) / 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 40px hsl(var(--gold-primary) / 0.2),
+      0 0 80px hsl(var(--gold-primary) / 0.1);
+  }
+}
+
+/* Royal CTA Button */
+.royal-cta-button {
+  position: relative;
+  padding: 16px 44px;
+  min-width: 200px;
+  min-height: 52px;
+  border: 1.5px solid hsl(var(--gold-primary) / 0.5);
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.06) 0%, hsl(var(--gold-primary) / 0.02) 50%, hsl(var(--gold-primary) / 0.06) 100%);
+  color: hsl(var(--gold-primary));
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow:
+    0 0 20px hsl(var(--gold-primary) / 0.05),
+    inset 0 1px 0 hsl(var(--gold-primary) / 0.1);
+}
+
+/* Shimmer sweep */
+.royal-cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, hsl(var(--gold-primary) / 0.12) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: button-shimmer 5s ease-in-out infinite;
+}
+
+/* Corner diamond accents */
+.royal-cta-button::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 0.5px solid hsl(var(--gold-primary) / 0.15);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.royal-cta-button:hover {
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.85) 0%, hsl(var(--gold-secondary)) 100%);
+  color: hsl(var(--primary-foreground));
+  border-color: hsl(var(--gold-primary));
+  transform: scale(1.03);
+  box-shadow:
+    0 4px 30px hsl(var(--gold-primary) / 0.3),
+    0 0 60px hsl(var(--gold-primary) / 0.1);
+}
+
+.royal-cta-button:active {
+  transform: scale(0.97);
+}
+
+.royal-cta-button:focus-visible {
+  outline: 2px solid hsl(var(--gold-primary));
+  outline-offset: 2px;
+}
