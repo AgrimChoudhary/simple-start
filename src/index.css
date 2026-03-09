@@ -1372,7 +1372,7 @@
 
 /* ══════════ GLOW LAYERS ══════════ */
 .opening-glow-hero {
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(ellipse 50% 40% at 50% 28%, hsl(var(--gold-primary) / 0.12) 0%, hsl(var(--gold-primary) / 0.04) 35%, transparent 60%);
@@ -1381,7 +1381,7 @@
 }
 
 .opening-glow-ambient {
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(ellipse 80% 50% at 50% 70%, hsl(var(--gold-primary) / 0.06) 0%, transparent 45%);
@@ -1390,7 +1390,7 @@
 }
 
 .opening-glow-bottom {
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(circle 180px at 50% 50%, hsl(var(--gold-primary) / 0.05) 0%, transparent 65%);
