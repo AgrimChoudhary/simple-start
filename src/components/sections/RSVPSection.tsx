@@ -145,7 +145,6 @@ const GoldDust: React.FC = () => {
 
 /* ═══ Family Contact Card — Premium ═══ */
 const FamilyContactCard: React.FC<{
-  side: string;
   icon: string;
   name: string;
   relation: string;
@@ -153,7 +152,7 @@ const FamilyContactCard: React.FC<{
   whatsapp: string;
   delay: string;
   active: boolean;
-}> = ({ side, icon, name, relation, phone, whatsapp, delay, active }) => (
+}> = ({ icon, name, relation, phone, whatsapp, delay, active }) => (
   <div
     className="family-contact-card group"
     style={{ animation: active ? `contact-card-reveal 0.7s cubic-bezier(0.22,0.61,0.36,1) ${delay} both` : 'none' }}
@@ -191,9 +190,6 @@ const FamilyContactCard: React.FC<{
           animation: 'contact-icon-pulse 3s ease-in-out infinite',
         }} />
       </div>
-
-      {/* Side label */}
-      <p className="font-heading text-base md:text-lg gold-shimmer-slow tracking-wide mb-1">{side}</p>
 
       {/* Ornamental mini divider */}
       <div className="flex items-center gap-2 mb-3">
