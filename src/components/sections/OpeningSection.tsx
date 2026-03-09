@@ -183,7 +183,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       </div>
 
       {/* ── Sparkle Stars ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[3]" aria-hidden="true">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[3]" aria-hidden="true">
         {sparkles.map(s => (
           <div
             key={s.id}
