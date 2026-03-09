@@ -302,6 +302,68 @@
   }
 }
 
+/* ===== GANESHA CTA BUTTON ===== */
+.ganesha-cta-button {
+  position: relative;
+  padding: 14px 40px;
+  border: 1px solid hsl(var(--gold-primary) / 0.5);
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.08) 0%, hsl(var(--gold-primary) / 0.02) 50%, hsl(var(--gold-primary) / 0.08) 100%);
+  color: hsl(var(--gold-primary));
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(4px);
+}
+.ganesha-cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, hsl(var(--gold-primary) / 0.15) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: button-shimmer 4s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.ganesha-cta-button:hover {
+  border-color: hsl(var(--gold-primary) / 0.8);
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.15) 0%, hsl(var(--gold-primary) / 0.06) 50%, hsl(var(--gold-primary) / 0.15) 100%);
+  box-shadow: 0 0 30px hsl(var(--gold-primary) / 0.15), inset 0 0 20px hsl(var(--gold-primary) / 0.05);
+  transform: translateY(-1px);
+}
+.ganesha-cta-button:hover::before {
+  opacity: 1;
+}
+.ganesha-cta-button:active {
+  transform: scale(0.98);
+}
+
+/* ===== GUEST NAME GLOW ===== */
+.guest-name-glow {
+  position: relative;
+  display: inline-block;
+}
+.guest-name-glow::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--gold-primary) / 0.6), transparent);
+  animation: guest-underline-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes guest-underline-glow {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.7); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes diya-orbit {
+  0% { transform: rotate(0deg) translateX(var(--radius, 90px)); }
+  100% { transform: rotate(360deg) translateX(var(--radius, 90px)); }
+}
+
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
