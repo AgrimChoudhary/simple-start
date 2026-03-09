@@ -5,43 +5,53 @@ interface CurtainRevealProps {
 }
 
 const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
-  const [phase, setPhase] = useState<'waiting' | 'parting' | 'done'>('waiting');
+  const [phase, setPhase] = useState<'waiting' | 'parting' | 'fading' | 'done'>('waiting');
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('parting'), 600);
-    const t2 = setTimeout(() => {
-      setPhase('done');
-      onComplete();
-    }, 3200);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    // Start parting after a brief pause
+    const t1 = setTimeout(() => setPhase('parting'), 500);
+    // Fire onComplete early so content reveals WHILE curtains are still moving
+    const t2 = setTimeout(() => onComplete(), 1200);
+    // Start fading curtain remnants
+    const t3 = setTimeout(() => setPhase('fading'), 2800);
+    // Remove from DOM
+    const t4 = setTimeout(() => setPhase('done'), 3400);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
   }, [onComplete]);
 
-  // Gold sparkle particles at center seam
   const sparkles = useMemo(() =>
-    Array.from({ length: 16 }, (_, i) => ({
+    Array.from({ length: 20 }, (_, i) => ({
       id: i,
-      top: `${8 + (i / 16) * 84}%`,
-      delay: `${0.2 + Math.random() * 1.2}s`,
+      top: `${5 + (i / 20) * 90}%`,
+      delay: `${0.1 + Math.random() * 0.8}s`,
       size: `${2 + Math.random() * 3}px`,
-      driftX: `${-20 + Math.random() * 40}px`,
-      duration: `${1.5 + Math.random() * 1}s`,
+      driftX: `${-25 + Math.random() * 50}px`,
+      duration: `${1.2 + Math.random() * 1}s`,
     })),
   []);
 
   if (phase === 'done') return null;
 
-  const isParting = phase === 'parting';
+  const isParting = phase === 'parting' || phase === 'fading';
+  const isFading = phase === 'fading';
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none" aria-hidden="true">
+    <div
+      className="fixed inset-0 z-50 pointer-events-none"
+      aria-hidden="true"
+      style={{
+        opacity: isFading ? 0 : 1,
+        transition: 'opacity 0.6s ease-out',
+      }}
+    >
       {/* Golden light expanding from center as curtains open */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 20% 70% at 50% 50%, hsl(var(--gold-primary) / 0.2) 0%, hsl(var(--gold-primary) / 0.05) 50%, transparent 80%)',
+          background: 'radial-gradient(ellipse 15% 60% at 50% 50%, hsl(var(--gold-primary) / 0.25) 0%, hsl(var(--gold-primary) / 0.08) 40%, transparent 75%)',
           opacity: isParting ? 1 : 0,
-          transform: isParting ? 'scaleX(3)' : 'scaleX(0.5)',
-          transition: 'opacity 1.5s ease-out, transform 2.5s ease-out',
+          transform: isParting ? 'scaleX(4)' : 'scaleX(0.3)',
+          transition: 'opacity 1s ease-out, transform 2.8s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       />
 
@@ -51,16 +61,13 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
         style={{
           background: 'linear-gradient(180deg, hsl(var(--curtain-dark)) 0%, hsl(var(--curtain-red)) 60%, transparent 100%)',
           opacity: isParting ? 0 : 1,
-          transition: 'opacity 2s ease-out 1s',
+          transition: 'opacity 1.8s ease-out 0.8s',
         }}
       >
-        {/* Scalloped bottom */}
         <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1200 30" preserveAspectRatio="none" style={{ height: '20px' }}>
           <path d="M0 0 Q50 30 100 0 Q150 30 200 0 Q250 30 300 0 Q350 30 400 0 Q450 30 500 0 Q550 30 600 0 Q650 30 700 0 Q750 30 800 0 Q850 30 900 0 Q950 30 1000 0 Q1050 30 1100 0 Q1150 30 1200 0 V30 H0Z" fill="hsl(348 60% 26%)" />
         </svg>
-        {/* Gold trim */}
         <div className="absolute bottom-[18px] left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-        {/* Embroidery motif */}
         <div className="absolute top-2 left-0 right-0 h-8 opacity-[0.08]">
           <svg viewBox="0 0 400 32" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
             {Array.from({ length: 20 }, (_, i) => (
@@ -76,10 +83,10 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
 
       {/* Left curtain panel */}
       <div
-        className="absolute top-0 left-0 w-1/2 h-full"
+        className="absolute top-0 left-0 w-1/2 h-full will-change-transform"
         style={{
-          transform: isParting ? 'translateX(-100%)' : 'translateX(0)',
-          transition: 'transform 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transform: isParting ? 'translateX(-102%)' : 'translateX(0)',
+          transition: 'transform 2.2s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
         <div className="absolute inset-0" style={{
@@ -89,7 +96,6 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
             hsl(348 60% 26%) 85%, hsl(348 55% 20%) 100%)`,
           boxShadow: 'inset -30px 0 60px rgba(0,0,0,0.4), inset 10px 0 30px rgba(0,0,0,0.2)',
         }} />
-        {/* Fabric texture — paisley embroidery overlay */}
         <div className="absolute inset-0 opacity-[0.04]">
           <svg viewBox="0 0 200 600" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
             {Array.from({ length: 6 }, (_, row) => (
@@ -101,25 +107,21 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
             ))}
           </svg>
         </div>
-        {/* Fold lines */}
         {[18, 35, 52, 70, 85].map(pos => (
           <div key={pos} className="absolute top-0 h-full" style={{
             left: `${pos}%`, width: '2px',
             background: `linear-gradient(180deg, transparent 0%, rgba(74,18,32,0.6) 20%, rgba(74,18,32,0.4) 50%, rgba(74,18,32,0.6) 80%, transparent 100%)`,
           }} />
         ))}
-        {/* Highlight strips */}
         {[20, 55, 87].map(pos => (
           <div key={`h-${pos}`} className="absolute top-0 h-full" style={{
             left: `${pos}%`, width: '3px',
             background: `linear-gradient(180deg, transparent 5%, rgba(160,50,60,0.15) 30%, rgba(160,50,60,0.08) 60%, transparent 95%)`,
           }} />
         ))}
-        {/* Gold rope at inner edge */}
         <div className="absolute top-0 right-0 w-[3px] h-full" style={{
           background: `repeating-linear-gradient(180deg, hsl(38 36% 60% / 0.7) 0px, hsl(38 40% 65% / 0.5) 4px, hsl(38 30% 35% / 0.6) 8px, hsl(38 36% 60% / 0.7) 12px)`,
         }} />
-        {/* Gold tassel */}
         <div className="absolute right-[-6px] top-[15%]">
           <svg width="16" height="60" viewBox="0 0 16 60" fill="none">
             <circle cx="8" cy="8" r="6" fill="hsl(38 36% 60%)" opacity="0.7" />
@@ -137,10 +139,10 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
 
       {/* Right curtain panel */}
       <div
-        className="absolute top-0 right-0 w-1/2 h-full"
+        className="absolute top-0 right-0 w-1/2 h-full will-change-transform"
         style={{
-          transform: isParting ? 'translateX(100%)' : 'translateX(0)',
-          transition: 'transform 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transform: isParting ? 'translateX(102%)' : 'translateX(0)',
+          transition: 'transform 2.2s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
         <div className="absolute inset-0" style={{
@@ -150,7 +152,6 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
             hsl(348 60% 26%) 85%, hsl(348 55% 20%) 100%)`,
           boxShadow: 'inset 30px 0 60px rgba(0,0,0,0.4), inset -10px 0 30px rgba(0,0,0,0.2)',
         }} />
-        {/* Fabric texture */}
         <div className="absolute inset-0 opacity-[0.04]" style={{ transform: 'scaleX(-1)' }}>
           <svg viewBox="0 0 200 600" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
             {Array.from({ length: 6 }, (_, row) => (
@@ -162,7 +163,6 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
             ))}
           </svg>
         </div>
-        {/* Fold lines */}
         {[15, 30, 48, 65, 82].map(pos => (
           <div key={pos} className="absolute top-0 h-full" style={{
             left: `${pos}%`, width: '2px',
@@ -193,18 +193,18 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
         }} />
       </div>
 
-      {/* Center seam glow — brightens as curtains start parting */}
+      {/* Center seam glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[3px] h-full"
         style={{
-          background: 'linear-gradient(180deg, transparent 5%, hsl(38 36% 60% / 0.4) 25%, hsl(38 36% 60% / 0.3) 50%, hsl(38 36% 60% / 0.4) 75%, transparent 95%)',
-          opacity: isParting ? 1 : 0.5,
-          filter: isParting ? 'blur(4px)' : 'blur(2px)',
-          transition: 'opacity 0.8s ease-out, filter 1s ease-out',
+          background: 'linear-gradient(180deg, transparent 5%, hsl(38 36% 60% / 0.5) 25%, hsl(38 36% 60% / 0.35) 50%, hsl(38 36% 60% / 0.5) 75%, transparent 95%)',
+          opacity: isParting ? 0 : 0.6,
+          filter: isParting ? 'blur(6px)' : 'blur(2px)',
+          transition: 'opacity 1.2s ease-out, filter 1.2s ease-out',
         }}
       />
 
-      {/* Gold sparkle particles at center seam */}
+      {/* Gold sparkle particles */}
       {isParting && sparkles.map(s => (
         <div
           key={s.id}
@@ -214,6 +214,7 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({ onComplete }) => {
             width: s.size,
             height: s.size,
             backgroundColor: 'hsl(var(--gold-primary))',
+            boxShadow: '0 0 6px hsl(var(--gold-primary) / 0.5)',
             animation: `curtain-sparkle ${s.duration} ${s.delay} ease-out forwards`,
             ['--sparkle-x' as string]: s.driftX,
           }}
