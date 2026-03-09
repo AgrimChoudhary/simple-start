@@ -247,7 +247,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       ].map((corner, i) => (
         <div
           key={i}
-          className={`absolute ${corner.pos} pointer-events-none z-[5]`}
+          className={`fixed ${corner.pos} pointer-events-none z-[5]`}
           style={{
             opacity: step >= 1 ? 0.18 : 0,
             transform: step >= 1 ? `rotate(${corner.rotate}) scale(1)` : `rotate(${corner.rotate}) scale(0.2)`,
