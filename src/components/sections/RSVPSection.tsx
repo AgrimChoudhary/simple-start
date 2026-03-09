@@ -306,24 +306,18 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
 
   return (
     <section className="rsvp-section" aria-labelledby="rsvp-heading">
-      {/* ── Multi-layer Background ── */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0" style={{
-          background: `
-            radial-gradient(ellipse 70% 45% at 50% 25%, hsl(var(--card) / 0.6) 0%, transparent 55%),
-            radial-gradient(ellipse 60% 50% at 15% 75%, hsl(218 48% 12% / 0.5) 0%, transparent 50%),
-            radial-gradient(ellipse 60% 50% at 90% 55%, hsl(218 45% 13% / 0.4) 0%, transparent 50%),
-            radial-gradient(ellipse 40% 30% at 50% 90%, hsl(var(--primary) / 0.03) 0%, transparent 50%),
-            hsl(var(--background))
-          `,
-        }} />
-        <div className="jaali-overlay" />
-      </div>
+      {/* ══════════ LAYERED BACKGROUND (matches Opening Section) ══════════ */}
+      <div className="rsvp-bg-base" aria-hidden="true" />
+      <div className="rsvp-bg-gradient" aria-hidden="true" />
+      <div className="rsvp-texture-grain" aria-hidden="true" />
+      <div className="rsvp-vignette" aria-hidden="true" />
+      <div className="rsvp-glow-top" aria-hidden="true" />
+      <div className="rsvp-glow-bottom" aria-hidden="true" />
 
       {/* Section-specific gold dust */}
       <GoldDust />
 
-      {/* Ornate border frame — enhanced with SectionBorderFrame */}
+      {/* Ornate border frame */}
       <OrnateFrame />
       <SectionBorderFrame active={active} variant="royal" />
 
@@ -338,8 +332,8 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
         <RangoliMandala size={350} />
       </div>
 
-      {/* ── Main Content ── */}
-      <div className="relative z-10 w-full max-w-lg mx-auto px-5 md:px-6 flex flex-col items-center justify-center min-h-full py-10">
+      {/* ── Main Content — scrollable, vertically centered ── */}
+      <div className="relative z-10 w-full max-w-lg mx-auto px-5 md:px-6 flex flex-col items-center py-10 md:py-14">
 
         {!accepted ? (
           /* ═══════════ INVITATION VIEW ═══════════ */
