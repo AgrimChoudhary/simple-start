@@ -164,7 +164,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       <SectionBorderFrame active={active} variant="royal" />
 
       {/* ── Dust Particles (Ambient Atmosphere) ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]" aria-hidden="true">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[2]" aria-hidden="true">
         {dustParticles.map(p => (
           <div
             key={p.id}
