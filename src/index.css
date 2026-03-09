@@ -1246,14 +1246,15 @@
 
 /* ══════════ LAYERED BACKGROUND SYSTEM ══════════ */
 .opening-bg-base {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: hsl(218 62% 7%);
   z-index: 0;
+  pointer-events: none;
 }
 
 .opening-bg-gradient {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: linear-gradient(
     180deg,
@@ -1266,10 +1267,11 @@
     hsl(218 65% 5%) 100%
   );
   z-index: 0;
+  pointer-events: none;
 }
 
 .opening-texture-grain {
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1;
@@ -1281,7 +1283,7 @@
 }
 
 .opening-vignette-deep {
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(ellipse 60% 50% at 50% 45%, transparent 10%, hsl(218 65% 4% / 0.55) 55%, hsl(218 70% 3% / 0.9) 100%);
