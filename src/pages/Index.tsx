@@ -86,6 +86,7 @@ const Index = () => {
             onBeginClick={handleBeginClick}
             visited={nav.visitedSections.has(0) && nav.currentSection !== 0}
             fading={doorPhase === 'ganesha-fading'}
+            guestName={guestName}
           />
         </div>
 
