@@ -1207,23 +1207,33 @@
 }
 
 .opening-section-bg {
-  background: linear-gradient(180deg, hsl(218 60% 8%) 0%, hsl(218 50% 12%) 25%, hsl(218 48% 13%) 50%, hsl(218 50% 12%) 75%, hsl(218 60% 8%) 100%);
+  background: linear-gradient(180deg, hsl(218 60% 8%) 0%, hsl(218 50% 11%) 25%, hsl(218 48% 12%) 50%, hsl(218 50% 11%) 75%, hsl(218 60% 8%) 100%);
   position: sticky;
   top: 0;
+}
+
+/* Vignette effect — darker edges for cinematic depth */
+.opening-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, hsl(218 60% 6% / 0.4) 70%, hsl(218 60% 4% / 0.7) 100%);
+  z-index: 1;
 }
 
 /* Scrollable content wrapper */
 .opening-scroll-content {
   @apply relative z-10 flex flex-col items-center text-center;
-  padding: 60px 24px 40px;
+  padding: 50px 20px 100px;
   min-height: 100%;
-  max-width: 640px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
 @media (min-width: 768px) {
   .opening-scroll-content {
-    padding: 80px 32px 60px;
+    padding: 70px 32px 120px;
+    max-width: 640px;
   }
 }
 
@@ -1231,42 +1241,114 @@
   @apply flex flex-col items-center text-center w-full;
 }
 
-/* Radial gold glow behind photo area */
-.opening-bg-glow {
-  background: radial-gradient(ellipse 50% 40% at 50% 35%, hsl(var(--gold-primary) / 0.07) 0%, transparent 70%);
+/* ── Animated Mandala Rings ── */
+.opening-mandala-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.opening-mandala-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--gold-primary) / 0.05);
+}
+
+.opening-mandala-ring-1 {
+  width: 300px;
+  height: 300px;
+  animation: mandala-rotate 60s linear infinite;
+  border-style: dashed;
+  border-width: 0.5px;
+}
+
+.opening-mandala-ring-2 {
+  width: 420px;
+  height: 420px;
+  animation: mandala-rotate 90s linear infinite reverse;
+  border-style: dotted;
+  opacity: 0.6;
+}
+
+.opening-mandala-ring-3 {
+  width: 540px;
+  height: 540px;
+  animation: mandala-rotate 120s linear infinite;
+  border-style: dashed;
+  opacity: 0.3;
+}
+
+@keyframes mandala-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ── Multiple Glow Layers ── */
+.opening-glow-layer-primary {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 50% 40% at 50% 35%, hsl(var(--gold-primary) / 0.08) 0%, transparent 60%);
   animation: opening-glow-pulse 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+.opening-glow-layer-secondary {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 80% 50% at 50% 80%, hsl(var(--gold-primary) / 0.04) 0%, transparent 50%);
+  animation: opening-glow-pulse 12s ease-in-out infinite 2s;
+  z-index: 0;
 }
 
 @keyframes opening-glow-pulse {
-  0%, 100% { opacity: 0.5; }
+  0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
 }
 
-/* Floating gold dust particles */
-.opening-gold-dust {
+/* ── Falling Marigold Petals ── */
+.opening-falling-petal {
   position: absolute;
-  bottom: -10px;
-  border-radius: 50%;
-  background: hsl(var(--gold-primary));
-  animation: gold-dust-float 10s ease-in-out infinite;
+  top: -15px;
+  border-radius: 50% 0 50% 50%;
+  animation: petal-fall linear infinite;
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
-@keyframes gold-dust-float {
+@keyframes petal-fall {
   0% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) rotate(0deg);
     opacity: 0;
   }
-  15% { opacity: 0.4; }
+  10% {
+    opacity: 1;
+  }
   50% {
-    transform: translate3d(15px, -50vh, 0);
-    opacity: 0.25;
+    transform: translate3d(calc(var(--drift-x) * 0.5), 50vh, 0) rotate(calc(var(--drift-rotate) * 0.5));
   }
-  85% { opacity: 0.1; }
+  90% {
+    opacity: 0.5;
+  }
   100% {
-    transform: translate3d(-10px, -100vh, 0);
+    transform: translate3d(var(--drift-x), 110vh, 0) rotate(var(--drift-rotate));
     opacity: 0;
   }
+}
+
+/* Corner glow animation */
+.opening-corner-glow {
+  animation: corner-glow-breath 4s ease-in-out infinite;
+}
+
+@keyframes corner-glow-breath {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.5); }
 }
 
 /* ── Couple Photo Frame — Enlarged ── */
@@ -1283,8 +1365,8 @@
 }
 
 .opening-photo-enlarged {
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
   padding: 5px;
 }
 
@@ -1295,8 +1377,8 @@
     padding: 5px;
   }
   .opening-photo-enlarged {
-    width: 240px;
-    height: 240px;
+    width: 220px;
+    height: 220px;
     padding: 6px;
   }
 }
@@ -1335,34 +1417,47 @@
 
 /* Photo Jharokha arch frame */
 .opening-photo-jharokha {
-  @apply absolute -top-10 left-1/2 -translate-x-1/2 pointer-events-none;
+  @apply absolute -top-8 md:-top-10 left-1/2 -translate-x-1/2 pointer-events-none;
 }
 
 /* Lotus motif below photo */
 .opening-lotus-below {
-  @apply flex justify-center mt-2 pointer-events-none;
+  @apply flex justify-center mt-1 md:mt-2 pointer-events-none;
 }
 
 /* ── Date Card ── */
 .opening-date-card {
-  padding: 20px 32px;
+  padding: 16px 24px;
   border: 1px solid hsl(var(--gold-primary) / 0.12);
   border-radius: 12px;
   background: hsl(var(--card) / 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  max-width: 280px;
+  max-width: 260px;
+}
+
+@media (min-width: 768px) {
+  .opening-date-card {
+    padding: 20px 32px;
+    max-width: 300px;
+  }
 }
 
 /* ── Hashtag Button ── */
 .opening-hashtag-btn {
   color: hsl(var(--gold-primary));
   cursor: pointer;
-  padding: 8px 24px;
+  padding: 6px 20px;
   border: 1px solid hsl(var(--gold-primary) / 0.2);
   border-radius: 50px;
   background: hsl(var(--gold-primary) / 0.04);
   transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .opening-hashtag-btn {
+    padding: 8px 24px;
+  }
 }
 
 .opening-hashtag-btn:hover {
@@ -1375,48 +1470,154 @@
   transform: scale(0.95);
 }
 
-/* ── Scroll Indicator ── */
-.opening-scroll-indicator {
-  position: absolute;
-  bottom: 20px;
+/* ══════════ ENHANCED SCROLL INDICATOR ══════════ */
+.opening-scroll-hint {
+  position: fixed;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
-  z-index: 15;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: scroll-hint-fade 3s ease-in-out infinite;
 }
 
-.opening-scroll-arrow {
-  width: 20px;
-  height: 20px;
+@media (min-width: 768px) {
+  .opening-scroll-hint {
+    bottom: 24px;
+    gap: 8px;
+  }
+}
+
+@keyframes scroll-hint-fade {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+
+.opening-scroll-diya {
+  transform: scale(0.8);
+  opacity: 0.7;
+}
+
+.opening-scroll-mouse {
+  width: 18px;
+  height: 28px;
+  border: 1.5px solid hsl(var(--gold-primary) / 0.4);
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .opening-scroll-mouse {
+    width: 22px;
+    height: 34px;
+    border-radius: 12px;
+  }
+}
+
+.opening-scroll-wheel {
+  width: 3px;
+  height: 6px;
+  background: hsl(var(--gold-primary) / 0.6);
+  border-radius: 2px;
+  margin-top: 5px;
+  animation: scroll-wheel 1.5s ease-in-out infinite;
+}
+
+@keyframes scroll-wheel {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.3; }
+}
+
+.opening-scroll-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: hsl(var(--gold-primary) / 0.5);
+}
+
+@media (min-width: 768px) {
+  .opening-scroll-text {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+}
+
+.opening-scroll-arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.opening-scroll-chevron {
+  width: 10px;
+  height: 10px;
   border-right: 1.5px solid hsl(var(--gold-primary) / 0.4);
   border-bottom: 1.5px solid hsl(var(--gold-primary) / 0.4);
   transform: rotate(45deg);
-  animation: scroll-bounce 2s ease-in-out infinite;
+  animation: scroll-chevron 2s ease-in-out infinite;
 }
 
-@keyframes scroll-bounce {
+.opening-scroll-chevron-2 {
+  animation-delay: 0.2s;
+  opacity: 0.6;
+}
+
+@keyframes scroll-chevron {
   0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.4; }
-  50% { transform: rotate(45deg) translate(4px, 4px); opacity: 0.8; }
+  50% { transform: rotate(45deg) translate(3px, 3px); opacity: 0.8; }
 }
 
-/* ── Royal CTA Button ── */
+/* ══════════ ROYAL CTA BUTTON — LUXURY REDESIGN ══════════ */
 .royal-cta-button {
   position: relative;
-  padding: 16px 48px;
-  min-width: 220px;
-  min-height: 54px;
-  border: 1.5px solid hsl(var(--gold-primary) / 0.5);
-  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.08) 0%, hsl(var(--gold-primary) / 0.02) 50%, hsl(var(--gold-primary) / 0.08) 100%);
+  padding: 14px 36px;
+  min-width: 200px;
+  min-height: 50px;
+  border: 1.5px solid hsl(var(--gold-primary) / 0.4);
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.06) 0%, hsl(var(--gold-primary) / 0.02) 50%, hsl(var(--gold-primary) / 0.06) 100%);
   color: hsl(var(--gold-primary));
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow:
-    0 0 20px hsl(var(--gold-primary) / 0.05),
+    0 0 30px hsl(var(--gold-primary) / 0.06),
+    0 4px 20px hsl(var(--background) / 0.4),
     inset 0 1px 0 hsl(var(--gold-primary) / 0.1);
+  animation: royal-btn-heartbeat 4s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .royal-cta-button {
+    padding: 16px 48px;
+    min-width: 240px;
+    min-height: 56px;
+    border-radius: 8px;
+  }
+}
+
+@keyframes royal-btn-heartbeat {
+  0%, 100% { 
+    box-shadow:
+      0 0 30px hsl(var(--gold-primary) / 0.06),
+      0 4px 20px hsl(var(--background) / 0.4),
+      inset 0 1px 0 hsl(var(--gold-primary) / 0.1);
+  }
+  50% { 
+    box-shadow:
+      0 0 50px hsl(var(--gold-primary) / 0.12),
+      0 4px 30px hsl(var(--background) / 0.5),
+      inset 0 1px 0 hsl(var(--gold-primary) / 0.15);
+  }
 }
 
 /* Shimmer sweep */
@@ -1427,6 +1628,7 @@
   background: linear-gradient(90deg, transparent 0%, hsl(var(--gold-primary) / 0.12) 50%, transparent 100%);
   background-size: 200% 100%;
   animation: button-shimmer 5s ease-in-out infinite;
+  border-radius: 6px;
 }
 
 /* Inner border accent */
@@ -1434,10 +1636,33 @@
   content: '';
   position: absolute;
   inset: 3px;
-  border: 0.5px solid hsl(var(--gold-primary) / 0.15);
-  border-radius: 6px;
+  border: 0.5px solid hsl(var(--gold-primary) / 0.12);
+  border-radius: 4px;
   pointer-events: none;
 }
+
+/* Ornate corner diamonds */
+.royal-btn-corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid hsl(var(--gold-primary) / 0.5);
+  transform: rotate(45deg);
+  background: hsl(var(--background));
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .royal-btn-corner {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.royal-btn-corner-tl { top: -5px; left: -5px; }
+.royal-btn-corner-tr { top: -5px; right: -5px; }
+.royal-btn-corner-bl { bottom: -5px; left: -5px; }
+.royal-btn-corner-br { bottom: -5px; right: -5px; }
 
 .royal-cta-button:hover {
   background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.85) 0%, hsl(var(--gold-secondary)) 100%);
@@ -1445,8 +1670,14 @@
   border-color: hsl(var(--gold-primary));
   transform: scale(1.03);
   box-shadow:
-    0 4px 30px hsl(var(--gold-primary) / 0.3),
-    0 0 60px hsl(var(--gold-primary) / 0.1);
+    0 6px 40px hsl(var(--gold-primary) / 0.35),
+    0 0 80px hsl(var(--gold-primary) / 0.15);
+}
+
+.royal-cta-button:hover .royal-btn-corner {
+  background: hsl(var(--gold-primary));
+  border-color: hsl(var(--gold-primary));
+  box-shadow: 0 0 10px hsl(var(--gold-primary) / 0.5);
 }
 
 .royal-cta-button:active {
@@ -1455,5 +1686,5 @@
 
 .royal-cta-button:focus-visible {
   outline: 2px solid hsl(var(--gold-primary));
-  outline-offset: 2px;
+  outline-offset: 3px;
 }

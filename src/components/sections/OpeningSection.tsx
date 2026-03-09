@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import GoldDivider from '@/components/global/GoldDivider';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
@@ -38,21 +38,71 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Falling marigold petals - CSS-only with randomized properties
+  const fallingPetals = useMemo(() =>
+    Array.from({ length: 14 }, (_, i) => ({
+      id: i,
+      left: `${5 + Math.random() * 90}%`,
+      delay: `${Math.random() * 12}s`,
+      duration: `${10 + Math.random() * 8}s`,
+      size: `${7 + Math.random() * 7}px`,
+      driftX: `${-40 + Math.random() * 80}px`,
+      driftRotate: `${180 + Math.random() * 540}deg`,
+      opacity: 0.15 + Math.random() * 0.2,
+      color: ['hsl(38 36% 60%)', 'hsl(42 75% 46%)', 'hsl(38 40% 65%)', 'hsl(30 60% 50%)'][Math.floor(Math.random() * 4)],
+    })),
+  []);
+
   return (
     <section
       className="opening-section-scroll"
       aria-labelledby="opening-heading"
     >
-      {/* Fixed background layers */}
+      {/* ══════════ ENHANCED BACKGROUND LAYERS ══════════ */}
+      
+      {/* Base gradient background */}
       <div className="absolute inset-0 pointer-events-none opening-section-bg" />
+      
+      {/* Vignette effect — dark edges for depth */}
+      <div className="opening-vignette" aria-hidden="true" />
+      
+      {/* Jaali pattern overlay */}
       <div className="jaali-overlay" />
+      
+      {/* Animated Mandala rings */}
+      <div
+        className="opening-mandala-container"
+        style={{
+          opacity: step >= 1 ? 1 : 0,
+          transition: 'opacity 1.5s ease-out',
+        }}
+        aria-hidden="true"
+      >
+        <div className="opening-mandala-ring opening-mandala-ring-1" />
+        <div className="opening-mandala-ring opening-mandala-ring-2" />
+        <div className="opening-mandala-ring opening-mandala-ring-3" />
+      </div>
+      
+      {/* Multiple radial glow layers */}
+      <div
+        className="opening-glow-layer-primary"
+        style={{ opacity: step >= 2 ? 1 : 0, transition: 'opacity 1.5s ease-out' }}
+        aria-hidden="true"
+      />
+      <div
+        className="opening-glow-layer-secondary"
+        style={{ opacity: step >= 2 ? 0.6 : 0, transition: 'opacity 2s ease-out 0.3s' }}
+        aria-hidden="true"
+      />
+      
+      {/* Section border frame */}
       <SectionBorderFrame active={active} variant="standard" />
 
       {/* ── Jharokha Arch Background ── */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
-          opacity: step >= 1 ? 0.07 : 0,
+          opacity: step >= 1 ? 0.08 : 0,
           transform: step >= 1 ? 'scale(1)' : 'scale(0.88)',
           transition: 'opacity 1.4s ease-out, transform 1.6s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
@@ -89,68 +139,80 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
         </svg>
       </div>
 
-      {/* ── Paisley Corner Ornaments ── */}
+      {/* ── Paisley Corner Ornaments with Gold Flourish ── */}
       {[
-        { pos: 'top-3 left-3', rotate: '0deg', delay: '0s' },
-        { pos: 'top-3 right-3', rotate: '90deg', delay: '0.15s' },
-        { pos: 'bottom-3 right-3', rotate: '180deg', delay: '0.3s' },
-        { pos: 'bottom-3 left-3', rotate: '270deg', delay: '0.45s' },
+        { pos: 'top-2 left-2 md:top-4 md:left-4', rotate: '0deg', delay: '0s' },
+        { pos: 'top-2 right-2 md:top-4 md:right-4', rotate: '90deg', delay: '0.15s' },
+        { pos: 'bottom-2 right-2 md:bottom-4 md:right-4', rotate: '180deg', delay: '0.3s' },
+        { pos: 'bottom-2 left-2 md:bottom-4 md:left-4', rotate: '270deg', delay: '0.45s' },
       ].map((corner, i) => (
         <div
           key={i}
           className={`absolute ${corner.pos} pointer-events-none`}
           style={{
-            opacity: step >= 1 ? 0.08 : 0,
+            opacity: step >= 1 ? 0.1 : 0,
             transform: step >= 1 ? `rotate(${corner.rotate})` : `rotate(${corner.rotate}) scale(0.3)`,
             transition: `opacity 1s ease-out ${corner.delay}, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${corner.delay}`,
           }}
           aria-hidden="true"
         >
-          <svg width="70" height="70" viewBox="0 0 70 70" fill="none">
-            <path d="M5 65 Q5 5 65 5" stroke="hsl(38 36% 60%)" strokeWidth="1.2" fill="none" />
-            <path d="M12 65 Q12 18 58 12" stroke="hsl(38 36% 60%)" strokeWidth="0.7" fill="none" />
-            <path d="M8 55 Q14 32 32 18" stroke="hsl(38 36% 60%)" strokeWidth="0.5" fill="none" />
-            <circle cx="22" cy="22" r="4" stroke="hsl(38 36% 60%)" strokeWidth="0.5" fill="none" />
-            <circle cx="22" cy="22" r="1.5" fill="hsl(38 36% 60%)" opacity="0.3" />
-            <path d="M35 8 Q38 12 35 16" stroke="hsl(38 36% 60%)" strokeWidth="0.3" fill="none" />
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className="w-[60px] h-[60px] md:w-[80px] md:h-[80px]">
+            {/* Enhanced paisley with gold flourish */}
+            <path d="M5 75 Q5 5 75 5" stroke="hsl(38 36% 60%)" strokeWidth="1.5" fill="none" />
+            <path d="M12 75 Q12 18 68 12" stroke="hsl(38 36% 60%)" strokeWidth="0.8" fill="none" />
+            <path d="M8 60 Q16 38 38 22" stroke="hsl(38 36% 60%)" strokeWidth="0.5" fill="none" />
+            <circle cx="28" cy="28" r="6" stroke="hsl(38 36% 60%)" strokeWidth="0.6" fill="none" />
+            <circle cx="28" cy="28" r="2.5" fill="hsl(38 36% 60%)" opacity="0.4" />
+            <path d="M42 8 Q46 14 42 20" stroke="hsl(38 36% 60%)" strokeWidth="0.4" fill="none" />
+            <path d="M8 42 Q14 46 20 42" stroke="hsl(38 36% 60%)" strokeWidth="0.4" fill="none" />
+            {/* Corner glow dot */}
+            <circle cx="10" cy="70" r="4" fill="hsl(38 36% 60%)" opacity="0.15" className="opening-corner-glow" />
           </svg>
         </div>
       ))}
 
-      {/* ── Radial Gold Glow ── */}
-      <div
-        className="absolute inset-0 pointer-events-none opening-bg-glow"
-        style={{ opacity: step >= 2 ? 1 : 0, transition: 'opacity 1.5s ease-out' }}
-        aria-hidden="true"
-      />
-
-      {/* ── Floating Gold Dust Particles ── */}
+      {/* ── Falling Marigold Petals ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {[0, 1, 2, 3, 4, 5, 6, 7].map(i => (
+        {fallingPetals.map(petal => (
           <div
-            key={i}
-            className="opening-gold-dust"
+            key={petal.id}
+            className="opening-falling-petal"
             style={{
-              left: `${8 + i * 12}%`,
-              animationDelay: `${i * 1.5}s`,
-              animationDuration: `${7 + i * 1.2}s`,
-              width: `${2 + (i % 3)}px`,
-              height: `${2 + (i % 3)}px`,
-              opacity: step >= 2 ? 1 : 0,
+              left: petal.left,
+              animationDelay: petal.delay,
+              animationDuration: petal.duration,
+              width: petal.size,
+              height: petal.size,
+              backgroundColor: petal.color,
+              opacity: step >= 2 ? petal.opacity : 0,
+              ['--drift-x' as string]: petal.driftX,
+              ['--drift-rotate' as string]: petal.driftRotate,
               transition: 'opacity 1s ease-out',
             }}
           />
         ))}
       </div>
 
-      {/* ── Jaali arches — top ── */}
-      <div className="absolute top-0 left-0 right-0 h-28 pointer-events-none opacity-[0.05]" aria-hidden="true">
-        <svg viewBox="0 0 800 100" className="w-full h-full" preserveAspectRatio="xMidYMin slice">
+      {/* ── Jaali arches — top border ── */}
+      <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none opacity-[0.06]" aria-hidden="true">
+        <svg viewBox="0 0 800 90" className="w-full h-full" preserveAspectRatio="xMidYMin slice">
           {[0, 100, 200, 300, 400, 500, 600, 700].map(x => (
             <g key={x}>
-              <path d={`M${x} 100 L${x} 35 Q${x + 50} -10 ${x + 100} 35 L${x + 100} 100`} fill="none" stroke="#C9A96E" strokeWidth="0.8" />
-              <path d={`M${x + 15} 100 L${x + 15} 48 Q${x + 50} 12 ${x + 85} 48 L${x + 85} 100`} fill="none" stroke="#C9A96E" strokeWidth="0.4" />
-              <circle cx={x + 50} cy="25" r="6" fill="none" stroke="#C9A96E" strokeWidth="0.3" />
+              <path d={`M${x} 90 L${x} 32 Q${x + 50} -8 ${x + 100} 32 L${x + 100} 90`} fill="none" stroke="hsl(38 36% 60%)" strokeWidth="0.8" />
+              <path d={`M${x + 15} 90 L${x + 15} 44 Q${x + 50} 10 ${x + 85} 44 L${x + 85} 90`} fill="none" stroke="hsl(38 36% 60%)" strokeWidth="0.4" />
+              <circle cx={x + 50} cy="22" r="5" fill="none" stroke="hsl(38 36% 60%)" strokeWidth="0.3" />
+            </g>
+          ))}
+        </svg>
+      </div>
+
+      {/* ── Jaali arches — bottom border (mirroring top) ── */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none opacity-[0.06] rotate-180" aria-hidden="true">
+        <svg viewBox="0 0 800 90" className="w-full h-full" preserveAspectRatio="xMidYMax slice">
+          {[0, 100, 200, 300, 400, 500, 600, 700].map(x => (
+            <g key={x}>
+              <path d={`M${x} 90 L${x} 32 Q${x + 50} -8 ${x + 100} 32 L${x + 100} 90`} fill="none" stroke="hsl(38 36% 60%)" strokeWidth="0.8" />
+              <path d={`M${x + 15} 90 L${x + 15} 44 Q${x + 50} 10 ${x + 85} 44 L${x + 85} 90`} fill="none" stroke="hsl(38 36% 60%)" strokeWidth="0.4" />
             </g>
           ))}
         </svg>
@@ -164,12 +226,12 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
           className="opening-content-block"
           style={{ opacity: step >= 1 ? 1 : 0, transition: 'opacity 0.6s ease-out' }}
         >
-          <GoldDivider className="mb-4" />
+          <GoldDivider className="mb-3" />
         </div>
 
         {/* ── Tagline with Diyas ── */}
         <div
-          className="opening-content-block flex items-center gap-3 mb-6"
+          className="opening-content-block flex-row items-center gap-2 md:gap-3 mb-5 md:mb-6"
           style={{
             opacity: step >= 1 ? 1 : 0,
             transform: step >= 1 ? 'translateY(0)' : 'translateY(15px)',
@@ -177,7 +239,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
           }}
         >
           <DiyaIcon lit={active} />
-          <p className="font-heading text-foreground/80 text-sm md:text-lg italic">
+          <p className="font-heading text-foreground/80 text-xs md:text-base lg:text-lg italic leading-tight">
             Two Hearts, One Promise, A Lifetime Together
           </p>
           <DiyaIcon lit={active} />
@@ -185,7 +247,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
 
         {/* ── Couple Photo with Jharokha Frame ── */}
         <div
-          className="opening-content-block relative mb-10"
+          className="opening-content-block relative mb-6 md:mb-10"
           style={{
             opacity: step >= 2 ? 1 : 0,
             transform: step >= 2 ? 'scale(1) translateY(0)' : 'scale(0.6) translateY(30px)',
@@ -194,7 +256,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
         >
           {/* Ornate Jharokha arch frame around photo */}
           <div className="opening-photo-jharokha" aria-hidden="true">
-            <svg width="280" height="160" viewBox="0 0 280 160" fill="none" className="w-[240px] md:w-[280px]">
+            <svg width="280" height="160" viewBox="0 0 280 160" fill="none" className="w-[200px] md:w-[280px]">
               {/* Main arch */}
               <path d="M15 160 L15 70 Q15 5 140 5 Q265 5 265 70 L265 160" stroke="hsl(38 36% 60%)" strokeWidth="1.5" fill="none" opacity="0.35" />
               {/* Inner arch */}
@@ -232,12 +294,12 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
         </div>
 
         {/* ── Couple Names — STACKED VERTICALLY ── */}
-        <div className="opening-content-block flex flex-col items-center gap-1 md:gap-2 mb-6" id="opening-heading">
+        <div className="opening-content-block flex-col items-center gap-0 md:gap-1 mb-4 md:mb-6" id="opening-heading">
           <h1
             className="font-display gold-shimmer leading-none"
             style={{
-              fontSize: 'clamp(38px, 10vw, 68px)',
-              letterSpacing: 'clamp(6px, 2vw, 12px)',
+              fontSize: 'clamp(32px, 9vw, 68px)',
+              letterSpacing: 'clamp(4px, 1.5vw, 12px)',
               opacity: step >= 3 ? 1 : 0,
               animation: step >= 3 ? 'slide-in-left 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards, gold-shimmer 4s linear infinite' : 'none',
               backgroundSize: '200% 100%',
@@ -248,7 +310,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
 
           {/* Decorative ampersand with ornament */}
           <div
-            className="relative my-1"
+            className="relative my-1 md:my-2"
             style={{
               opacity: step >= 3 ? 1 : 0,
               transform: step >= 3 ? 'scale(1)' : 'scale(0.5)',
@@ -257,20 +319,20 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
           >
             <span
               className="font-display gold-shimmer leading-none block"
-              style={{ fontSize: 'clamp(28px, 7vw, 48px)', backgroundSize: '200% 100%' }}
+              style={{ fontSize: 'clamp(24px, 6vw, 48px)', backgroundSize: '200% 100%' }}
             >
               &amp;
             </span>
-            {/* Small ornamental lines around & */}
-            <div className="absolute -left-8 top-1/2 w-6 h-px bg-gradient-to-r from-transparent to-primary/40" />
-            <div className="absolute -right-8 top-1/2 w-6 h-px bg-gradient-to-l from-transparent to-primary/40" />
+            {/* Ornamental lines around & */}
+            <div className="absolute -left-6 md:-left-10 top-1/2 w-4 md:w-8 h-px bg-gradient-to-r from-transparent to-primary/40" />
+            <div className="absolute -right-6 md:-right-10 top-1/2 w-4 md:w-8 h-px bg-gradient-to-l from-transparent to-primary/40" />
           </div>
 
           <h1
             className="font-display gold-shimmer leading-none"
             style={{
-              fontSize: 'clamp(38px, 10vw, 68px)',
-              letterSpacing: 'clamp(6px, 2vw, 12px)',
+              fontSize: 'clamp(32px, 9vw, 68px)',
+              letterSpacing: 'clamp(4px, 1.5vw, 12px)',
               opacity: step >= 3 ? 1 : 0,
               animation: step >= 3 ? 'slide-in-right 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards, gold-shimmer 4s linear infinite' : 'none',
               backgroundSize: '200% 100%',
@@ -282,50 +344,57 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
 
         {/* ── "Are Getting Married" text ── */}
         <div
-          className="opening-content-block mb-6"
+          className="opening-content-block mb-4 md:mb-6"
           style={{
             opacity: step >= 4 ? 1 : 0,
             transform: step >= 4 ? 'translateY(0)' : 'translateY(12px)',
             transition: 'opacity 0.7s ease-out, transform 0.7s ease-out',
           }}
         >
-          <p className="font-heading text-foreground/70 text-lg md:text-2xl italic tracking-wide">
+          <p className="font-heading text-foreground/70 text-base md:text-xl lg:text-2xl italic tracking-wide">
             are getting married
           </p>
         </div>
 
-        {/* ── Gold Divider ── */}
+        {/* ── Decorative Lotus Divider ── */}
         <div
-          className="opening-content-block mb-6"
+          className="opening-content-block mb-4 md:mb-6"
           style={{
             opacity: step >= 4 ? 1 : 0,
             transition: 'opacity 0.5s ease-out 0.2s',
           }}
         >
-          <GoldDivider />
+          <svg width="180" height="24" viewBox="0 0 180 24" fill="none" className="w-[140px] md:w-[180px]" aria-hidden="true">
+            <line x1="0" y1="12" x2="55" y2="12" stroke="hsl(38 36% 60%)" strokeWidth="0.5" opacity="0.4" />
+            {/* Lotus center */}
+            <path d="M70 20 Q80 8 90 4 Q100 8 110 20" stroke="hsl(38 36% 60%)" strokeWidth="0.8" fill="none" opacity="0.5" />
+            <path d="M75 22 Q85 10 90 6 Q95 10 105 22" stroke="hsl(38 36% 60%)" strokeWidth="0.5" fill="none" opacity="0.3" />
+            <circle cx="90" cy="6" r="2" fill="hsl(38 36% 60%)" opacity="0.4" />
+            <line x1="125" y1="12" x2="180" y2="12" stroke="hsl(38 36% 60%)" strokeWidth="0.5" opacity="0.4" />
+          </svg>
         </div>
 
         {/* ── Date + Venue Block ── */}
         <div
-          className="opening-content-block opening-date-card mb-8"
+          className="opening-content-block opening-date-card mb-5 md:mb-8"
           style={{
             opacity: step >= 5 ? 1 : 0,
             transform: step >= 5 ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
             transition: 'opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          <p className="font-hindi text-primary/60 text-sm mb-2">शुभ विवाह</p>
-          <p className="font-body text-foreground text-lg md:text-xl mb-1" style={{ letterSpacing: '3px' }}>
+          <p className="font-hindi text-primary/60 text-xs md:text-sm mb-1 md:mb-2">शुभ विवाह</p>
+          <p className="font-body text-foreground text-base md:text-lg lg:text-xl mb-0.5 md:mb-1" style={{ letterSpacing: '2px' }}>
             10th May 2026
           </p>
-          <p className="font-heading text-foreground/50 text-sm md:text-base italic">
+          <p className="font-heading text-foreground/50 text-xs md:text-sm lg:text-base italic">
             Jaipur, Rajasthan
           </p>
         </div>
 
         {/* ── Hashtag ── */}
         <div
-          className="opening-content-block mb-8"
+          className="opening-content-block mb-5 md:mb-8"
           style={{
             opacity: step >= 6 ? 1 : 0,
             transform: step >= 6 ? 'translateY(0)' : 'translateY(10px)',
@@ -337,7 +406,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
             className="opening-hashtag-btn"
             aria-label="Copy hashtag to clipboard"
           >
-            <span className="font-hashtag text-xl md:text-2xl">
+            <span className="font-hashtag text-lg md:text-xl lg:text-2xl gold-shimmer-slow">
               {copied ? '✓ Copied!' : '#HarAnshTera'}
             </span>
           </button>
@@ -345,7 +414,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
 
         {/* ── Bottom Gold Divider ── */}
         <div
-          className="opening-content-block mb-8"
+          className="opening-content-block mb-6 md:mb-8"
           style={{
             opacity: step >= 7 ? 1 : 0,
             transition: 'opacity 0.5s ease-out',
@@ -354,9 +423,9 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
           <GoldDivider />
         </div>
 
-        {/* ── Royal CTA Button ── */}
+        {/* ── Royal CTA Button with Ornate Styling ── */}
         <div
-          className="opening-content-block mb-16"
+          className="opening-content-block mb-12 md:mb-16"
           style={{
             opacity: step >= 8 ? 1 : 0,
             transform: step >= 8 ? 'translateY(0) scale(1)' : 'translateY(15px) scale(0.9)',
@@ -364,27 +433,51 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
             pointerEvents: step >= 8 ? 'auto' : 'none',
           }}
         >
-          <button onClick={onViewCelebrations} className="royal-cta-button">
-            <span className="relative z-10 font-ui font-semibold text-sm md:text-base tracking-widest uppercase">
-              View Celebrations →
+          <button onClick={onViewCelebrations} className="royal-cta-button group">
+            {/* Ornate corner diamonds */}
+            <span className="royal-btn-corner royal-btn-corner-tl" aria-hidden="true" />
+            <span className="royal-btn-corner royal-btn-corner-tr" aria-hidden="true" />
+            <span className="royal-btn-corner royal-btn-corner-bl" aria-hidden="true" />
+            <span className="royal-btn-corner royal-btn-corner-br" aria-hidden="true" />
+            
+            <span className="relative z-10 font-ui font-semibold text-xs md:text-sm lg:text-base tracking-[0.2em] uppercase flex items-center gap-2">
+              Explore the Celebrations
+              <span className="text-base md:text-lg opacity-80">✦</span>
             </span>
           </button>
         </div>
 
         {/* Bottom spacing for scroll */}
-        <div className="h-8" aria-hidden="true" />
+        <div className="h-16 md:h-20" aria-hidden="true" />
       </div>
 
-      {/* ── Scroll indicator ── */}
+      {/* ══════════ ENHANCED SCROLL INDICATOR ══════════ */}
       <div
-        className="opening-scroll-indicator"
+        className="opening-scroll-hint"
         style={{
-          opacity: step >= 2 ? 0.5 : 0,
+          opacity: step >= 2 ? 1 : 0,
           transition: 'opacity 1s ease-out 1s',
         }}
         aria-hidden="true"
       >
-        <div className="opening-scroll-arrow" />
+        {/* Glowing diya above arrow */}
+        <div className="opening-scroll-diya">
+          <DiyaIcon lit={active} />
+        </div>
+        
+        {/* Mouse wheel indicator */}
+        <div className="opening-scroll-mouse">
+          <div className="opening-scroll-wheel" />
+        </div>
+        
+        {/* Text hint */}
+        <p className="opening-scroll-text">Scroll Down</p>
+        
+        {/* Animated arrow */}
+        <div className="opening-scroll-arrows">
+          <span className="opening-scroll-chevron" />
+          <span className="opening-scroll-chevron opening-scroll-chevron-2" />
+        </div>
       </div>
     </section>
   );
