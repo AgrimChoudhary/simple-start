@@ -113,7 +113,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       <div className="opening-vignette-deep" aria-hidden="true" />
       
       {/* ── Floating Gold Orbs (Deep Background) ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[0]" aria-hidden="true">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[0]" aria-hidden="true">
         {goldOrbs.map(orb => (
           <div
             key={orb.id}
