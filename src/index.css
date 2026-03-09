@@ -1197,14 +1197,48 @@
    OPENING SECTION — Royal Rajasthani Styles
    ═══════════════════════════════════════════════ */
 
+/* Scrollable section container */
+.opening-section-scroll {
+  @apply relative w-full;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.opening-section-bg {
+  background: linear-gradient(180deg, hsl(218 60% 8%) 0%, hsl(218 50% 12%) 25%, hsl(218 48% 13%) 50%, hsl(218 50% 12%) 75%, hsl(218 60% 8%) 100%);
+  position: sticky;
+  top: 0;
+}
+
+/* Scrollable content wrapper */
+.opening-scroll-content {
+  @apply relative z-10 flex flex-col items-center text-center;
+  padding: 60px 24px 40px;
+  min-height: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .opening-scroll-content {
+    padding: 80px 32px 60px;
+  }
+}
+
+.opening-content-block {
+  @apply flex flex-col items-center text-center w-full;
+}
+
 /* Radial gold glow behind photo area */
 .opening-bg-glow {
-  background: radial-gradient(ellipse 40% 35% at 50% 40%, hsl(var(--gold-primary) / 0.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse 50% 40% at 50% 35%, hsl(var(--gold-primary) / 0.07) 0%, transparent 70%);
   animation: opening-glow-pulse 8s ease-in-out infinite;
 }
 
 @keyframes opening-glow-pulse {
-  0%, 100% { opacity: 0.6; }
+  0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
 
@@ -1235,7 +1269,7 @@
   }
 }
 
-/* Couple Photo Frame */
+/* ── Couple Photo Frame — Enlarged ── */
 .couple-photo-frame {
   width: 140px;
   height: 140px;
@@ -1248,11 +1282,22 @@
   animation: photo-frame-glow 3s ease-in-out infinite;
 }
 
+.opening-photo-enlarged {
+  width: 180px;
+  height: 180px;
+  padding: 5px;
+}
+
 @media (min-width: 768px) {
   .couple-photo-frame {
     width: 180px;
     height: 180px;
     padding: 5px;
+  }
+  .opening-photo-enlarged {
+    width: 240px;
+    height: 240px;
+    padding: 6px;
   }
 }
 
@@ -1283,19 +1328,85 @@
   }
   50% {
     box-shadow:
-      0 0 40px hsl(var(--gold-primary) / 0.2),
-      0 0 80px hsl(var(--gold-primary) / 0.1);
+      0 0 50px hsl(var(--gold-primary) / 0.22),
+      0 0 100px hsl(var(--gold-primary) / 0.1);
   }
 }
 
-/* Royal CTA Button */
+/* Photo Jharokha arch frame */
+.opening-photo-jharokha {
+  @apply absolute -top-10 left-1/2 -translate-x-1/2 pointer-events-none;
+}
+
+/* Lotus motif below photo */
+.opening-lotus-below {
+  @apply flex justify-center mt-2 pointer-events-none;
+}
+
+/* ── Date Card ── */
+.opening-date-card {
+  padding: 20px 32px;
+  border: 1px solid hsl(var(--gold-primary) / 0.12);
+  border-radius: 12px;
+  background: hsl(var(--card) / 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  max-width: 280px;
+}
+
+/* ── Hashtag Button ── */
+.opening-hashtag-btn {
+  color: hsl(var(--gold-primary));
+  cursor: pointer;
+  padding: 8px 24px;
+  border: 1px solid hsl(var(--gold-primary) / 0.2);
+  border-radius: 50px;
+  background: hsl(var(--gold-primary) / 0.04);
+  transition: all 0.3s ease;
+}
+
+.opening-hashtag-btn:hover {
+  border-color: hsl(var(--gold-primary) / 0.4);
+  background: hsl(var(--gold-primary) / 0.08);
+  box-shadow: 0 0 20px hsl(var(--gold-primary) / 0.1);
+}
+
+.opening-hashtag-btn:active {
+  transform: scale(0.95);
+}
+
+/* ── Scroll Indicator ── */
+.opening-scroll-indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 15;
+}
+
+.opening-scroll-arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 1.5px solid hsl(var(--gold-primary) / 0.4);
+  border-bottom: 1.5px solid hsl(var(--gold-primary) / 0.4);
+  transform: rotate(45deg);
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.4; }
+  50% { transform: rotate(45deg) translate(4px, 4px); opacity: 0.8; }
+}
+
+/* ── Royal CTA Button ── */
 .royal-cta-button {
   position: relative;
-  padding: 16px 44px;
-  min-width: 200px;
-  min-height: 52px;
+  padding: 16px 48px;
+  min-width: 220px;
+  min-height: 54px;
   border: 1.5px solid hsl(var(--gold-primary) / 0.5);
-  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.06) 0%, hsl(var(--gold-primary) / 0.02) 50%, hsl(var(--gold-primary) / 0.06) 100%);
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.08) 0%, hsl(var(--gold-primary) / 0.02) 50%, hsl(var(--gold-primary) / 0.08) 100%);
   color: hsl(var(--gold-primary));
   border-radius: 8px;
   cursor: pointer;
@@ -1318,7 +1429,7 @@
   animation: button-shimmer 5s ease-in-out infinite;
 }
 
-/* Corner diamond accents */
+/* Inner border accent */
 .royal-cta-button::after {
   content: '';
   position: absolute;
