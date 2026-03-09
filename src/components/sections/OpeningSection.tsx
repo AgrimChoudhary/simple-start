@@ -272,7 +272,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       ))}
 
       {/* ── Falling Marigold Petals ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[4]" aria-hidden="true">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[4]" aria-hidden="true">
         {fallingPetals.map(petal => (
           <div
             key={petal.id}
