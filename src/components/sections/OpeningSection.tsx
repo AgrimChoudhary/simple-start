@@ -113,7 +113,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       <div className="opening-vignette-deep" aria-hidden="true" />
       
       {/* ── Floating Gold Orbs (Deep Background) ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[0]" aria-hidden="true">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[0]" aria-hidden="true">
         {goldOrbs.map(orb => (
           <div
             key={orb.id}
@@ -164,7 +164,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       <SectionBorderFrame active={active} variant="royal" />
 
       {/* ── Dust Particles (Ambient Atmosphere) ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]" aria-hidden="true">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[2]" aria-hidden="true">
         {dustParticles.map(p => (
           <div
             key={p.id}
@@ -183,7 +183,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       </div>
 
       {/* ── Sparkle Stars ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[3]" aria-hidden="true">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[3]" aria-hidden="true">
         {sparkles.map(s => (
           <div
             key={s.id}
@@ -247,7 +247,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       ].map((corner, i) => (
         <div
           key={i}
-          className={`absolute ${corner.pos} pointer-events-none z-[5]`}
+          className={`fixed ${corner.pos} pointer-events-none z-[5]`}
           style={{
             opacity: step >= 1 ? 0.18 : 0,
             transform: step >= 1 ? `rotate(${corner.rotate}) scale(1)` : `rotate(${corner.rotate}) scale(0.2)`,
@@ -272,7 +272,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       ))}
 
       {/* ── Falling Marigold Petals ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[4]" aria-hidden="true">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[4]" aria-hidden="true">
         {fallingPetals.map(petal => (
           <div
             key={petal.id}
