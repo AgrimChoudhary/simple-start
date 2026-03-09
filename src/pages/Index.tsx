@@ -102,7 +102,7 @@ const Index = () => {
             willChange: 'opacity',
           }}
         >
-          <OpeningSection
+        <OpeningSection
             active={nav.currentSection === 1}
             guestName={guestName}
             onViewCelebrations={() => handleNextSection(2)}
