@@ -257,6 +257,7 @@
   100% { background-position: 0% 0%; }
 }
 
+@keyframes heartbeat-glow {
   0%, 100% { 
     box-shadow: 0 0 60px hsl(var(--gold-primary) / 0.08);
     transform: scale(1);
