@@ -11,8 +11,12 @@ interface GaneshaSectionProps {
   guestName: string;
 }
 
-const shlokLine1 = 'वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।';
-const shlokLine2 = 'निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥';
+const shlokLines = [
+  'वक्रतुण्ड महाकाय',
+  'सूर्यकोटि समप्रभ।',
+  'निर्विघ्नं कुरु मे देव',
+  'सर्वकार्येषु सर्वदा॥',
+];
 
 const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginClick, visited, fading = false, guestName }) => {
   const [revealed, setRevealed] = useState(false);
@@ -80,30 +84,22 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
           />
         </div>
 
-        {/* Shloka — slide up with stagger */}
+        {/* Shloka — 4 lines, staggered reveal */}
         <div className="mb-4" id="ganesha-heading">
-          <p
-            className={`cinematic-reveal ${r} delay-2 font-hindi font-semibold leading-[1.9] tracking-wide`}
-            lang="hi"
-            style={{
-              fontSize: 'clamp(14px, 3.6vw, 19px)',
-              color: 'hsl(var(--gold-primary))',
-              textShadow: '0 0 20px hsl(var(--gold-primary) / 0.25)',
-            }}
-          >
-            {shlokLine1}
-          </p>
-          <p
-            className={`cinematic-reveal ${r} delay-3 font-hindi font-semibold leading-[1.9] tracking-wide`}
-            lang="hi"
-            style={{
-              fontSize: 'clamp(14px, 3.6vw, 19px)',
-              color: 'hsl(var(--gold-primary))',
-              textShadow: '0 0 20px hsl(var(--gold-primary) / 0.25)',
-            }}
-          >
-            {shlokLine2}
-          </p>
+          {shlokLines.map((line, i) => (
+            <p
+              key={i}
+              className={`cinematic-reveal ${r} delay-${i + 2} font-hindi font-semibold leading-[1.9] tracking-wide`}
+              lang="hi"
+              style={{
+                fontSize: 'clamp(14px, 3.6vw, 19px)',
+                color: 'hsl(var(--gold-primary))',
+                textShadow: '0 0 20px hsl(var(--gold-primary) / 0.25)',
+              }}
+            >
+              {line}
+            </p>
+          ))}
         </div>
 
         {/* Gold Divider */}
@@ -139,7 +135,7 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
           aria-label="Open the wedding invitation"
         >
           <span className="relative z-10 font-heading text-sm sm:text-base tracking-[0.15em] uppercase">
-            Open Invitation
+            Enter the Invitation
           </span>
         </button>
       </div>

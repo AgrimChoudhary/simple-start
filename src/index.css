@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@400;500&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500;600&family=Mukta:wght@400;500&family=Playfair+Display:ital,wght@1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@400;500&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500;600&family=Noto+Serif+Devanagari:wght@500;600&family=Mukta:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    /* Royal Midnight Rajasthan Palette */
-    --background: 218 60% 10%;         /* #0A1628 */
-    --foreground: 36 30% 94%;          /* #F5F0E8 */
+    /* Royal Midnight Rajasthan Palette — refined */
+    --background: 216 72% 7%;          /* #071830 deep midnight */
+    --foreground: 36 30% 94%;          /* #F5F0E8 ivory */
 
-    --card: 218 52% 14%;              /* #111E36 */
+    --card: 214 60% 10%;              /* #0b2747 */
     --card-foreground: 36 30% 94%;
 
-    --popover: 218 52% 14%;
+    --popover: 214 60% 10%;
     --popover-foreground: 36 30% 94%;
 
-    --primary: 38 36% 60%;            /* #C9A96E */
-    --primary-foreground: 218 60% 10%;
+    --primary: 42 48% 57%;            /* #C8A45C antique gold */
+    --primary-foreground: 216 72% 7%;
 
-    --secondary: 218 42% 19%;         /* #1A2A4A */
+    --secondary: 214 55% 16%;         /* #132e52 */
     --secondary-foreground: 36 12% 81%;
 
-    --muted: 38 8% 50%;              /* #8A8578 */
+    --muted: 38 8% 50%;
     --muted-foreground: 38 8% 50%;
 
-    --accent: 38 30% 65%;            /* #D4B87A */
-    --accent-foreground: 218 60% 10%;
+    --accent: 45 61% 52%;             /* #D4AF37 soft gold highlight */
+    --accent-foreground: 216 72% 7%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 36 30% 94%;
 
-    --border: 38 36% 60% / 0.2;
-    --input: 38 36% 60% / 0.4;
-    --ring: 38 36% 60%;
+    --border: 42 48% 57% / 0.2;
+    --input: 42 48% 57% / 0.4;
+    --ring: 42 48% 57%;
 
     --radius: 0.75rem;
 
     /* Wedding-specific tokens */
-    --gold-primary: 38 36% 60%;       /* #C9A96E */
-    --gold-secondary: 38 40% 65%;     /* #D4B87A */
-    --gold-tertiary: 38 30% 35%;      /* #8B7340 */
+    --gold-primary: 42 48% 57%;       /* #C8A45C */
+    --gold-secondary: 45 61% 52%;     /* #D4AF37 */
+    --gold-tertiary: 38 30% 35%;      /* #8B7340 dark gold */
     --text-cream: 36 12% 81%;         /* #D4CFC5 */
     --text-ivory: 36 30% 94%;         /* #F5F0E8 */
     --curtain-red: 348 60% 26%;       /* #6B1A2A */
     --curtain-dark: 348 60% 18%;      /* #4A1220 */
     --petal-gold: 42 75% 46%;         /* #D4A017 */
-    --bg-card: 218 52% 14%;           /* #111E36 */
-    --bg-hover: 218 42% 19%;          /* #1A2A4A */
+    --bg-card: 214 60% 10%;           /* #0b2747 */
+    --bg-hover: 214 55% 16%;          /* #132e52 */
   }
 }
 
