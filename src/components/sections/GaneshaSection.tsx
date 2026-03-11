@@ -42,12 +42,37 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
     >
       <SectionBorderFrame active={curtainOpen} variant="royal" />
 
-      {/* Background radial glow */}
+      {/* Layer 1: Midnight blue gradient */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse at 50% 35%, hsl(var(--gold-primary) / 0.12) 0%, hsl(var(--gold-primary) / 0.04) 35%, transparent 65%)',
+        background: 'linear-gradient(180deg, hsl(216 72% 7%) 0%, hsl(214 60% 10%) 50%, hsl(216 72% 7%) 100%)',
       }} />
+
+      {/* Layer 2: Jaali pattern at 4% opacity */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse at center, transparent 50%, hsl(var(--background)) 100%)',
+        backgroundImage: 'url(/images/jaali-pattern.png)',
+        backgroundSize: '280px',
+        backgroundRepeat: 'repeat',
+        opacity: 0.04,
+        mixBlendMode: 'screen',
+      }} />
+
+      {/* Layer 3: Soft gold radial glow center */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse at 50% 40%, rgba(200,164,92,0.15) 0%, rgba(200,164,92,0.05) 35%, transparent 65%)',
+      }} />
+
+      {/* Layer 4: Gold dust particles */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: 'url(/images/gold-dust.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.10,
+        animation: 'gold-dust-drift 30s linear infinite',
+      }} />
+
+      {/* Vignette */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse at center, transparent 40%, hsl(216 72% 7%) 100%)',
       }} />
 
       {/* Main content — cinematic staggered reveal */}
