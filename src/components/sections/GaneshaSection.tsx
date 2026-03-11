@@ -135,7 +135,7 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
           aria-label="Open the wedding invitation"
         >
           <span className="relative z-10 font-heading text-sm sm:text-base tracking-[0.15em] uppercase">
-            Open Invitation
+            Enter the Invitation
           </span>
         </button>
       </div>
