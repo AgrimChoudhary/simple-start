@@ -11,8 +11,12 @@ interface GaneshaSectionProps {
   guestName: string;
 }
 
-const shlokLine1 = 'वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।';
-const shlokLine2 = 'निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥';
+const shlokLines = [
+  'वक्रतुण्ड महाकाय',
+  'सूर्यकोटि समप्रभ।',
+  'निर्विघ्नं कुरु मे देव',
+  'सर्वकार्येषु सर्वदा॥',
+];
 
 const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginClick, visited, fading = false, guestName }) => {
   const [revealed, setRevealed] = useState(false);
