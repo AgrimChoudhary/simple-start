@@ -5,7 +5,7 @@ import { useGuestName } from '@/hooks/useGuestName';
 import CurtainReveal from '@/components/transitions/CurtainReveal';
 import PalaceDoors from '@/components/transitions/PalaceDoors';
 import FloatingPetals from '@/components/global/FloatingPetals';
-import FloatingNav from '@/components/global/FloatingNav';
+// FloatingNav removed — hamburger menu disabled
 import ProgressDots from '@/components/global/ProgressDots';
 import MusicToggle from '@/components/global/MusicToggle';
 
@@ -63,7 +63,7 @@ const Index = () => {
 
       {nav.curtainOpen && (
         <>
-          <FloatingNav currentSection={nav.currentSection} onNavigate={handleNavJump} />
+          {/* FloatingNav removed */}
           <ProgressDots currentSection={nav.currentSection} onNavigate={handleNavJump} />
           <MusicToggle />
         </>
