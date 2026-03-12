@@ -35,22 +35,16 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
     >
       <SectionBorderFrame active={curtainOpen} variant="royal" />
 
-      {/* Layer 1: Dark base */}
-      <div className="absolute inset-0 pointer-events-none bg-black" />
-
-      {/* Full palace background — fully visible */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <img
-          src={palaceFacade}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          style={{ opacity: 1 }}
-        />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.5) 100%)',
-        }} />
-      </div>
+      {/* Full palace background with midnight blue overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(rgba(7,24,48,0.85), rgba(7,24,48,0.85)), url(${palaceFacade})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
 
       {/* Main content */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-8 text-center max-w-2xl mx-auto min-h-full">
