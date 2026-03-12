@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GoldDivider from '@/components/global/GoldDivider';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 import ganeshaImg from '@/assets/ganesha.png';
+import palaceFacade from '@/assets/palace-facade.png';
 
 interface GaneshaSectionProps {
   curtainOpen: boolean;
@@ -39,14 +40,21 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
         background: 'linear-gradient(180deg, hsl(216 72% 7%) 0%, hsl(214 60% 10%) 50%, hsl(216 72% 7%) 100%)',
       }} />
 
-      {/* Layer 2: Jaali pattern */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: 'url(/images/jaali-pattern.png)',
-        backgroundSize: '280px',
-        backgroundRepeat: 'repeat',
-        opacity: 0.04,
-        mixBlendMode: 'screen',
-      }} />
+      {/* Layer 2: Palace facade */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <img
+          src={palaceFacade}
+          alt=""
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140%] max-w-none object-contain"
+          style={{
+            opacity: 0.06,
+            mixBlendMode: 'screen',
+            filter: 'sepia(1) hue-rotate(-10deg) saturate(0.6) brightness(1.2)',
+            maskImage: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, transparent 75%)',
+            WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, transparent 75%)',
+          }}
+        />
+      </div>
 
       {/* Layer 3: Soft gold radial glow */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -154,16 +162,14 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
         {/* Couple Names — BIG & prominent */}
         <div className={`cinematic-reveal ${r} delay-5 mb-2`}>
           <h1
-            className="font-display gold-shimmer leading-none"
+            className="font-display gold-shimmer leading-none whitespace-nowrap"
             style={{
-              fontSize: 'clamp(42px, 10vw, 90px)',
+              fontSize: 'clamp(32px, 8vw, 80px)',
               fontWeight: 700,
               letterSpacing: '0.02em',
             }}
           >
-            Harshit{' '}
-            <span className="text-accent font-heading italic" style={{ fontSize: '0.7em' }}>&amp;</span>
-            {' '}Anshika
+            Harshit <span className="text-accent font-heading italic" style={{ fontSize: '0.7em' }}>&amp;</span> Anshika
           </h1>
         </div>
 
