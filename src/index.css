@@ -298,7 +298,7 @@
   50% { text-shadow: 0 0 50px hsl(var(--gold-primary) / 0.7), 0 0 90px hsl(var(--gold-primary) / 0.3), 0 2px 10px rgba(0,0,0,0.6); }
 }
 
-
+@keyframes diya-flame {
   0%, 100% { 
     transform: scaleY(1) scaleX(1);
     opacity: 1;
