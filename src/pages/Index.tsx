@@ -21,10 +21,19 @@ const Index = () => {
   const guestName = useGuestName();
 
   const [doorPhase, setDoorPhase] = useState<'none' | 'ganesha-fading' | 'doors-visible' | 'complete'>('none');
+  // CurtainReveal manages its own DOM lifecycle — it removes itself when animation is done.
+  // We always render it; it returns null internally when phase='done'.
+  const [showCurtain, setShowCurtain] = useState(true);
 
   const handleCurtainComplete = useCallback(() => {
+    // This fires early (200ms) — tells GaneshaSection to mount content behind curtain
     nav.setCurtainOpen(true);
   }, [nav]);
+
+  const handleCurtainDone = useCallback(() => {
+    // This fires when curtain animation is fully complete (7000ms) — remove from DOM
+    setShowCurtain(false);
+  }, []);
 
   const handleBeginClick = useCallback(() => {
     setDoorPhase('ganesha-fading');
@@ -58,7 +67,13 @@ const Index = () => {
 
       <FloatingPetals />
 
-      {!nav.curtainOpen && <CurtainReveal onComplete={handleCurtainComplete} />}
+      {/* CurtainReveal: ALWAYS rendered until it removes itself.
+          It sits at z-50, physically covering GaneshaSection (z-10).
+          onComplete fires early (200ms) to mount content behind curtain.
+          onDone fires when animation is fully complete (7000ms). */}
+      {showCurtain && (
+        <CurtainReveal onComplete={handleCurtainComplete} onDone={handleCurtainDone} />
+      )}
       {doorPhase === 'doors-visible' && <PalaceDoors onComplete={handleDoorsComplete} />}
 
       {nav.curtainOpen && (
@@ -70,7 +85,7 @@ const Index = () => {
       )}
 
       <div id="main-content" className="relative w-full h-full">
-        {/* Section 0: Ganesha */}
+        {/* Section 0: Ganesha — content is always visible, physically hidden behind curtain */}
         <div
           className="absolute inset-0"
           style={{

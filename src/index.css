@@ -130,103 +130,525 @@
   100% { background-position: -200% 0; }
 }
 
-/* ===== CURTAIN REVEAL (GPU-OPTIMISED) ===== */
+/* ===== CURTAIN REVEAL — PREMIUM CINEMATIC (GPU-ONLY) ===== */
+
+/* Base panel — GPU compositing layer */
 .curtain-panel {
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
+  contain: layout style paint;
 }
 
+/* Rich velvet fabric gradient — deeper, more luxurious */
 .curtain-panel-left {
   background: linear-gradient(90deg,
-    hsl(var(--curtain-dark)) 0%, hsl(var(--curtain-red)) 40%,
-    hsl(348 60% 24%) 70%, hsl(var(--curtain-red)) 100%);
-  box-shadow: inset -20px 0 40px rgba(0,0,0,0.5);
+    hsl(348 65% 12%) 0%,
+    hsl(var(--curtain-dark)) 15%,
+    hsl(var(--curtain-red)) 40%,
+    hsl(348 58% 28%) 65%,
+    hsl(var(--curtain-red)) 85%,
+    hsl(348 55% 22%) 100%);
+  box-shadow: inset -25px 0 50px rgba(0,0,0,0.6), inset 0 0 80px rgba(107,26,42,0.3);
 }
 .curtain-panel-right {
   background: linear-gradient(270deg,
-    hsl(var(--curtain-dark)) 0%, hsl(var(--curtain-red)) 40%,
-    hsl(348 60% 24%) 70%, hsl(var(--curtain-red)) 100%);
-  box-shadow: inset 20px 0 40px rgba(0,0,0,0.5);
+    hsl(348 65% 12%) 0%,
+    hsl(var(--curtain-dark)) 15%,
+    hsl(var(--curtain-red)) 40%,
+    hsl(348 58% 28%) 65%,
+    hsl(var(--curtain-red)) 85%,
+    hsl(348 55% 22%) 100%);
+  box-shadow: inset 25px 0 50px rgba(0,0,0,0.6), inset 0 0 80px rgba(107,26,42,0.3);
 }
 
+/* Fabric folds — more defined, realistic draping */
 .curtain-folds-left {
   background: repeating-linear-gradient(90deg,
-    transparent 0%, rgba(0,0,0,0.12) 8%, transparent 16%);
+    transparent 0%, rgba(0,0,0,0.08) 4%, rgba(0,0,0,0.15) 8%,
+    transparent 12%, rgba(255,255,255,0.03) 14%, transparent 16%);
 }
 .curtain-folds-right {
   background: repeating-linear-gradient(270deg,
-    transparent 0%, rgba(0,0,0,0.12) 8%, transparent 16%);
+    transparent 0%, rgba(0,0,0,0.08) 4%, rgba(0,0,0,0.15) 8%,
+    transparent 12%, rgba(255,255,255,0.03) 14%, transparent 16%);
 }
 
+/* Fabric shimmer — subtle light play before opening */
+.curtain-fabric-shimmer {
+  background: linear-gradient(120deg,
+    transparent 30%,
+    rgba(201, 169, 110, 0.06) 45%,
+    rgba(201, 169, 110, 0.12) 50%,
+    rgba(201, 169, 110, 0.06) 55%,
+    transparent 70%);
+  background-size: 250% 100%;
+  opacity: 0;
+}
+.curtain-fabric-shimmer.active {
+  animation: curtain-shimmer 3s ease-in-out 0.2s infinite;
+  opacity: 1;
+}
+@keyframes curtain-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Gold embroidery trim — main inner edge */
 .curtain-gold-trim {
-  background: linear-gradient(180deg, transparent 5%, hsl(var(--gold-primary) / 0.5) 30%, hsl(var(--gold-primary) / 0.3) 50%, hsl(var(--gold-primary) / 0.5) 70%, transparent 95%);
+  background: linear-gradient(180deg,
+    transparent 2%,
+    hsl(var(--gold-primary) / 0.6) 15%,
+    hsl(var(--gold-secondary) / 0.8) 30%,
+    hsl(var(--gold-primary) / 0.4) 50%,
+    hsl(var(--gold-secondary) / 0.8) 70%,
+    hsl(var(--gold-primary) / 0.6) 85%,
+    transparent 98%);
+  box-shadow: 0 0 8px hsl(var(--gold-primary) / 0.3);
+}
+/* Secondary thinner trim line */
+.curtain-gold-trim-inner {
+  background: linear-gradient(180deg,
+    transparent 10%,
+    hsl(var(--gold-primary) / 0.2) 30%,
+    hsl(var(--gold-primary) / 0.15) 50%,
+    hsl(var(--gold-primary) / 0.2) 70%,
+    transparent 90%);
 }
 
+/* Bottom drape shadow — heavier for depth */
 .curtain-bottom-shadow {
-  background: linear-gradient(0deg, rgba(0,0,0,0.35) 0%, transparent 100%);
+  background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, transparent 100%);
 }
 
+/* Center seam — golden light seeping through */
 .curtain-seam {
-  background: linear-gradient(180deg, transparent 5%, hsl(var(--gold-primary) / 0.4) 30%, hsl(var(--gold-primary) / 0.25) 50%, hsl(var(--gold-primary) / 0.4) 70%, transparent 95%);
-  filter: blur(1px);
-  transition: opacity 0.8s ease-out;
+  background: linear-gradient(180deg,
+    transparent 3%,
+    hsl(var(--gold-primary) / 0.5) 20%,
+    hsl(var(--gold-primary) / 0.35) 40%,
+    hsl(var(--gold-secondary) / 0.5) 50%,
+    hsl(var(--gold-primary) / 0.35) 60%,
+    hsl(var(--gold-primary) / 0.5) 80%,
+    transparent 97%);
+  filter: blur(1.5px);
+  box-shadow: 0 0 12px hsl(var(--gold-primary) / 0.2);
+  opacity: 0.7;
+}
+.curtain-seam-fade {
+  animation: curtain-seam-out 1.2s ease-out forwards;
+}
+@keyframes curtain-seam-out {
+  0% { opacity: 0.7; }
+  30% { opacity: 1; } /* brief flash before parting */
+  100% { opacity: 0; }
 }
 
+/* Top pelmet (valance) */
 .curtain-pelmet {
-  background: linear-gradient(180deg, hsl(var(--curtain-dark)) 0%, hsl(var(--curtain-red)) 70%, transparent 100%);
-  transition: opacity 1.2s ease-out 0.5s;
+  background: linear-gradient(180deg,
+    hsl(348 65% 12%) 0%,
+    hsl(var(--curtain-dark)) 30%,
+    hsl(var(--curtain-red)) 70%,
+    transparent 100%);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.curtain-pelmet-fade {
+  animation: curtain-pelmet-out 2.2s ease-out 0.5s forwards;
+}
+@keyframes curtain-pelmet-out {
+  0% { opacity: 1; transform: translate3d(0, 0, 0); }
+  100% { opacity: 0; transform: translate3d(0, -100%, 0); }
 }
 
+/* Gold tassel fringe at pelmet bottom */
+.curtain-tassel-fringe {
+  background: repeating-linear-gradient(90deg,
+    transparent 0px,
+    transparent 8px,
+    hsl(var(--gold-primary) / 0.3) 8px,
+    hsl(var(--gold-primary) / 0.15) 10px,
+    transparent 10px,
+    transparent 14px);
+}
+
+/* Golden glow layer — expands from center */
 .curtain-glow-layer {
-  background: radial-gradient(ellipse 20% 50% at 50% 50%, hsl(var(--gold-primary) / 0.2) 0%, hsl(var(--gold-primary) / 0.06) 50%, transparent 80%);
-  transition: opacity 1.2s ease-out, transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+  background: radial-gradient(ellipse 15% 45% at 50% 50%,
+    hsl(var(--gold-primary) / 0.25) 0%,
+    hsl(var(--gold-primary) / 0.1) 40%,
+    transparent 70%);
+  opacity: 0.3;
+  transform: scale3d(1, 1, 1);
   will-change: transform, opacity;
 }
+.curtain-glow-expand {
+  animation: curtain-glow-burst 3.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes curtain-glow-burst {
+  0% {
+    opacity: 0.3;
+    transform: scale3d(1, 1, 1);
+  }
+  20% {
+    opacity: 1;
+    transform: scale3d(1.8, 1.15, 1);
+  }
+  45% {
+    opacity: 0.9;
+    transform: scale3d(2.5, 1.4, 1);
+  }
+  70% {
+    opacity: 0.4;
+    transform: scale3d(3.5, 1.8, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale3d(5, 2.5, 1);
+  }
+}
 
+/* Sparkle burst particles */
+@keyframes sparkle-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate3d(
+      calc(var(--sparkle-x) * 0.3),
+      calc(var(--sparkle-y) * 0.3),
+      0
+    ) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(
+      var(--sparkle-x),
+      var(--sparkle-y),
+      0
+    ) scale(0.2);
+  }
+}
+
+/* ── Curtain slide animations — smooth with fabric sway ── */
 .curtain-animate-left {
-  animation: curtain-slide-left 2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation: curtain-slide-left 3.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 .curtain-animate-right {
-  animation: curtain-slide-right 2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation: curtain-slide-right 3.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 @keyframes curtain-slide-left {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-105%, 0, 0); }
+  0% { transform: translate3d(0, 0, 0) skewX(0deg); }
+  8% { transform: translate3d(-1%, 0, 0) skewX(-0.5deg); } /* gentle tug */
+  18% { transform: translate3d(-8%, 0, 0) skewX(-1.8deg); } /* fabric starts to pull */
+  35% { transform: translate3d(-30%, 0, 0) skewX(-2.5deg); } /* fabric billows dramatically */
+  55% { transform: translate3d(-60%, 0, 0) skewX(-1.5deg); } /* sweeping open */
+  75% { transform: translate3d(-88%, 0, 0) skewX(-0.5deg); } /* settling */
+  90% { transform: translate3d(-100%, 0, 0) skewX(-0.2deg); } /* almost done */
+  100% { transform: translate3d(-105%, 0, 0) skewX(0deg); } /* fully off */
 }
 @keyframes curtain-slide-right {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(105%, 0, 0); }
+  0% { transform: translate3d(0, 0, 0) skewX(0deg); }
+  8% { transform: translate3d(1%, 0, 0) skewX(0.5deg); }
+  18% { transform: translate3d(8%, 0, 0) skewX(1.8deg); }
+  35% { transform: translate3d(30%, 0, 0) skewX(2.5deg); }
+  55% { transform: translate3d(60%, 0, 0) skewX(1.5deg); }
+  75% { transform: translate3d(88%, 0, 0) skewX(0.5deg); }
+  90% { transform: translate3d(100%, 0, 0) skewX(0.2deg); }
+  100% { transform: translate3d(105%, 0, 0) skewX(0deg); }
 }
 
-/* ===== CINEMATIC CONTENT REVEAL ===== */
-.cinematic-reveal {
-  opacity: 0;
-  transform: translate3d(0, 30px, 0) scale(0.96);
-  will-change: transform, opacity;
-}
-.cinematic-reveal.revealed {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.cinematic-reveal.revealed.delay-1 { transition-delay: 0.15s; }
-.cinematic-reveal.revealed.delay-2 { transition-delay: 0.35s; }
-.cinematic-reveal.revealed.delay-3 { transition-delay: 0.55s; }
-.cinematic-reveal.revealed.delay-4 { transition-delay: 0.75s; }
-.cinematic-reveal.revealed.delay-5 { transition-delay: 0.95s; }
+/* ═══════════════════════════════════════════════════════════════════
+   CURTAIN-SYNCED THEATRICAL ENTRANCE — Grand Staggered Content Reveal
+   
+   TIMELINE (synced with curtain opening at 900ms):
+   Curtain: 3.5s animation with cubic-bezier(0.22, 0.61, 0.36, 1)
+   Content animations START when .curtain-synced-active is added.
+   
+   At curtain 18% (630ms): -8% open → शुभ विवाह starts fading down
+   At curtain 25% (875ms): -15% open → Ganesha divine bloom begins
+   At curtain 35% (1225ms): -30% open → OM symbol pulses in
+   At curtain 40% (1400ms): -35% open → Shloka text reveals line by line
+   At curtain 45% (1575ms): -40% open → Divider draws from center
+   At curtain 50% (1750ms): -50% open → DEAR + Guest name slides up
+   At curtain 55% (1925ms): -55% open → Cordially invited fades in
+   At curtain 60% (2100ms): -60% open → HARSHIT grand scale entrance
+   At curtain 65% (2275ms): -65% open → & divider draws
+   At curtain 68% (2380ms): -68% open → ANSHIKHA grand scale entrance
+   At curtain 75% (2625ms): -75% open → Tagline + Date soft fade
+   At curtain 85% (2975ms): -85% open → Button bounces in with glow
+   ═══════════════════════════════════════════════════════════════════ */
 
-.cinematic-reveal-scale {
+/* ── Base state: all elements start invisible ── */
+.cs-element {
   opacity: 0;
-  transform: scale(0.7);
   will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
-.cinematic-reveal-scale.revealed {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+/* ── 1. शुभ विवाह — Fade down from above ── */
+.cs-shubh {
+  transform: translate3d(0, -20px, 0);
+}
+.curtain-synced-active .cs-shubh {
+  animation: cs-fade-down 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+@keyframes cs-fade-down {
+  0% { opacity: 0; transform: translate3d(0, -20px, 0); }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ── 2. Ganesha — Divine bloom with golden glow burst ── */
+.cs-ganesha {
+  transform: scale(0.3);
+  filter: blur(8px) brightness(0.5);
+}
+.curtain-synced-active .cs-ganesha {
+  animation: cs-divine-bloom 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+@keyframes cs-divine-bloom {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+    filter: blur(8px) brightness(0.5);
+  }
+  25% {
+    opacity: 0.5;
+    transform: scale(0.7);
+    filter: blur(3px) brightness(0.8);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06);
+    filter: blur(0px) brightness(1.2);
+  }
+  70% {
+    transform: scale(0.98);
+    filter: blur(0px) brightness(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px) brightness(1);
+  }
+}
+
+/* ── 3. OM Symbol — Pulse in with sacred glow ── */
+.cs-om {
+  transform: scale(0.5);
+}
+.curtain-synced-active .cs-om {
+  animation: cs-sacred-pulse 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+}
+@keyframes cs-sacred-pulse {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ── 4. Shloka — Line-by-line reveal with golden glow ── */
+.cs-shloka {
+  transform: translate3d(0, 12px, 0);
+  clip-path: inset(100% 0 0 0);
+}
+.curtain-synced-active .cs-shloka {
+  animation: cs-shloka-reveal 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+}
+@keyframes cs-shloka-reveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    clip-path: inset(100% 0 0 0);
+  }
+  40% {
+    opacity: 0.8;
+    clip-path: inset(50% 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(0% 0 0 0);
+  }
+}
+
+/* ── 5. Divider — Draw from center outward ── */
+.cs-divider {
+  transform: scaleX(0);
+}
+.curtain-synced-active .cs-divider {
+  animation: cs-draw-center 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
+}
+@keyframes cs-draw-center {
+  0% { opacity: 0; transform: scaleX(0); }
+  50% { opacity: 0.7; transform: scaleX(0.6); }
+  100% { opacity: 1; transform: scaleX(1); }
+}
+
+/* ── 6. DEAR text — Soft fade ── */
+.cs-dear {
+  transform: translate3d(0, 8px, 0);
+}
+.curtain-synced-active .cs-dear {
+  animation: cs-soft-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.35s forwards;
+}
+
+/* ── 7. Guest Name — Slide up with golden shimmer ── */
+.cs-guest-name {
+  transform: translate3d(0, 25px, 0) scale(0.9);
+}
+.curtain-synced-active .cs-guest-name {
+  animation: cs-name-entrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
+}
+@keyframes cs-name-entrance {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 25px, 0) scale(0.9);
+    filter: brightness(0.6);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1.3);
+  }
+  75% {
+    transform: translate3d(0, -3px, 0) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: brightness(1);
+  }
+}
+
+/* ── 8. Cordially invited — Tracking reveal (letter-spacing animation) ── */
+.cs-cordially {
+  transform: translate3d(0, 8px, 0);
+  letter-spacing: 0.5em;
+}
+.curtain-synced-active .cs-cordially {
+  animation: cs-tracking-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.7s forwards;
+}
+@keyframes cs-tracking-reveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+    letter-spacing: 0.5em;
+  }
+  60% {
+    opacity: 0.8;
+    letter-spacing: 0.22em;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    letter-spacing: 0.18em;
+  }
+}
+
+/* ── 9. Groom Name (HARSHIT) — Grand scale entrance from below ── */
+.cs-groom {
+  transform: translate3d(0, 30px, 0) scale(0.6);
+}
+.curtain-synced-active .cs-groom {
+  animation: cs-grand-name 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.9s forwards;
+}
+@keyframes cs-grand-name {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0) scale(0.6);
+    filter: blur(3px);
+  }
+  35% {
+    opacity: 0.7;
+    filter: blur(0px);
+  }
+  65% {
+    transform: translate3d(0, -4px, 0) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* ── 10. Ampersand divider — Draw from center ── */
+.cs-ampersand {
+  transform: scaleX(0) scaleY(0.5);
+}
+.curtain-synced-active .cs-ampersand {
+  animation: cs-amp-draw 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.15s forwards;
+}
+@keyframes cs-amp-draw {
+  0% { opacity: 0; transform: scaleX(0) scaleY(0.5); }
+  50% { opacity: 0.7; transform: scaleX(0.8) scaleY(0.9); }
+  100% { opacity: 1; transform: scaleX(1) scaleY(1); }
+}
+
+/* ── 11. Bride Name (ANSHIKHA) — Grand scale entrance from below ── */
+.cs-bride {
+  transform: translate3d(0, 30px, 0) scale(0.6);
+}
+.curtain-synced-active .cs-bride {
+  animation: cs-grand-name 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.3s forwards;
+}
+
+/* ── 12. Tagline — Soft italic fade ── */
+.cs-tagline {
+  transform: translate3d(0, 8px, 0);
+}
+.curtain-synced-active .cs-tagline {
+  animation: cs-soft-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.6s forwards;
+}
+
+/* ── 13. Date — Soft fade with slight scale ── */
+.cs-date {
+  transform: translate3d(0, 8px, 0) scale(0.95);
+}
+.curtain-synced-active .cs-date {
+  animation: cs-date-reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 2.75s forwards;
+}
+@keyframes cs-date-reveal {
+  0% { opacity: 0; transform: translate3d(0, 8px, 0) scale(0.95); }
+  60% { opacity: 0.8; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* ── 14. Button — Bounce in with golden glow pulse ── */
+.cs-button {
+  transform: translate3d(0, 20px, 0) scale(0.85);
+}
+.curtain-synced-active .cs-button {
+  animation: cs-button-bounce 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 2.95s forwards;
+}
+@keyframes cs-button-bounce {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.85);
+  }
+  40% {
+    opacity: 0.8;
+    transform: translate3d(0, -6px, 0) scale(1.05);
+  }
+  70% {
+    transform: translate3d(0, 2px, 0) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* ── Shared: Soft slide up ── */
+@keyframes cs-soft-up {
+  0% { opacity: 0; transform: translate3d(0, 8px, 0); }
+  60% { opacity: 0.8; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @keyframes petal-drift {
@@ -257,73 +679,51 @@
   100% { background-position: 0% 0%; }
 }
 
+/* Heartbeat glow — smooth breathing, no box-shadow jank */
 @keyframes heartbeat-glow {
   0%, 100% { 
-    box-shadow: 0 0 60px hsl(var(--gold-primary) / 0.08);
+    opacity: 0.6;
     transform: scale(1);
-  }
-  7% { 
-    box-shadow: 0 0 100px hsl(var(--gold-primary) / 0.12);
-    transform: scale(1.02);
-  }
-  12% { 
-    box-shadow: 0 0 60px hsl(var(--gold-primary) / 0.08);
-    transform: scale(1);
-  }
-  19% { 
-    box-shadow: 0 0 100px hsl(var(--gold-primary) / 0.12);
-    transform: scale(1.02);
-  }
-  25% { 
-    box-shadow: 0 0 60px hsl(var(--gold-primary) / 0.08);
-    transform: scale(1);
-  }
-}
-
-/* Shloka text glow pulse */
-.shloka-glow {
-  animation: shloka-pulse 3s ease-in-out infinite;
-}
-@keyframes shloka-pulse {
-  0%, 100% { text-shadow: 0 0 25px hsl(var(--gold-primary) / 0.4), 0 0 50px hsl(var(--gold-primary) / 0.15); }
-  50% { text-shadow: 0 0 40px hsl(var(--gold-primary) / 0.6), 0 0 80px hsl(var(--gold-primary) / 0.25); }
-}
-
-/* Couple name glow pulse */
-.couple-name-glow {
-  animation: couple-glow 4s ease-in-out infinite;
-}
-@keyframes couple-glow {
-  0%, 100% { text-shadow: 0 0 30px hsl(var(--gold-primary) / 0.5), 0 2px 10px rgba(0,0,0,0.6); }
-  50% { text-shadow: 0 0 50px hsl(var(--gold-primary) / 0.7), 0 0 90px hsl(var(--gold-primary) / 0.3), 0 2px 10px rgba(0,0,0,0.6); }
-}
-
-@keyframes diya-flame {
-  0%, 100% { 
-    transform: scaleY(1) scaleX(1);
-    opacity: 1;
-  }
-  25% { 
-    transform: scaleY(1.1) scaleX(0.9);
-    opacity: 0.9;
   }
   50% { 
-    transform: scaleY(0.95) scaleX(1.05);
     opacity: 1;
-  }
-  75% { 
-    transform: scaleY(1.05) scaleX(0.95);
-    opacity: 0.95;
+    transform: scale(1.04);
   }
 }
 
+/* Shloka text glow pulse — smooth, GPU-friendly */
+.shloka-glow {
+  text-shadow: 0 0 30px hsl(var(--gold-primary) / 0.4), 0 0 60px hsl(var(--gold-primary) / 0.15);
+  animation: shloka-pulse 4s ease-in-out infinite;
+}
+@keyframes shloka-pulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* Couple name glow pulse — smooth breathing */
+.couple-name-glow {
+  text-shadow: 0 0 35px hsl(var(--gold-primary) / 0.5), 0 2px 10px rgba(0,0,0,0.6);
+  animation: couple-glow 5s ease-in-out infinite;
+}
+@keyframes couple-glow {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.01); }
+}
+
+/* Diya flame — smooth flicker, GPU-only transforms */
+@keyframes diya-flame {
+  0%, 100% { transform: scaleY(1) scaleX(1) translate3d(0,0,0); }
+  20% { transform: scaleY(1.08) scaleX(0.92) translate3d(0.5px, -0.5px, 0); }
+  40% { transform: scaleY(0.96) scaleX(1.04) translate3d(-0.3px, 0, 0); }
+  60% { transform: scaleY(1.05) scaleX(0.97) translate3d(0.3px, -0.3px, 0); }
+  80% { transform: scaleY(0.98) scaleX(1.02) translate3d(-0.5px, 0, 0); }
+}
+
+/* Diya glow — use opacity instead of box-shadow for GPU perf */
 @keyframes diya-glow {
-  0% { 
-    box-shadow: 0 0 0 hsl(var(--gold-primary) / 0);
-  }
-  100% { 
-    box-shadow: 0 0 30px hsl(var(--gold-primary) / 0.3);
-  }
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 @keyframes fade-slide-up {
@@ -404,36 +804,32 @@
 
 /* ===== GANESHA SECTION — Premium Animations ===== */
 
-/* Diya glow pulse */
+/* Diya glow pulse — smooth breathing */
 @keyframes diya-glow-pulse {
   0%, 100% {
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
     opacity: 0.5;
   }
   50% {
-    transform: scale(1.4);
-    opacity: 0.9;
+    transform: scale3d(1.3, 1.3, 1);
+    opacity: 0.85;
   }
 }
 
-/* Gold dust rising particles */
+/* Gold dust rising particles — simplified for GPU perf */
 @keyframes ganesha-dust-rise {
   0% {
-    transform: translate3d(0, 0, 0) scale(0.5);
+    transform: translate3d(0, 0, 0);
     opacity: 0;
   }
-  15% {
+  10% {
     opacity: 0.3;
   }
-  50% {
-    transform: translate3d(calc(-15px + 30px * var(--random, 0.5)), -45vh, 0) scale(1);
-    opacity: 0.25;
-  }
-  85% {
-    opacity: 0.1;
+  80% {
+    opacity: 0.15;
   }
   100% {
-    transform: translate3d(calc(-20px + 40px * var(--random, 0.5)), -100vh, 0) scale(0.3);
+    transform: translate3d(var(--drift-x, 10px), -95vh, 0);
     opacity: 0;
   }
 }
@@ -1597,11 +1993,11 @@
 @keyframes corner-glow-pulse {
   0%, 100% {
     opacity: 0.3;
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
   }
   50% {
-    opacity: 0.7;
-    transform: scale(1.3);
+    opacity: 0.6;
+    transform: scale3d(1.2, 1.2, 1);
   }
 }
 
