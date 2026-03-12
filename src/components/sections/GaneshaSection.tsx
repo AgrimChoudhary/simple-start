@@ -162,16 +162,14 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
         {/* Couple Names — BIG & prominent */}
         <div className={`cinematic-reveal ${r} delay-5 mb-2`}>
           <h1
-            className="font-display gold-shimmer leading-none"
+            className="font-display gold-shimmer leading-none whitespace-nowrap"
             style={{
-              fontSize: 'clamp(42px, 10vw, 90px)',
+              fontSize: 'clamp(32px, 8vw, 80px)',
               fontWeight: 700,
               letterSpacing: '0.02em',
             }}
           >
-            Harshit{' '}
-            <span className="text-accent font-heading italic" style={{ fontSize: '0.7em' }}>&amp;</span>
-            {' '}Anshika
+            Harshit <span className="text-accent font-heading italic" style={{ fontSize: '0.7em' }}>&amp;</span> Anshika
           </h1>
         </div>
 
