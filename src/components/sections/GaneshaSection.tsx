@@ -89,15 +89,15 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
           ॐ
         </p>
 
-        {/* Shloka - single elegant line */}
+        {/* Shloka - styled with glow animation */}
         <p
-          className={`cinematic-reveal ${r} delay-2 font-hindi font-semibold leading-relaxed tracking-wide mb-1`}
+          className={`cinematic-reveal ${r} delay-2 font-hindi font-semibold leading-relaxed tracking-wide mb-1 shloka-glow`}
           lang="hi"
           id="ganesha-heading"
           style={{
-            fontSize: 'clamp(12px, 2.8vw, 16px)',
+            fontSize: 'clamp(13px, 3vw, 18px)',
             color: 'hsl(var(--gold-primary))',
-            textShadow: '0 0 20px hsl(var(--gold-primary) / 0.2)',
+            textShadow: '0 0 25px hsl(var(--gold-primary) / 0.4), 0 0 50px hsl(var(--gold-primary) / 0.15)',
           }}
         >
           वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ। निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
