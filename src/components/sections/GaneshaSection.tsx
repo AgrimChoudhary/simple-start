@@ -35,10 +35,8 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
     >
       <SectionBorderFrame active={curtainOpen} variant="royal" />
 
-      {/* Layer 1: Midnight blue gradient */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'linear-gradient(180deg, hsl(216 72% 7%) 0%, hsl(214 60% 10%) 50%, hsl(216 72% 7%) 100%)',
-      }} />
+      {/* Layer 1: Dark base */}
+      <div className="absolute inset-0 pointer-events-none bg-black" />
 
       {/* Layer 2: Palace facade — HD visible */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
