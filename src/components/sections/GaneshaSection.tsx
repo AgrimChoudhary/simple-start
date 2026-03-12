@@ -38,26 +38,19 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
       {/* Layer 1: Dark base */}
       <div className="absolute inset-0 pointer-events-none bg-black" />
 
-      {/* Layer 2: Palace facade — HD visible */}
+      {/* Full palace background — fully visible */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <img
           src={palaceFacade}
           alt=""
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full min-w-[600px] max-w-none object-cover object-bottom h-[70%]"
-          style={{
-            opacity: 0.18,
-            mixBlendMode: 'screen',
-            filter: 'sepia(0.6) hue-rotate(-10deg) saturate(0.5) brightness(1.1)',
-            maskImage: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, transparent 85%)',
-            WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, transparent 85%)',
-          }}
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          style={{ opacity: 1 }}
         />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.5) 100%)',
+        }} />
       </div>
-
-      {/* Vignette */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse at center, transparent 40%, hsl(216 72% 7%) 100%)',
-      }} />
 
       {/* Main content */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-8 text-center max-w-2xl mx-auto min-h-full">
