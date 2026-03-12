@@ -40,35 +40,21 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
         background: 'linear-gradient(180deg, hsl(216 72% 7%) 0%, hsl(214 60% 10%) 50%, hsl(216 72% 7%) 100%)',
       }} />
 
-      {/* Layer 2: Palace facade */}
+      {/* Layer 2: Palace facade — HD visible */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <img
           src={palaceFacade}
           alt=""
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140%] max-w-none object-contain"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full min-w-[600px] max-w-none object-cover object-bottom h-[70%]"
           style={{
-            opacity: 0.06,
+            opacity: 0.18,
             mixBlendMode: 'screen',
-            filter: 'sepia(1) hue-rotate(-10deg) saturate(0.6) brightness(1.2)',
-            maskImage: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, transparent 75%)',
-            WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, transparent 75%)',
+            filter: 'sepia(0.6) hue-rotate(-10deg) saturate(0.5) brightness(1.1)',
+            maskImage: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, transparent 85%)',
+            WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, transparent 85%)',
           }}
         />
       </div>
-
-      {/* Layer 3: Soft gold radial glow */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse at 50% 30%, rgba(200,164,92,0.18) 0%, rgba(200,164,92,0.06) 35%, transparent 65%)',
-      }} />
-
-      {/* Layer 4: Gold dust particles */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: 'url(/images/gold-dust.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        opacity: 0.10,
-        animation: 'gold-dust-drift 30s linear infinite',
-      }} />
 
       {/* Vignette */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -164,7 +150,7 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
           <h1
             className="font-display gold-shimmer leading-none whitespace-nowrap"
             style={{
-              fontSize: 'clamp(32px, 8vw, 80px)',
+              fontSize: 'clamp(24px, 6vw, 52px)',
               fontWeight: 700,
               letterSpacing: '0.02em',
             }}
