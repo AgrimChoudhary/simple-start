@@ -150,7 +150,7 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
           <h1
             className="font-display gold-shimmer leading-none whitespace-nowrap"
             style={{
-              fontSize: 'clamp(32px, 8vw, 80px)',
+              fontSize: 'clamp(24px, 6vw, 52px)',
               fontWeight: 700,
               letterSpacing: '0.02em',
             }}
