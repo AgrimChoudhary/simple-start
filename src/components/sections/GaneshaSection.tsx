@@ -136,14 +136,15 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
           You are cordially invited to the wedding of
         </p>
 
-        {/* Couple Names — BIG & prominent */}
+        {/* Couple Names with shimmer + glow animation */}
         <div className={`cinematic-reveal ${r} delay-5 mb-2`}>
           <h1
-            className="font-display gold-shimmer leading-none whitespace-nowrap"
+            className="font-display gold-shimmer leading-none whitespace-nowrap couple-name-glow"
             style={{
               fontSize: 'clamp(24px, 6vw, 52px)',
               fontWeight: 700,
-              letterSpacing: '0.02em',
+              letterSpacing: '0.04em',
+              textShadow: '0 0 30px hsl(var(--gold-primary) / 0.5), 0 2px 10px rgba(0,0,0,0.6)',
             }}
           >
             Harshit <span className="text-accent font-heading italic" style={{ fontSize: '0.7em' }}>&amp;</span> Anshika
