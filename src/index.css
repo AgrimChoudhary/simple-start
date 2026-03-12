@@ -402,6 +402,58 @@
 
 /* curtain-sparkle removed — sparkles replaced by GPU glow layer */
 
+/* ===== GANESHA SECTION — Premium Animations ===== */
+
+/* Diya glow pulse */
+@keyframes diya-glow-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.9;
+  }
+}
+
+/* Gold dust rising particles */
+@keyframes ganesha-dust-rise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate3d(calc(-15px + 30px * var(--random, 0.5)), -45vh, 0) scale(1);
+    opacity: 0.25;
+  }
+  85% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translate3d(calc(-20px + 40px * var(--random, 0.5)), -100vh, 0) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Lotus bloom animation */
+@keyframes ganesha-lotus-bloom {
+  0% {
+    transform: scale(0) rotate(-30deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15) rotate(5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
 /* ===== GANESHA CTA BUTTON ===== */
 .ganesha-cta-button {
   position: relative;
