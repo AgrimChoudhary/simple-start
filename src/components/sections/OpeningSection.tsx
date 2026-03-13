@@ -378,77 +378,44 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
           <DiyaIcon lit={active} />
         </div>
 
-        {/* ── Couple Photo with Premium Animated Frame ── */}
+        {/* ── Couple Video with Royal Frame ── */}
         <div
-          className="opening-content-block relative mb-10 md:mb-14"
+          className="opening-content-block relative mb-8 md:mb-12"
           style={{
             opacity: step >= 3 ? 1 : 0,
-            transform: step >= 3 ? 'scale(1) translateY(0)' : 'scale(0.5) translateY(40px)',
-            transition: 'opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            transform: step >= 3 ? 'scale(1) translateY(0)' : 'scale(0.85) translateY(30px)',
+            transition: 'opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          {/* Jharokha arch frame above photo */}
-          <div
-            className="opening-photo-arch"
-            style={{
-              opacity: step >= 3 ? 1 : 0,
-              transform: step >= 3 ? 'translateY(0)' : 'translateY(-15px)',
-              transition: 'opacity 1s ease-out 0.3s, transform 1s ease-out 0.3s',
-            }}
-            aria-hidden="true"
-          >
-            <svg width="300" height="180" viewBox="0 0 300 180" fill="none" className="w-[240px] md:w-[320px]">
-              <path d="M20 180 L20 80 Q20 10 150 5 Q280 10 280 80 L280 180" stroke="hsl(38 36% 60%)" strokeWidth="1.2" fill="none" opacity="0.25" />
-              <path d="M40 180 L40 88 Q40 25 150 18 Q260 25 260 88 L260 180" stroke="hsl(38 36% 60%)" strokeWidth="0.7" fill="none" opacity="0.15" />
-              <path d="M55 95 Q80 65 110 88 Q140 55 170 85 Q200 55 230 88 Q260 65 255 95" stroke="hsl(38 36% 60%)" strokeWidth="0.5" fill="none" opacity="0.12" />
-              <path d="M135 12 L150 2 L165 12" stroke="hsl(38 36% 60%)" strokeWidth="1" fill="none" opacity="0.3" />
-              <circle cx="150" cy="18" r="5" stroke="hsl(38 36% 60%)" strokeWidth="0.5" fill="none" opacity="0.2" />
-              <circle cx="150" cy="18" r="2" fill="hsl(38 36% 60%)" opacity="0.15" />
-            </svg>
-          </div>
-
-          {/* Photo container with animated rings */}
-          <div className="couple-photo-container">
-            {/* Outer animated rings */}
-            <div className="couple-photo-orbit-1" aria-hidden="true" />
-            <div className="couple-photo-orbit-2" aria-hidden="true" />
-            <div className="couple-photo-orbit-3" aria-hidden="true" />
+          <div className="couple-video-frame">
+            {/* Animated corner accents */}
+            <div className="couple-video-corner couple-video-corner-tl" aria-hidden="true" />
+            <div className="couple-video-corner couple-video-corner-tr" aria-hidden="true" />
+            <div className="couple-video-corner couple-video-corner-bl" aria-hidden="true" />
+            <div className="couple-video-corner couple-video-corner-br" aria-hidden="true" />
             
-            {/* Main photo frame */}
-            <div className="couple-photo-frame-premium">
-              <div className="couple-photo-glow" aria-hidden="true" />
-              <div className="couple-photo-inner-premium">
-                <img
-                  src={coupleImage}
-                  alt="Harshit & Anshikha — Royal Wedding Illustration"
-                  loading="eager"
-                />
-              </div>
+            {/* Outer glow ring */}
+            <div className="couple-video-glow" aria-hidden="true" />
+            
+            {/* Video container */}
+            <div className="couple-video-inner">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={coupleImage}
+                className="w-full h-full object-cover"
+              >
+                {/* Replace src with actual couple video */}
+                <source src="" type="video/mp4" />
+                {/* Fallback to poster image */}
+              </video>
+              {/* Overlay gradient for cinematic feel */}
+              <div className="absolute inset-0 pointer-events-none" style={{
+                background: 'linear-gradient(180deg, rgba(7,24,48,0.15) 0%, transparent 30%, transparent 70%, rgba(7,24,48,0.2) 100%)',
+              }} />
             </div>
-          </div>
-
-          {/* Lotus ornament below photo */}
-          <div
-            className="opening-lotus-ornament"
-            style={{
-              opacity: step >= 3 ? 1 : 0,
-              transform: step >= 3 ? 'translateY(0) scaleX(1)' : 'translateY(-10px) scaleX(0)',
-              transition: 'opacity 0.8s ease-out 0.5s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s',
-            }}
-            aria-hidden="true"
-          >
-            <svg width="180" height="45" viewBox="0 0 180 45" fill="none">
-              <path d="M35 40 Q60 18 90 8 Q120 18 145 40" stroke="hsl(38 36% 60%)" strokeWidth="0.8" fill="none" opacity="0.35" />
-              <path d="M25 42 Q55 15 90 5 Q125 15 155 42" stroke="hsl(38 36% 60%)" strokeWidth="0.5" fill="none" opacity="0.2" />
-              <path d="M50 38 Q70 20 90 12 Q110 20 130 38" stroke="hsl(38 36% 60%)" strokeWidth="0.4" fill="none" opacity="0.15" />
-              <circle cx="90" cy="8" r="3" fill="hsl(38 36% 60%)" opacity="0.35" />
-              <circle cx="90" cy="8" r="6" stroke="hsl(38 36% 60%)" strokeWidth="0.3" fill="none" opacity="0.2" />
-              <circle cx="30" cy="38" r="1.5" fill="hsl(38 36% 60%)" opacity="0.25" />
-              <circle cx="150" cy="38" r="1.5" fill="hsl(38 36% 60%)" opacity="0.25" />
-              {/* Side decorative lines */}
-              <line x1="0" y1="25" x2="20" y2="25" stroke="hsl(38 36% 60%)" strokeWidth="0.4" opacity="0.2" />
-              <line x1="160" y1="25" x2="180" y2="25" stroke="hsl(38 36% 60%)" strokeWidth="0.4" opacity="0.2" />
-            </svg>
           </div>
         </div>
 
