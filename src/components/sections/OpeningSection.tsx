@@ -464,6 +464,26 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
           </h1>
         </div>
 
+        {/* ── Couple Illustration Figure ── */}
+        <div
+          className="opening-content-block mb-6 md:mb-8"
+          style={{
+            opacity: step >= 5 ? 1 : 0,
+            transform: step >= 5 ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.9)',
+            transition: 'opacity 1s ease-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
+        >
+          <div className="couple-figure-container">
+            <img
+              src={coupleImage}
+              alt="Harshit & Anshikha — Couple Illustration"
+              className="couple-figure-img"
+              loading="eager"
+            />
+            <div className="couple-figure-glow" aria-hidden="true" />
+          </div>
+        </div>
+
         {/* ── "Are Getting Married" text ── */}
         <div
           className="opening-content-block mb-5 md:mb-7"
