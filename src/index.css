@@ -1239,15 +1239,15 @@
   align-items: center;
 }
 
-/* ── Background layers ── */
-.cel-bg-layers {
+/* ── Royal Background Layers (Shared) ── */
+.royal-bg-layers {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
 }
 
-.cel-bg-base {
+.royal-bg-base {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -1259,7 +1259,7 @@
   );
 }
 
-.cel-bg-radial-top {
+.royal-bg-radial-top {
   position: absolute;
   inset: 0;
   background:
@@ -1268,14 +1268,14 @@
     radial-gradient(ellipse 50% 30% at 80% 10%, rgba(255,215,0,0.08) 0%, transparent 50%);
 }
 
-.cel-bg-radial-bottom {
+.royal-bg-radial-bottom {
   position: absolute;
   inset: 0;
   background:
     radial-gradient(ellipse 60% 30% at 50% 100%, rgba(0,100,200,0.15) 0%, transparent 60%);
 }
 
-.cel-bg-stars {
+.royal-bg-stars {
   position: absolute;
   inset: 0;
   background-image:
@@ -1289,13 +1289,20 @@
     radial-gradient(1px 1px at 65% 70%, rgba(255,215,0,0.2) 0%, transparent 100%),
     radial-gradient(1.5px 1.5px at 45% 80%, rgba(255,255,255,0.15) 0%, transparent 100%),
     radial-gradient(1px 1px at 92% 75%, rgba(255,215,0,0.3) 0%, transparent 100%);
-  animation: cel-stars-twinkle 4s ease-in-out infinite alternate;
+  animation: royal-stars-twinkle 4s ease-in-out infinite alternate;
 }
 
-@keyframes cel-stars-twinkle {
+@keyframes royal-stars-twinkle {
   0% { opacity: 0.7; }
   100% { opacity: 1; }
 }
+
+/* ── Legacy Aliases ── */
+.cel-bg-layers { @apply royal-bg-layers; }
+.cel-bg-base { @apply royal-bg-base; }
+.cel-bg-radial-top { @apply royal-bg-radial-top; }
+.cel-bg-radial-bottom { @apply royal-bg-radial-bottom; }
+.cel-bg-stars { @apply royal-bg-stars; }
 
 /* ── Diya Flame Animations ── */
 @keyframes cel-diya-flicker {

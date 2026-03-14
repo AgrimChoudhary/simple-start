@@ -1,154 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { weddingEvents, dayTabs } from '@/data/events';
 
+import RoyalBackground from '@/components/global/RoyalBackground';
+
 interface CelebrationsSectionProps {
   active: boolean;
   onNext: () => void;
 }
 
-/* ═══════════════════════════════════════════════
-   GLITTER PARTICLE SYSTEM
-   ═══════════════════════════════════════════════ */
-const GlitterCanvas: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: true });
-    if (!ctx) return;
-
-    let animId: number;
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-
-    const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
-    };
-
-    resize();
-    window.addEventListener('resize', resize);
-    
-    // Safety check after a small delay to ensure correct mounting size
-    const timer = setTimeout(resize, 100);
-
-    interface Particle {
-      x: number;
-      y: number;
-      size: number;
-      speedX: number;
-      speedY: number;
-      opacity: number;
-      opacityDir: number;
-      color: string;
-      twinkle: number;
-      twinkleSpeed: number;
-      glowSize: number;
-    }
-
-    const colors = [
-      '#FFD700', // Gold
-      '#FFECB3', // Soft Amber
-      '#FFFFFF', // White
-      '#FFF9C4', // Pale Yellow
-      '#FFC107', // Amber
-      '#FFF59D'  // Lemon
-    ];
-    
-    // Higher density for a more "magical" feel
-    const particleCount = width < 768 ? 80 : 160;
-    
-    const particles: Particle[] = Array.from({ length: particleCount }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 2 + 0.5,
-      speedX: (Math.random() - 0.5) * 0.4,
-      speedY: Math.random() * 0.7 + 0.3, // Constant falling down
-      opacity: Math.random() * 0.6 + 0.2,
-      opacityDir: Math.random() > 0.5 ? 0.005 : -0.005,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      twinkle: Math.random() * Math.PI * 2,
-      twinkleSpeed: Math.random() * 0.03 + 0.01,
-      glowSize: Math.random() * 10 + 5,
-    }));
-
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      particles.forEach(p => {
-        // Update physics
-        p.twinkle += p.twinkleSpeed;
-        
-        // Vertical movement + slight sine wave sway for "magical" drift
-        p.x += p.speedX + Math.sin(p.twinkle * 0.5) * 0.2;
-        p.y += p.speedY;
-
-        // Reset when falling out of bounds
-        if (p.y > height + 20) {
-          p.y = -20;
-          p.x = Math.random() * width;
-        }
-        if (p.x < -20) p.x = width + 20;
-        if (p.x > width + 20) p.x = -20;
-
-        // Opacity oscillation (twinkle)
-        const currentOpacity = p.opacity + Math.sin(p.twinkle) * 0.2;
-
-        ctx.save();
-        ctx.globalAlpha = Math.max(0.1, Math.min(0.9, currentOpacity));
-        
-        // Glow effect
-        ctx.shadowBlur = p.glowSize;
-        ctx.shadowColor = p.color;
-        ctx.fillStyle = p.color;
-
-        ctx.beginPath();
-        if (p.size > 1.8) {
-          // Draw tiny 4-pointed diamond/star
-          const s = p.size;
-          ctx.moveTo(p.x, p.y - s * 2);
-          ctx.lineTo(p.x + s * 0.6, p.y - s * 0.6);
-          ctx.lineTo(p.x + s * 2, p.y);
-          ctx.lineTo(p.x + s * 0.6, p.y + s * 0.6);
-          ctx.lineTo(p.x, p.y + s * 2);
-          ctx.lineTo(p.x - s * 0.6, p.y + s * 0.6);
-          ctx.lineTo(p.x - s * 2, p.y);
-          ctx.lineTo(p.x - s * 0.6, p.y - s * 0.6);
-        } else {
-          // Soft dust particle
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        }
-        ctx.fill();
-        ctx.restore();
-      });
-
-      animId = requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', resize);
-      clearTimeout(timer);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 1, mixBlendMode: 'screen' }}
-      aria-hidden="true"
-    />
-  );
-};
 
 
 
@@ -638,18 +498,8 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
     >
       <SharedPeacockDefs />
       
-      {/* ── LAYERED BACKGROUND ── */}
-      <div aria-hidden="true" className="cel-bg-layers">
-        {/* Rich royal blue gradient base */}
-        <div className="cel-bg-base"/>
-        {/* Radial light accents */}
-        <div className="cel-bg-radial-top"/>
-        <div className="cel-bg-radial-bottom"/>
-        {/* Stars / dust pattern */}
-        <div className="cel-bg-stars"/>
-        {/* Glitter canvas */}
-        <GlitterCanvas />
-      </div>
+      {/* ── SHARED ROYAL BACKGROUND ── */}
+      <RoyalBackground />
 
       {/* ── HANGING DECORATIONS (top) ── */}
       <HangingDecors />

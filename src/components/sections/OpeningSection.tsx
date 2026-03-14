@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
+import RoyalBackground from '@/components/global/RoyalBackground';
 import coupleImage from '@/assets/couple-illustration.png';
 
 interface OpeningSectionProps {
@@ -52,10 +53,9 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
 
   return (
     <section className="os-container" aria-labelledby="opening-heading">
-      {/* ══════ BACKGROUND LAYERS ══════ */}
-      <div className="os-bg-base" aria-hidden="true" />
-      <div className="os-bg-radial-glow" aria-hidden="true" />
-      <div className="os-bg-vignette" aria-hidden="true" />
+      {/* ══════ SHARED ROYAL BACKGROUND ══════ */}
+      <RoyalBackground />
+
       <div className="os-bg-grain" aria-hidden="true" />
 
       {/* Gold floating particles */}
