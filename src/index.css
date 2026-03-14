@@ -1403,7 +1403,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 480px;
+  max-width: 400px; /* Reduced from 480px */
   margin: 0 auto;
   padding: 52px 16px 40px;
   box-sizing: border-box;
@@ -1414,7 +1414,7 @@
 }
 
 @media (min-width: 768px) {
-  .cel-content { padding: 60px 32px 48px; max-width: 540px; }
+  .cel-content { padding: 60px 32px 48px; max-width: 460px; /* Reduced from 540px */ }
 }
 
 /* ── Heading block ── */
@@ -1545,7 +1545,7 @@
 .cel-cards-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px; /* Reduced from 24px */
 }
 
 /* Animate card on tab switch */
