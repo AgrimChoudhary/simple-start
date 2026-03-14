@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:wght@400;500&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500;600&family=Noto+Serif+Devanagari:wght@500;600&family=Mukta:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Alex+Brush&family=Pinyon+Script&family=Lora:wght@400;500&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500;600&family=Noto+Serif+Devanagari:wght@500;600&family=Mukta:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -1223,168 +1223,483 @@
 }
 
 /* ═══════════════════════════════════════════════
-   CELEBRATIONS SECTION — Premium Styles
+   CELEBRATIONS SECTION — Royal Redesign
    ═══════════════════════════════════════════════ */
 
-/* Section container — SCROLLABLE */
+/* ── Main Section Container ── */
+.cel-section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Background layers ── */
+.cel-bg-layers {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cel-bg-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    hsl(220, 72%, 6%) 0%,
+    hsl(222, 68%, 9%) 30%,
+    hsl(218, 65%, 11%) 60%,
+    hsl(220, 70%, 7%) 100%
+  );
+}
+
+.cel-bg-radial-top {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(100,145,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 20% 10%, rgba(255,215,0,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 30% at 80% 10%, rgba(255,215,0,0.08) 0%, transparent 50%);
+}
+
+.cel-bg-radial-bottom {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 30% at 50% 100%, rgba(0,100,200,0.15) 0%, transparent 60%);
+}
+
+.cel-bg-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 8% 15%, rgba(255,215,0,0.35) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 22% 35%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 38% 12%, rgba(255,215,0,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 45%, rgba(255,236,180,0.2) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 72% 18%, rgba(255,215,0,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 60%, rgba(255,215,0,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 70%, rgba(255,215,0,0.2) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 80%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 75%, rgba(255,215,0,0.3) 0%, transparent 100%);
+  animation: cel-stars-twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes cel-stars-twinkle {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* ── Diya Flame Animations ── */
+@keyframes cel-diya-flicker {
+  0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.9; }
+  25% { transform: scale(1.05, 0.95) rotate(1deg); opacity: 1; }
+  50% { transform: scale(0.95, 1.05) rotate(-0.5deg); opacity: 0.8; }
+  75% { transform: scale(1.02) rotate(0.5deg); opacity: 0.95; }
+}
+
+@keyframes cel-diya-glow {
+  0%, 100% { filter: drop-shadow(0 0 5px #FF9800) blur(0.5px); opacity: 0.4; }
+  50% { filter: drop-shadow(0 0 12px #FF9800) blur(1px); opacity: 0.7; }
+}
+
+.cel-diya-flame-inner {
+  animation: cel-diya-flicker 0.6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.cel-diya-flame-glow {
+  animation: cel-diya-glow 1.5s ease-in-out infinite;
+}
+
+/* ── Peacock (Mayur) Animations ── */
+@keyframes cel-peacock-neck {
+  0%, 100% { transform: rotate(0deg) translateY(0) scale(1); }
+  25% { transform: rotate(5deg) translateY(-1px) scale(1.02); }
+  50% { transform: rotate(-2deg) translateY(0.5px) scale(0.98); }
+  75% { transform: rotate(3deg) translateY(-1.5px) scale(1.01); }
+}
+
+@keyframes cel-peacock-tail {
+  0%, 100% { transform: rotate(0deg) scaleX(1); }
+  50% { transform: rotate(-1.5deg) scaleX(1.02); }
+}
+
+@keyframes cel-peacock-wing-rustle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+
+@keyframes cel-peacock-body-breath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes cel-peacock-crest {
+  0%, 100% { opacity: 0.7; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-1px); }
+}
+
+@keyframes cel-peacock-eye {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.1); filter: brightness(1.2); }
+}
+
+.cel-peacock-neck-group {
+  animation: cel-peacock-neck 5s ease-in-out infinite;
+  transform-origin: bottom left;
+  transform-box: fill-box;
+}
+
+.cel-peacock-tail-group {
+  animation: cel-peacock-tail 6s ease-in-out infinite;
+  transform-origin: bottom right;
+  transform-box: fill-box;
+}
+
+.cel-peacock-body {
+  animation: cel-peacock-body-breath 4s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.cel-peacock-wing {
+  animation: cel-peacock-wing-rustle 3s ease-in-out infinite;
+  transform-origin: center left;
+  transform-box: fill-box;
+}
+
+.cel-peacock-crest-dot {
+  animation: cel-peacock-crest 2s ease-in-out infinite;
+}
+
+.cel-peacock-ocellus {
+  animation: cel-peacock-eye 4s ease-in-out infinite;
+}
+
+/* For the corner feathers */
+.cel-feather-wisp {
+  animation: cel-peacock-tail 5s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+/* ── Content wrapper ── */
+.cel-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 52px 16px 40px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 480px) {
+  .cel-content { padding: 56px 24px 44px; }
+}
+
+@media (min-width: 768px) {
+  .cel-content { padding: 60px 32px 48px; max-width: 620px; }
+}
+
+/* ── Heading block ── */
+.cel-heading-block {
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.cel-heading-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -15px; /* Pull title up into the badge */
+  position: relative;
+  z-index: 2;
+}
+
+.cel-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ── Title ── */
+.cel-title {
+  font-family: 'Cinzel', 'Playfair Display', serif;
+  font-size: clamp(24px, 6vw, 32px);
+  font-weight: 400;
+  color: #E2E8F0;
+  letter-spacing: 0.02em;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cel-subtitle-hindi {
+  font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
+  font-size: clamp(11px, 2vw, 13px);
+  color: #E2E8F0;
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.cel-title-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cel-divider-line {
+  height: 1px;
+  width: 100px;
+  background: linear-gradient(90deg, transparent, rgba(130, 160, 220, 0.5), transparent);
+}
+
+/* ── Day Tabs ── */
+.cel-tabs-wrapper {
+  display: flex;
+  gap: 0;
+  border-radius: 12px;
+  background: rgba(10, 20, 50, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(130, 160, 220, 0.3);
+  margin: 0 auto 36px auto;
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.cel-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cel-tab:hover {
+  background: rgba(255,215,0,0.06);
+}
+
+.cel-tab--active {
+  background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,215,0,0.06));
+  border: 1px solid rgba(255,215,0,0.3);
+  box-shadow: 0 0 12px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,215,0,0.15);
+}
+
+.cel-tab-date {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(12px, 3vw, 14px);
+  font-weight: 600;
+  color: rgba(255,215,0,0.9);
+  letter-spacing: 0.03em;
+}
+
+.cel-tab:not(.cel-tab--active) .cel-tab-date {
+  color: rgba(255,255,255,0.55);
+}
+
+.cel-tab-sub {
+  display: block;
+  font-family: 'Lato', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,215,0,0.45);
+  margin-top: 2px;
+}
+
+.cel-tab:not(.cel-tab--active) .cel-tab-sub {
+  color: rgba(255,255,255,0.3);
+}
+
+/* ── Cards Container ── */
+.cel-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* Animate card on tab switch */
+@keyframes cel-fade-up {
+  0% { opacity: 0; transform: translateY(28px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Shimmer Sweep Animation ── */
+@keyframes cel-shimmer-sweep {
+  0% { transform: translate(-150%, -150%) rotate(45deg); }
+  100% { transform: translate(150%, 150%) rotate(45deg); }
+}
+
+.cel-event-card {
+  position: relative;
+  margin-top: 28px;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.cel-event-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  z-index: 20 !important;
+}
+
+.cel-frame-wrapper {
+  position: relative;
+  padding: 4px;
+  transition: box-shadow 0.5s ease;
+}
+
+.cel-event-card:hover .cel-frame-wrapper {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.15);
+}
+
+.cel-frame-shimmer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+.cel-frame-shimmer::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0) 48%,
+    rgba(255, 215, 0, 0.15) 50%,
+    rgba(255, 255, 255, 0) 52%,
+    transparent 55%
+  );
+  transform: rotate(45deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cel-event-card:hover .cel-frame-shimmer::after {
+  opacity: 1;
+  animation: cel-shimmer-sweep 1.2s infinite;
+}
+
+/* Internal element animations on hover */
+.cel-event-card .cel-badge-wrapper {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cel-event-card:hover .cel-badge-wrapper {
+  transform: translateY(-5px) scale(1.1);
+}
+
+.cel-event-card h3 {
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.cel-event-card:hover h3 {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 12px rgba(255,215,0,0.7));
+}
+
+/* ── Map Button ── */
+.cel-map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 24px;
+  border: 1px solid #FFD700;
+  background: rgba(10, 20, 50, 0.9);
+  color: #FFFFFF;
+  font-family: 'Lato', sans-serif;
+  font-size: clamp(11px, 2.5vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 0 8px rgba(255,215,0,0.1);
+  margin-top: 6px;
+}
+
+.cel-map-btn:hover {
+  background: rgba(20, 40, 80, 0.9);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 0 0 12px rgba(255,215,0,0.2);
+  transform: translateY(-2px);
+  border-color: #FFF9C4;
+}
+
+/* ── Next button wrap ── */
+.cel-next-btn-wrap {
+  text-align: center;
+  margin-top: 32px;
+  padding-bottom: 80px;
+}
+
+.cel-next-btn {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255,215,0,0.85);
+  background: transparent;
+  border: 1px solid rgba(255,215,0,0.35);
+  padding: 12px 32px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cel-next-btn:hover {
+  background: rgba(255,215,0,0.1);
+  border-color: rgba(255,215,0,0.6);
+  box-shadow: 0 0 20px rgba(255,215,0,0.2);
+  color: #FFD700;
+  transform: translateY(-2px);
+}
+
+/* Celebrations section — OLD class aliases for backwards compat */
 .celebrations-section {
-  @apply relative w-full flex flex-col items-center;
+  position: relative;
+  width: 100%;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   background: hsl(var(--background));
   scroll-behavior: smooth;
-}
-
-/* Floating gold dust effect */
-.celebrations-particles {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 10% 20%, hsl(var(--primary) / 0.15), transparent),
-    radial-gradient(1px 1px at 30% 50%, hsl(var(--primary) / 0.1), transparent),
-    radial-gradient(1.5px 1.5px at 55% 15%, hsl(var(--primary) / 0.12), transparent),
-    radial-gradient(1px 1px at 70% 70%, hsl(var(--primary) / 0.08), transparent),
-    radial-gradient(1px 1px at 85% 35%, hsl(var(--primary) / 0.1), transparent),
-    radial-gradient(1.5px 1.5px at 45% 85%, hsl(var(--primary) / 0.12), transparent),
-    radial-gradient(1px 1px at 15% 65%, hsl(var(--primary) / 0.08), transparent),
-    radial-gradient(1px 1px at 90% 90%, hsl(var(--primary) / 0.1), transparent);
-  animation: celebrations-dust-drift 20s linear infinite;
-}
-
-@keyframes celebrations-dust-drift {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-30px); }
-}
-
-/* Paisley borders */
-.celebrations-border-left,
-.celebrations-border-right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 40px;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.06;
-  background: repeating-linear-gradient(
-    180deg,
-    transparent 0px,
-    hsl(var(--primary) / 0.3) 60px,
-    transparent 120px
-  );
-  mask-image: linear-gradient(180deg, transparent, white 20%, white 80%, transparent);
-  -webkit-mask-image: linear-gradient(180deg, transparent, white 20%, white 80%, transparent);
-}
-.celebrations-border-left { left: 0; }
-.celebrations-border-right { right: 0; }
-
-/* ── Glass Tabs ── */
-.celebrations-tabs-wrapper {
-  @apply sticky top-0 z-20 mb-8 rounded-xl mx-auto max-w-md;
-  background: hsl(var(--bg-card) / 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid hsl(var(--primary) / 0.12);
-  box-shadow: 0 8px 32px hsl(var(--background) / 0.5);
-}
-
-.celebrations-tab {
-  @apply flex-1 relative py-3 px-3 rounded-lg font-ui text-sm font-medium transition-all duration-300 cursor-pointer;
-  color: hsl(var(--muted));
-}
-.celebrations-tab:hover { color: hsl(var(--foreground) / 0.7); }
-.celebrations-tab--active { color: hsl(var(--primary)); }
-
-.celebrations-tab-bg {
-  background: hsl(var(--secondary) / 0.6);
-  animation: scale-fade-in 0.25s ease-out;
-}
-
-/* ── Event Card — Royal Farmaan ── */
-.celebrations-card {
-  @apply relative rounded-2xl p-7 md:p-9 transition-all duration-500;
-  background: linear-gradient(
-    165deg,
-    hsl(var(--card)) 0%,
-    hsl(218 50% 13%) 50%,
-    hsl(var(--card)) 100%
-  );
-  border: 1px solid hsl(var(--primary) / 0.15);
-  box-shadow:
-    0 4px 24px hsl(var(--primary) / 0.04),
-    0 1px 3px hsl(var(--background) / 0.3);
-  animation: celebrations-card-in 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-}
-
-.celebrations-card:hover {
-  border-color: hsl(var(--primary) / 0.35);
-  box-shadow:
-    0 8px 40px hsl(var(--primary) / 0.1),
-    0 2px 8px hsl(var(--primary) / 0.06),
-    inset 0 1px 0 hsl(var(--primary) / 0.05);
-  transform: translateY(-2px);
-}
-
-/* Card inner glow line at top */
-.celebrations-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 20px;
-  right: 20px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, hsl(var(--primary) / 0.3) 30%, hsl(var(--primary) / 0.5) 50%, hsl(var(--primary) / 0.3) 70%, transparent 100%);
-}
-
-.celebrations-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 30px;
-  right: 30px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.15), transparent);
-}
-
-@keyframes celebrations-card-in {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.97);
-    filter: blur(4px);
-  }
-  60% {
-    filter: blur(0px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-  }
-}
-
-/* ── Map Button ── */
-.celebrations-map-btn {
-  @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-ui font-medium transition-all duration-300;
-  border: 1px solid hsl(var(--primary) / 0.35);
-  color: hsl(var(--text-cream));
-  position: relative;
-  overflow: hidden;
-}
-
-.celebrations-map-btn:hover {
-  border-color: hsl(var(--accent));
-  background: hsl(var(--primary) / 0.08);
-  box-shadow: 0 2px 12px hsl(var(--primary) / 0.12);
-}
-
-.celebrations-map-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.06), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ═══════════════════════════════════════════════
