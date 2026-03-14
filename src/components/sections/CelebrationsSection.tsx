@@ -28,8 +28,8 @@ const PeacockCorner: React.FC<{ pos: 'tl' | 'tr' | 'bl' | 'br' }> = ({ pos }) =>
         bottom: !isTop ? '-6px' : 'auto',
         left: isLeft ? '-6px' : 'auto',
         right: !isLeft ? '-6px' : 'auto',
-        width: '64px',
-        height: '64px',
+        width: '48px',
+        height: '48px',
         zIndex: 4,
         pointerEvents: 'none',
         transform: `scaleX(${isLeft ? 1 : -1}) scaleY(${isTop ? 1 : -1})`,
@@ -68,7 +68,7 @@ const PeacockCorner: React.FC<{ pos: 'tl' | 'tr' | 'bl' | 'br' }> = ({ pos }) =>
 const OrnateFrame: React.FC<{ children: React.ReactNode; glowColor?: string }> = ({
   children, glowColor = '#FFD700'
 }) => (
-  <div className="cel-frame-wrapper" style={{ position: 'relative', marginTop: '30px' }}>
+  <div className="cel-frame-wrapper" style={{ position: 'relative', marginTop: '24px' }}>
     {/* Inner background container */}
     <div style={{
       position: 'relative',
@@ -76,7 +76,7 @@ const OrnateFrame: React.FC<{ children: React.ReactNode; glowColor?: string }> =
       borderRadius: '2px', // Sharp inner corners
       background: 'linear-gradient(180deg, rgba(8, 20, 65, 0.85) 0%, rgba(12, 28, 85, 0.95) 50%, rgba(10, 24, 75, 0.85) 100%)',
       boxShadow: `0 0 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(0,20,80,0.5)`,
-      padding: '44px 24px 32px',
+      padding: '36px 20px 24px',
       zIndex: 1,
     }}>
       {/* Outer framing lines */}
@@ -164,8 +164,8 @@ const EventBadge: React.FC<{ icon: string }> = ({ icon }) => (
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 10,
-    width: 48,
-    height: 48,
+    width: 40,
+    height: 40,
     borderRadius: '50%',
     background: 'linear-gradient(135deg, #FFD700, #B8860B)', // Thin solid gold border effect
     padding: '2px', // Border width
@@ -179,7 +179,7 @@ const EventBadge: React.FC<{ icon: string }> = ({ icon }) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '22px',
+      fontSize: '18px',
       filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.5))',
     }}>
       {icon}
@@ -253,7 +253,7 @@ const SharedPeacockDefs: React.FC = () => (
 );
 
 const EventBottomDecor: React.FC = () => (
-  <svg viewBox="0 0 340 120" width="100%" height="auto" style={{ maxWidth: '340px', filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.4))' }}>
+  <svg viewBox="0 0 340 120" width="100%" height="auto" style={{ maxWidth: '280px', filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.4))' }}>
     {/* Platform */}
     <ellipse cx="170" cy="95" rx="70" ry="15" fill="#0F172A" stroke="#D4AF37" strokeWidth="2"/>
     <ellipse cx="170" cy="95" rx="60" ry="10" fill="none" stroke="#D4AF37" strokeWidth="1" strokeDasharray="4 2"/>
@@ -305,7 +305,7 @@ const EventCard: React.FC<{
       className="cel-event-card"
       style={{
         position: 'relative',
-        marginTop: '28px',
+        marginTop: '20px',
         animation: `cel-fade-up 0.55s ease-out ${index * 0.2}s both`,
       }}
     >
@@ -315,7 +315,7 @@ const EventCard: React.FC<{
         {/* Event Name */}
         <h3 className="cel-event-title" style={{
           fontFamily: "'Cinzel', 'Playfair Display', serif",
-          fontSize: 'clamp(22px, 5.5vw, 28px)',
+          fontSize: 'clamp(20px, 5vw, 24px)',
           textAlign: 'center',
           background: 'linear-gradient(135deg, #FFD700 0%, #FFF9C4 40%, #FFD700 70%, #FF8F00 100%)',
           WebkitBackgroundClip: 'text',
@@ -332,7 +332,7 @@ const EventCard: React.FC<{
         {/* Hindi name */}
         <p style={{
           textAlign: 'center',
-          fontSize: 'clamp(14px, 3vw, 16px)',
+          fontSize: 'clamp(12px, 2.5vw, 14px)',
           color: 'rgba(255,215,0,0.75)',
           fontFamily: "'Noto Serif Devanagari', serif",
           marginBottom: '16px',
@@ -360,7 +360,7 @@ const EventCard: React.FC<{
         }}>
           <span style={{ fontSize: '16px', filter: 'drop-shadow(0 0 5px rgba(255,152,0,0.5))' }}>📅</span>
           <span style={{
-            fontSize: 'clamp(14px, 3.5vw, 17px)',
+            fontSize: 'clamp(13px, 3vw, 15px)',
             color: 'rgba(255,255,255,0.95)',
             letterSpacing: '0.03em',
             fontWeight: 600,
@@ -369,7 +369,7 @@ const EventCard: React.FC<{
           </span>
           <span style={{ color: '#D4AF37', fontSize: '14px', opacity: 0.6 }}>⬥</span>
           <span style={{
-            fontSize: 'clamp(14px, 3.5vw, 17px)',
+            fontSize: 'clamp(13px, 3vw, 15px)',
             color: 'rgba(255,255,255,0.95)',
             fontWeight: 600,
           }}>
@@ -395,11 +395,11 @@ const EventCard: React.FC<{
               border: `1.2px solid ${event.dressColor || 'rgba(255,215,0,0.4)'}`,
               background: `linear-gradient(135deg, ${event.dressColor || '#FFD700'}1a, transparent)`,
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(13px, 3vw, 15px)',
+              fontSize: 'clamp(12px, 2.8vw, 14px)',
               fontWeight: 700,
               letterSpacing: '0.04em',
               color: '#FFFFFF',
-              boxShadow: `0 4px 15px rgba(0,0,0,0.3), 0 0 10px ${event.dressColor || '#FFD700'}20`,
+              boxShadow: `0 4px 12px rgba(0,0,0,0.3), 0 0 8px ${event.dressColor || '#FFD700'}20`,
             }}>
               {event.dressColor && (
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: event.dressColor, boxShadow: `0 0 6px ${event.dressColor}` }}/>
@@ -419,7 +419,7 @@ const EventCard: React.FC<{
           <p style={{
             textAlign: 'center',
             fontFamily: "'Cinzel', serif",
-            fontSize: 'clamp(16px, 4vw, 19px)',
+            fontSize: 'clamp(14px, 3.5vw, 17px)',
             color: '#FFFFFF',
             fontWeight: 700,
             marginBottom: '4px',
@@ -431,7 +431,7 @@ const EventCard: React.FC<{
           <p style={{
             textAlign: 'center',
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(12px, 3vw, 15px)',
+            fontSize: 'clamp(11px, 2.8vw, 14px)',
             color: 'rgba(255,255,255,0.7)',
             fontStyle: 'italic',
             marginBottom: '20px',
@@ -532,7 +532,7 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
 
           <div className="cel-header-accent" style={{ 
             fontFamily: "'Alex Brush', cursive", 
-            fontSize: 'clamp(28px, 6vw, 36px)', 
+            fontSize: 'clamp(24px, 5vw, 30px)', 
             color: '#FFD700', 
             marginBottom: '-10px',
             opacity: 0.9,
@@ -550,7 +550,7 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
             
             <h2 id="cel-heading" className="cel-title" style={{
               fontFamily: "'Cinzel Decorative', serif",
-              fontSize: 'clamp(26px, 7vw, 42px)',
+              fontSize: 'clamp(22px, 6vw, 34px)',
               fontWeight: 700,
               letterSpacing: '0.05em',
               background: 'linear-gradient(135deg, #FFD700 0%, #FFF9C4 45%, #FFD700 70%, #B8860B 100%)',
