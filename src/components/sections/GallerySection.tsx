@@ -3,6 +3,7 @@ import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 import RoyalBackground from '@/components/global/RoyalBackground';
+import FamilySection from '@/components/sections/FamilySection';
 
 interface GallerySectionProps {
   active: boolean;
@@ -318,7 +319,11 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
       <div className="relative z-10 w-full max-w-3xl mx-auto px-4 md:px-6 pt-10 pb-16">
 
         {/* Section Heading */}
-        <div className="text-center mb-8" style={{ animation: active ? 'fade-slide-up 0.5s ease-out' : 'none' }}>
+        {/* ── Family Section (shown first) ── */}
+        <FamilySection active={active} />
+
+        {/* ── Gallery Heading ── */}
+        <div className="text-center mb-8" style={{ animation: active ? 'fade-slide-up 0.5s ease-out 0.6s both' : 'none' }}>
           <div className="flex items-center justify-center gap-3 mb-1">
             <DiyaIcon lit={active} />
             <h2 id="gallery-heading" className="font-heading text-[28px] md:text-[42px] gold-shimmer-slow leading-none">
