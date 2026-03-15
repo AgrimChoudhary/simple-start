@@ -3,6 +3,7 @@ import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 import RoyalBackground from '@/components/global/RoyalBackground';
+import FamilySection from '@/components/sections/FamilySection';
 
 interface GallerySectionProps {
   active: boolean;
