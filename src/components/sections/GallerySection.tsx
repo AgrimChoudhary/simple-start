@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
+import RoyalBackground from '@/components/global/RoyalBackground';
 
 interface GallerySectionProps {
   active: boolean;
@@ -303,19 +304,8 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
       className="gallery-section"
       aria-labelledby="gallery-heading"
     >
-      {/* ── Layered background ── */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0" style={{
-          background: `
-            radial-gradient(ellipse 70% 40% at 50% 10%, hsl(var(--card) / 0.5) 0%, transparent 60%),
-            radial-gradient(ellipse 50% 30% at 80% 70%, hsl(218 45% 12% / 0.4) 0%, transparent 50%),
-            radial-gradient(ellipse 50% 30% at 15% 60%, hsl(218 45% 12% / 0.3) 0%, transparent 50%),
-            hsl(var(--background))
-          `,
-        }} />
-        <div className="jaali-overlay" />
-        <div className="celebrations-particles" />
-      </div>
+      {/* ── Royal Background (same as Events section) ── */}
+      <RoyalBackground />
 
       {/* Border frame */}
       <SectionBorderFrame active={active} variant="standard" />
@@ -339,52 +329,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
           <GoldDivider />
         </div>
 
-        {/* ── Jharokha Video Frame ── */}
-        <JharokhaFrame active={active}>
-          <div className="aspect-video flex items-center justify-center relative" style={{ background: 'hsl(var(--bg-card))' }}>
-            {/* Ambient glow behind play button */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-32 h-32 rounded-full" style={{
-                background: 'radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 70%)',
-              }} />
-            </div>
 
-            {/* Play button */}
-            <button
-              className="relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 group/play cursor-pointer"
-              style={{
-                background: 'hsl(var(--primary) / 0.15)',
-                border: '2px solid hsl(var(--primary) / 0.5)',
-                boxShadow: '0 0 30px hsl(var(--primary) / 0.1)',
-              }}
-              aria-label="Play pre-wedding video"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" className="text-primary ml-1 group-hover/play:scale-110 transition-transform">
-                <polygon points="6,3 20,12 6,21" fill="currentColor" />
-              </svg>
-              {/* Pulse ring */}
-              <div className="absolute inset-0 rounded-full border border-primary/30 animate-ping" style={{ animationDuration: '2s' }} />
-            </button>
-
-            {/* Video label */}
-            <p className="absolute bottom-3 left-0 right-0 text-center font-ui text-[11px] text-muted tracking-wider uppercase">
-              Pre-Wedding Video
-            </p>
-          </div>
-        </JharokhaFrame>
-
-        {/* Caption below frame */}
-        <p
-          className="text-center font-heading italic text-sm md:text-base text-muted mt-5 mb-2"
-          style={{ animation: active ? 'fade-in 0.4s ease-out 0.5s both' : 'none' }}
-        >
-          <span className="font-hindi not-italic" lang="hi">हमारी कहानी</span>
-          <span className="mx-2 text-primary/30">·</span>
-          Our Journey Together
-        </p>
-
-        {/* Marigold divider */}
-        <MarigoldDivider />
 
         {/* ── Photo Gallery ── */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-10">
