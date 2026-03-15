@@ -794,14 +794,12 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
         </div>
 
         {/* ── Contact Overlay ── */}
-        <AnimatePresence>
-          {activeContactGroup && (
-            <FamilyContactsOverlay
-              group={activeContactGroup}
-              onClose={() => setActiveContactGroup(null)}
-            />
-          )}
-        </AnimatePresence>
+        {activeContactGroup && (
+          <FamilyContactsOverlay
+            group={activeContactGroup}
+            onClose={() => setActiveContactGroup(null)}
+          />
+        )}
 
         {/* ── Footer ── */}
         <footer className="rsvp-footer w-full" style={{ animation: active ? 'fade-in 0.5s ease-out 1.2s both' : 'none' }}>
