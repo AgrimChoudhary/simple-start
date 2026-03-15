@@ -3397,6 +3397,173 @@
 
   .cel-diya-glow {
     width: 25px !important;
-    height: 25px !important;
+     height: 25px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   FAMILY SECTION — Royal Card, Jharokha, Modal
+   ═══════════════════════════════════════════════════ */
+
+/* Royal Card Animated Gradient Border */
+.royal-card-wrapper {
+  position: relative;
+  border-radius: 1rem;
+  z-index: 1;
+}
+.royal-card-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 1.05rem;
+  background: linear-gradient(
+    60deg,
+    hsl(var(--primary) / 0.05),
+    hsl(var(--primary) / 0.4),
+    hsl(var(--primary) / 0.05),
+    hsl(var(--primary) / 0.4)
+  );
+  background-size: 300% 300%;
+  animation: family-border-flow 6s linear infinite;
+  z-index: -1;
+  opacity: 0.3;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .royal-card-wrapper::before {
+  opacity: 0.6;
+  inset: -1.5px;
+  filter: blur(2px);
+}
+
+@keyframes family-border-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Premium Button — Gold Shine */
+.btn-royal {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--gold-tertiary)) 0%,
+    hsl(var(--primary)) 25%,
+    hsl(36 30% 94%) 50%,
+    hsl(var(--primary)) 75%,
+    hsl(var(--gold-tertiary)) 100%
+  );
+  background-size: 200% auto;
+  animation: family-shine 4s linear infinite;
+  color: hsl(var(--background));
+  border: 1px solid hsl(var(--foreground) / 0.15);
+  box-shadow: 0 4px 15px hsl(var(--background) / 0.4);
+}
+.btn-royal:hover {
+  animation: family-shine 2s linear infinite;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px hsl(var(--primary) / 0.25);
+}
+
+@keyframes family-shine {
+  to { background-position: 200% center; }
+}
+
+/* Jharokha SVG Path Draw Animation */
+.jharokha-draw .jharokha-path {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: jharokha-draw-in 2s ease-out forwards;
+}
+@keyframes jharokha-draw-in {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Pulsing Frame Glow */
+.animate-frame-pulse {
+  animation: family-frame-glow-pulse 3s ease-in-out infinite;
+}
+@keyframes family-frame-glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 2px hsl(var(--primary) / 0.15)); }
+  50% { filter: drop-shadow(0 0 6px hsl(var(--primary) / 0.5)); }
+}
+
+/* Family Card Entrance */
+.family-card-enter {
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  animation: family-card-in 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+@keyframes family-card-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal Backdrop */
+.family-modal-backdrop {
+  animation: family-backdrop-in 0.3s ease-out;
+}
+@keyframes family-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal 3D Flip Entrance */
+.family-modal-enter {
+  animation: family-modal-flip 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+@keyframes family-modal-flip {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateX(12deg) scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg) scale(1) translateY(0);
+  }
+}
+
+/* Member Card Staggered Entrance */
+.family-member-card {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  animation: family-member-in 0.4s ease-out forwards;
+}
+@keyframes family-member-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Member card hover */
+.family-member-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 25px hsl(var(--primary) / 0.12);
+}
+
+/* Custom scrollbar for modal */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 2px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .family-card-enter {
+    animation-duration: 0.5s;
+  }
+  .btn-royal {
+    padding: 6px 16px;
+    font-size: 8px;
   }
 }
