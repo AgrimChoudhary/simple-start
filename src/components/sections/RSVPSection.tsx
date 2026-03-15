@@ -272,8 +272,8 @@ const FamilyContactsOverlay: React.FC<{
       <div className="mt-8">
         <GoldDivider />
       </div>
-    </motion.div>
-  </motion.div>
+    </div>
+  </div>
 );
 
 /* ═══ Contact Card — Premium ═══ */
