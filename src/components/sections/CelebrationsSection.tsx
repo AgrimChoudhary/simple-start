@@ -68,39 +68,61 @@ const PeacockCorner: React.FC<{ pos: 'tl' | 'tr' | 'bl' | 'br' }> = ({ pos }) =>
 const OrnateFrame: React.FC<{ children: React.ReactNode; glowColor?: string }> = ({
   children, glowColor = '#FFD700'
 }) => (
-  <div className="cel-frame-wrapper" style={{ position: 'relative', marginTop: '16px' }}>
+  <div className="cel-frame-wrapper" style={{ 
+    position: 'relative', 
+    marginTop: '0px',
+    padding: '2.5px', // Space for the rotating border glow
+    borderRadius: '24px',
+    overflow: 'hidden',
+    background: 'rgba(0,0,0,0.2)',
+    boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+  }}>
+    {/* Rotating Glow Border Element */}
+    <div className="cel-glow-border-layer" />
+
     {/* Inner background container */}
     <div style={{
       position: 'relative',
-      border: `1.5px solid rgba(212, 175, 55, 0.4)`,
-      borderRadius: '2px', // Sharp inner corners
-      background: 'linear-gradient(180deg, rgba(8, 20, 65, 0.85) 0%, rgba(12, 28, 85, 0.95) 50%, rgba(10, 24, 75, 0.85) 100%)',
-      boxShadow: `0 0 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(0,20,80,0.5)`,
-      padding: '28px 16px 20px',
+      borderRadius: '22px', 
+      background: 'linear-gradient(180deg, rgba(8, 20, 65, 0.92) 0%, rgba(12, 28, 85, 1) 50%, rgba(10, 24, 75, 0.92) 100%)',
+      boxShadow: `inset 0 0 50px rgba(0,20,80,0.4)`,
+      padding: '32px 16px 20px',
       zIndex: 1,
+      transformStyle: 'preserve-3d', // Allow children to use Z-depth
     }}>
-      {/* Outer framing lines */}
-      <div style={{ position: 'absolute', inset: '-6px', border: '1px solid rgba(212, 175, 55, 0.8)', zIndex: 0, pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', inset: '-1px', border: '1px dashed rgba(255, 215, 0, 0.3)', zIndex: 0, pointerEvents: 'none' }} />
+      {/* Decorative inner framing line */}
+      <div style={{ 
+        position: 'absolute', 
+        inset: '8px', 
+        border: '1px solid rgba(212, 175, 55, 0.25)', 
+        borderRadius: '16px', 
+        zIndex: 0, 
+        pointerEvents: 'none' 
+      }} />
 
       {/* Decorative inner bottom border */}
-      <div style={{ position: 'absolute', bottom: '8px', left: '20px', right: '20px', height: '12px', zIndex: 0, borderBottom: '1px solid rgba(212,175,55,0.4)', opacity: 0.7 }}>
+      <div style={{ position: 'absolute', bottom: '12px', left: '30px', right: '30px', height: '12px', zIndex: 0, borderBottom: '1px solid rgba(212,175,55,0.3)', opacity: 0.6 }}>
         <div style={{ position: 'absolute', bottom: '-3px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px' }}>
-          {[...Array(9)].map((_, i) => <div key={i} style={{ width: '4px', height: '4px', background: '#D4AF37', transform: 'rotate(45deg)' }} />)}
+          {[...Array(7)].map((_, i) => <div key={i} style={{ width: '4px', height: '4px', background: '#D4AF37', transform: 'rotate(45deg)' }} />)}
         </div>
       </div>
 
       {/* Shimmer effect layer */}
-      <div className="cel-frame-shimmer" />
+      <div className="cel-frame-shimmer" style={{ borderRadius: '22px' }} />
 
       {children}
     </div>
 
-    {/* SVG Corners */}
-    <PeacockCorner pos="tl" />
-    <PeacockCorner pos="tr" />
-    <PeacockCorner pos="bl" />
-    <PeacockCorner pos="br" />
+    {/* Final interactive border spotlight layer */}
+    <div className="cel-border-spotlight" />
+
+    {/* SVG Corners (adjusted for curved corners) */}
+    <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 5 }}>
+      <PeacockCorner pos="tl" />
+      <PeacockCorner pos="tr" />
+      <PeacockCorner pos="bl" />
+      <PeacockCorner pos="br" />
+    </div>
   </div>
 );
 
@@ -162,14 +184,16 @@ const EventBadge: React.FC<{ icon: string }> = ({ icon }) => (
     position: 'absolute',
     top: -20,
     left: '50%',
-    transform: 'translateX(-50%)',
+    transform: 'translateX(-50%) translateZ(50px)', // Float 50px above the card
     zIndex: 10,
-    width: 32,
-    height: 32,
+    width: 36,
+    height: 36,
     borderRadius: '50%',
-    background: 'linear-gradient(135deg, #FFD700, #B8860B)', // Thin solid gold border effect
-    padding: '2px', // Border width
-    boxShadow: '0 4px 12px rgba(0,0,0,0.5), 0 0 16px rgba(255,215,0,0.4)',
+    background: 'linear-gradient(135deg, #FFD700, #B8860B)', 
+    padding: '2px', 
+    boxShadow: '0 8px 20px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.5)',
+    transformStyle: 'preserve-3d',
+    animation: 'cel-float 3s ease-in-out infinite',
   }}>
     <div style={{
       width: '100%',
@@ -179,7 +203,7 @@ const EventBadge: React.FC<{ icon: string }> = ({ icon }) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '14px',
+      fontSize: '16px',
       filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.5))',
     }}>
       {icon}
@@ -290,6 +314,10 @@ const EventCard: React.FC<{
   event: typeof weddingEvents[0];
   index: number;
 }> = ({ event, index }) => {
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
   // Props specific imagery per event
   const propEmoji: Record<string, string> = {
     'Haldi Ceremony': '🌼',
@@ -300,19 +328,64 @@ const EventCard: React.FC<{
     'Wedding Reception': '✨',
   };
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Percentage for spotlight
+    const mouseXPercent = (x / rect.width) * 100;
+    const mouseYPercent = (y / rect.height) * 100;
+    cardRef.current.style.setProperty('--mx', `${mouseXPercent}%`);
+    cardRef.current.style.setProperty('--my', `${mouseYPercent}%`);
+
+    // Calculate rotation: center is (0,0), range is -1 to 1 multiplied by max tilt angle
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (centerY - y) / 10; // Negative because tilting up rotates around X axis backwards
+    const rotateY = (x - centerX) / 10;
+    
+    setTilt({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTilt({ x: 0, y: 0 });
+  };
+
   return (
     <div
-      className="cel-event-card"
+      className="cel-entrance-wrapper"
       style={{
-        position: 'relative',
-        marginTop: '16px',
-        animation: `cel-fade-up 0.55s ease-out ${index * 0.2}s both`,
+        animation: `cel-fade-up 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${index * 0.15}s both`,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
       }}
     >
-      <OrnateFrame>
+      <div
+        ref={cardRef}
+        className="cel-event-card cel-card-3d-wrapper"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          position: 'relative',
+          marginTop: '24px', // Space for floating badge
+          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${isHovered ? '-12px' : '0px'}) scale(${isHovered ? '1.04' : '1'})`,
+          transition: !isHovered ? 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease-out' : 'transform 0.1s ease-out, box-shadow 0.2s ease-out',
+          boxShadow: isHovered ? '0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(212,175,55,0.15)' : '0 10px 30px rgba(0,0,0,0.3)',
+          willChange: 'transform, box-shadow',
+          zIndex: isHovered ? 20 : 1,
+          width: '100%',
+          maxWidth: '380px',
+        }}
+      >
         <EventBadge icon={propEmoji[event.eventName] || event.eventIcon} />
-
-        {/* Event Name */}
+        <OrnateFrame>
+          {/* Event Name */}
         <h3 className="cel-event-title" style={{
           fontFamily: "'Cinzel', 'Playfair Display', serif",
           fontSize: 'clamp(18px, 4.5vw, 22px)',
@@ -325,6 +398,7 @@ const EventCard: React.FC<{
           letterSpacing: '0.04em',
           marginBottom: '4px',
           filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
+          transform: 'translateZ(30px)', // Mid-layer depth
         }}>
           {event.eventName}
         </h3>
@@ -336,13 +410,14 @@ const EventCard: React.FC<{
           color: 'rgba(255,215,0,0.75)',
           fontFamily: "'Noto Serif Devanagari', serif",
           marginBottom: '16px',
-          letterSpacing: '0.05em'
+          letterSpacing: '0.05em',
+          transform: 'translateZ(25px)',
         }} lang="hi">
           {event.eventNameHindi}
         </p>
 
         {/* Gold divider */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '14px', transform: 'translateZ(20px)' }}>
           <div style={{ height: '1px', width: '60px', background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.5))' }}/>
           <span style={{ fontSize: '8px', color: '#FFD700', opacity: 0.7 }}>✦</span>
           <div style={{ height: '1px', width: '60px', background: 'linear-gradient(90deg, rgba(255,215,0,0.5), transparent)' }}/>
@@ -357,6 +432,7 @@ const EventCard: React.FC<{
           marginBottom: '14px',
           flexWrap: 'wrap',
           fontFamily: "'Cormorant Garamond', serif",
+          transform: 'translateZ(28px)',
         }}>
           <span style={{ fontSize: '16px', filter: 'drop-shadow(0 0 5px rgba(255,152,0,0.5))' }}>📅</span>
           <span style={{
@@ -379,7 +455,7 @@ const EventCard: React.FC<{
 
         {/* Dress Code Badge */}
         {event.dressCode && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '18px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '18px', transform: 'translateZ(35px)' }}>
             <span style={{ 
               fontFamily: "'Alex Brush', cursive", 
               fontSize: '18px', 
@@ -410,12 +486,12 @@ const EventCard: React.FC<{
         )}
 
         {/* Divider */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '14px', transform: 'translateZ(15px)' }}>
           <div style={{ height: '1px', flex: 1, background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.35), transparent)' }}/>
         </div>
 
         {/* Venue */}
-        <div style={{ transform: 'translateY(-4px)' }}>
+        <div style={{ transform: 'translateY(-4px) translateZ(32px)' }}>
           <p style={{
             textAlign: 'center',
             fontFamily: "'Cinzel', serif",
@@ -444,7 +520,7 @@ const EventCard: React.FC<{
         </div>
 
         {/* Maps Button */}
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', transform: 'translateZ(40px)' }}>
           <a
             href={event.mapsLink}
             target="_blank"
@@ -457,12 +533,13 @@ const EventCard: React.FC<{
         </div>
 
         {/* Event Props at the Bottom */}
-        <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', minHeight: '80px' }}>
+        <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', minHeight: '80px', transform: 'translateZ(10px)' }}>
           <EventBottomDecor />
         </div>
       </OrnateFrame>
     </div>
-  );
+  </div>
+);
 };
 
 /* ═══════════════════════════════════════════════
@@ -596,7 +673,7 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
           marginBottom: '32px',
           flexWrap: 'wrap'
         }}>
-          {dayTabs.map((tab) => {
+          {dayTabs.map((tab, idx) => {
             const isActive = activeDay === tab.day;
             return (
               <button
@@ -617,7 +694,8 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
                   minWidth: '100px',
                   cursor: 'pointer',
                   position: 'relative',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  animation: `cel-fade-up 0.5s ease-out ${idx * 0.1}s both`,
                 }}
               >
                 <span className="cel-tab-date" style={{
@@ -678,10 +756,21 @@ const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({ active, onNex
           <Diya scale={0.8}/>
         </div>
 
-        {/* ── NEXT BUTTON ── */}
+        {/* Next Button - Premium Floating */}
         <div className="cel-next-btn-wrap">
-          <button onClick={onNext} className="cel-next-btn">
-            Next: Gallery →
+          <button onClick={onNext} className="cel-next-btn" aria-label="Next Section: Gallery">
+            <div className="cel-diya-container">
+              <div className="cel-diya-glow"></div>
+              <div className="cel-diya-flame"></div>
+              <span className="cel-diya-icon">🪔</span>
+            </div>
+            <span>Next</span>
+            <span className="cel-btn-arrow">→</span>
+            <div className="cel-diya-container" style={{ transform: 'scaleX(-1)' }}>
+              <div className="cel-diya-glow"></div>
+              <div className="cel-diya-flame"></div>
+              <span className="cel-diya-icon">🪔</span>
+            </div>
           </button>
         </div>
       </div>

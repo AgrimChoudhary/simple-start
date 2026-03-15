@@ -1414,7 +1414,11 @@
 }
 
 @media (min-width: 768px) {
-  .cel-content { padding: 60px 32px 48px; max-width: 460px; /* Reduced from 540px */ }
+  .cel-content { padding: 60px 24px 48px; max-width: 90%; /* Increased from adaptive fixed width */ }
+}
+
+@media (min-width: 1200px) {
+  .cel-content { max-width: 1200px; }
 }
 
 /* ── Heading block ── */
@@ -1545,7 +1549,23 @@
 .cel-cards-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px; /* Reduced from 24px */
+}
+
+@media (min-width: 1024px) {
+  .cel-cards-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    align-items: stretch;
+  }
+  
+  .cel-entrance-wrapper {
+    width: auto !important;
+    max-width: 400px;
+  }
 }
 
 /* Animate card on tab switch */
@@ -1618,7 +1638,7 @@
 }
 
 /* Internal element animations on hover */
-.cel-event-card .cel-badge-wrapper {
+.cel-badge-wrapper {
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -1635,26 +1655,42 @@
   filter: drop-shadow(0 0 12px rgba(255,215,0,0.7));
 }
 
-/* ── Map Button ── */
+/* ── Map Button - Enhanced Traditional Floating ── */
 .cel-map-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  border-radius: 24px;
-  border: 1px solid #FFD700;
-  background: rgba(10, 20, 50, 0.9);
-  color: #FFFFFF;
-  font-family: 'Lato', sans-serif;
-  font-size: clamp(11px, 2.5vw, 13px);
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: 1.5px solid #D4AF37;
+  background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+  color: #FFD700;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(10px, 2.8vw, 13px);
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 0 8px rgba(255,215,0,0.1);
-  margin-top: 6px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 
+              0 0 15px rgba(212, 175, 55, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cel-map-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  z-index: -1;
 }
 
 .cel-map-btn:hover {
@@ -1664,35 +1700,88 @@
   border-color: #FFF9C4;
 }
 
-/* ── Next button wrap ── */
+/* ── Next button - Fixed Floating Navigation ── */
 .cel-next-btn-wrap {
-  text-align: center;
-  margin-top: 32px;
-  padding-bottom: 80px;
+  position: fixed;
+  bottom: clamp(20px, 4vh, 40px);
+  right: clamp(20px, 4vw, 40px);
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  pointer-events: none; /* Allow clicks to pass through the wrapper */
+  display: flex;
+  justify-content: flex-end;
 }
 
 .cel-next-btn {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(13px, 3vw, 15px);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: rgba(255,215,0,0.85);
-  background: transparent;
-  border: 1px solid rgba(255,215,0,0.35);
-  padding: 12px 32px;
-  border-radius: 24px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  pointer-events: auto;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 14px 44px;
+  /* High Intensity Liquid Gold Background */
+  background: linear-gradient(-45deg, #FFD700, #D4AF37, #FFF9C4, #D4AF37, #FFD700);
+  background-size: 400% 400%;
+  animation: cel-gold-liquid 8s ease infinite, cel-btn-pulse-premium 3s infinite ease-in-out;
+  color: #001A33; /* Deep Blue for contrast on gold */
+  border-radius: 40px;
+  border: 2.5px solid #D4AF37;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(14px, 3.5vw, 17px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(212, 175, 55, 0.3);
+  z-index: 10;
 }
 
 .cel-next-btn:hover {
-  background: rgba(255,215,0,0.1);
-  border-color: rgba(255,215,0,0.6);
-  box-shadow: 0 0 20px rgba(255,215,0,0.2);
-  color: #FFD700;
-  transform: translateY(-2px);
+  transform: translateY(-8px) scale(1.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 45px rgba(255, 215, 0, 0.6);
+  color: #000000;
+  background: linear-gradient(-45deg, #FFF9C4, #FFD700, #FFF9C4);
+}
+
+.cel-next-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 55%
+  );
+  transform: rotate(45deg);
+  animation: cel-glint 4s infinite ease-in-out;
+  pointer-events: none;
+}
+
+/* Keyframes for the new button animations */
+@keyframes cel-gold-liquid {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes cel-btn-pulse-premium {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes cel-glint {
+  0% { transform: rotate(45deg) translate(-100%, -100%); opacity: 0; }
+  10% { opacity: 1; }
+  20% { transform: rotate(45deg) translate(100%, 100%); opacity: 0; }
+  100% { opacity: 0; }
 }
 
 /* Celebrations section — OLD class aliases for backwards compat */
@@ -3061,5 +3150,253 @@
   .os-portrait-glow-outer,
   .os-portrait-glow-inner {
     animation: none !important;
+  }
+}
+
+/* 
+   CELEBRATIONS ENHANCEMENTS
+    */
+
+@keyframes cel-border-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cel-glow-border-layer {
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0) 20%,
+    rgba(212, 175, 55, 0.8) 25%,
+    rgba(255, 215, 0, 1) 30%,
+    rgba(212, 175, 55, 0.8) 35%,
+    rgba(212, 175, 55, 0) 40%,
+    transparent 100%
+  );
+  animation: cel-border-spin 4s linear infinite;
+  z-index: -1;
+}
+
+.cel-card-3d-wrapper {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+/* Variable block consolidated above */
+
+.cel-border-spotlight {
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 24px;
+  pointer-events: none;
+  z-index: 10;
+  background: radial-gradient(
+    circle 150px at var(--mx) var(--my),
+    rgba(255, 215, 0, 0.95),
+    rgba(212, 175, 55, 0.5) 40%,
+    transparent 80%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2.5px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cel-event-card:hover .cel-border-spotlight {
+  opacity: 1;
+}
+
+/* CELEBRATIONS CORE ANIMATIONS */
+@keyframes cel-fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cel-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes cel-feather-wisp {
+  0%, 100% { stroke-dashoffset: 200; opacity: 0.3; }
+  50% { stroke-dashoffset: 0; opacity: 0.8; }
+}
+
+.cel-tab--active {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  animation: cel-scale-in 0.3s ease-out;
+}
+
+@keyframes cel-scale-in {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+@keyframes cel-gold-liquid {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes cel-glint {
+  0% { transform: rotate(45deg) translate(-100%, -100%); }
+  25%, 100% { transform: rotate(45deg) translate(100%, 100%); }
+}
+
+@keyframes cel-btn-pulse-premium {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.02); filter: brightness(1.15); }
+}
+
+/* RESPONSIVE TWEAKS */
+@media (max-width: 768px) {
+  .cel-card-3d-wrapper {
+    perspective: 1000px;
+  }
+  .cel-badge-wrapper {
+    transform: translateX(-50%) translateZ(25px) !important; /* Half depth on mobile */
+  }
+}
+
+.cel-cards-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .cel-cards-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cel-event-card {
+    flex: 0 1 380px;
+  }
+}
+
+/* ── Burning Lamp (Deepak) Animations ── */
+.cel-diya-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.cel-diya-icon {
+  font-size: 22px;
+  z-index: 2;
+  filter: drop-shadow(0 0 2px rgba(255, 165, 0, 0.5));
+}
+
+.cel-diya-flame {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 12px;
+  background: radial-gradient(circle at bottom, #FFF1AC 20%, #FFC107 50%, #FF5722 90%);
+  border-radius: 50% 50% 20% 20%;
+  transform: translateX(-50%);
+  filter: blur(0.5px);
+  z-index: 3;
+  animation: cel-flame-flicker 0.6s infinite alternate ease-in-out;
+  box-shadow: 0 0 10px #FF5722, 0 0 20px #FFC107;
+}
+
+.cel-diya-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.4) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 1;
+  animation: cel-diya-glow-pulse 2s infinite ease-in-out;
+}
+
+@keyframes cel-flame-flicker {
+  0% { transform: translateX(-50%) scale(1) rotate(-1deg); opacity: 0.9; }
+  25% { transform: translateX(-52%) scale(1.1, 0.9) rotate(1deg); }
+  50% { transform: translateX(-48%) scale(0.9, 1.1) rotate(-2deg); opacity: 1; }
+  75% { transform: translateX(-51%) scale(1.05) rotate(2deg); }
+  100% { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 0.85; }
+}
+
+@keyframes cel-diya-glow-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+  50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; }
+}
+
+.cel-btn-arrow {
+  display: inline-block;
+  font-size: 1.2em;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  color: inherit;
+}
+
+.cel-next-btn:hover .cel-btn-arrow {
+  animation: cel-arrow-slide 0.6s infinite ease-in-out;
+}
+
+@keyframes cel-arrow-slide {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+/* ── AGGRESSIVE MOBILE SCALING ── */
+@media (max-width: 480px) {
+  .cel-next-btn {
+    padding: 6px 16px !important;
+    gap: 6px !important;
+    font-size: 11px !important;
+    border-width: 1.5px !important;
+    border-radius: 20px !important;
+  }
+
+  .cel-btn-arrow {
+    font-size: 14px !important;
+  }
+  
+  .cel-next-btn:hover .cel-btn-arrow {
+    animation: cel-arrow-slide-mobile 0.6s infinite ease-in-out !important;
+  }
+
+  @keyframes cel-arrow-slide-mobile {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+  }
+
+  .cel-diya-container {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .cel-diya-icon {
+    font-size: 14px !important;
+  }
+
+  .cel-diya-flame {
+    top: -2px !important;
+    width: 4px !important;
+    height: 7px !important;
+  }
+
+  .cel-diya-glow {
+    width: 25px !important;
+    height: 25px !important;
   }
 }
