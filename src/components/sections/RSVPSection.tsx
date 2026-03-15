@@ -198,19 +198,13 @@ const FamilyContactsOverlay: React.FC<{
   group: ContactGroup;
   onClose: () => void;
 }> = ({ group, onClose }) => (
-  <motion.div
+  <div
     className="contact-overlay-backdrop"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
+    style={{ animation: 'fade-in 0.3s ease-out both' }}
     onClick={onClose}
   >
-    <motion.div
+    <div
       className="contact-overlay-modal"
-      initial={{ y: 50, scale: 0.9, opacity: 0 }}
-      animate={{ y: 0, scale: 1, opacity: 1 }}
-      exit={{ y: 30, scale: 0.95, opacity: 0 }}
-      transition={{ type: "spring", damping: 25, stiffness: 300 }}
       onClick={(e) => e.stopPropagation()}
     >
       {/* Close button */}
@@ -277,8 +271,8 @@ const FamilyContactsOverlay: React.FC<{
       <div className="mt-8">
         <GoldDivider />
       </div>
-    </motion.div>
-  </motion.div>
+    </div>
+  </div>
 );
 
 /* ═══ Contact Card — Premium ═══ */
@@ -799,14 +793,12 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
         </div>
 
         {/* ── Contact Overlay ── */}
-        <AnimatePresence>
-          {activeContactGroup && (
-            <FamilyContactsOverlay
-              group={activeContactGroup}
-              onClose={() => setActiveContactGroup(null)}
-            />
-          )}
-        </AnimatePresence>
+        {activeContactGroup && (
+          <FamilyContactsOverlay
+            group={activeContactGroup}
+            onClose={() => setActiveContactGroup(null)}
+          />
+        )}
 
         {/* ── Footer ── */}
         <footer className="rsvp-footer w-full" style={{ animation: active ? 'fade-in 0.5s ease-out 1.2s both' : 'none' }}>
