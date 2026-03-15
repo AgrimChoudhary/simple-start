@@ -2283,24 +2283,86 @@
 
 /* ═══ Family Contact Cards — Premium ═══ */
 .family-contact-card {
-  @apply relative rounded-2xl p-6 md:p-8 text-center transition-all duration-500 overflow-hidden;
-  background: linear-gradient(165deg,
-      hsl(var(--card) / 0.7) 0%,
-      hsl(var(--bg-card) / 0.9) 40%,
-      hsl(var(--card) / 0.5) 100%);
-  border: 1px solid hsl(var(--primary) / 0.12);
-  backdrop-filter: blur(12px);
+  @apply relative p-6 md:p-8 text-center transition-all duration-500 overflow-hidden cursor-pointer;
+  border-radius: 24px;
+  background: hsl(var(--bg-card));
+  border: 1px solid hsl(var(--primary) / 0.15);
   box-shadow:
     0 4px 24px hsl(var(--primary) / 0.04),
     inset 0 1px 0 hsl(var(--primary) / 0.06);
 }
 
+/* Rotating Glow Border Pseudo-element */
+.family-contact-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    transparent 200deg,
+    hsl(var(--primary) / 0.6) 240deg,
+    hsl(var(--primary)) 270deg,
+    hsl(var(--primary) / 0.6) 300deg,
+    transparent 340deg,
+    transparent
+  );
+  animation: contact-border-spin 4s linear infinite;
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
+}
+
+.family-contact-card:hover::before {
+  opacity: 1;
+  animation-duration: 2s;
+}
+
+/* Inner masking to keep the card clean */
+.family-contact-card::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: inherit;
+  border-radius: 23px;
+  z-index: 0;
+}
+
 .family-contact-card:hover {
-  border-color: hsl(var(--primary) / 0.3);
-  transform: translateY(-3px);
-  box-shadow:
-    0 12px 40px hsl(var(--primary) / 0.08),
-    inset 0 1px 0 hsl(var(--primary) / 0.1);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 40px hsl(var(--primary) / 0.12);
+  border-color: hsl(var(--primary) / 0.4);
+}
+
+@keyframes contact-border-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Overlay / Modal Styles */
+.contact-overlay-backdrop {
+  @apply fixed inset-0 z-[100] flex items-center justify-center p-6;
+  background: radial-gradient(circle at center, hsl(var(--background) / 0.8) 0%, hsl(var(--background) / 0.95) 100%);
+  backdrop-filter: blur(8px);
+  animation: overlay-fade-in 0.4s ease-out both;
+}
+
+.contact-overlay-modal {
+  @apply relative w-full max-w-lg bg-card border border-primary/20 p-8 md:p-10 text-center overflow-hidden;
+  border-radius: 32px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: modal-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes overlay-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-slide-up {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .family-contact-btn {

@@ -143,34 +143,156 @@ const GoldDust: React.FC = () => {
   );
 };
 
-/* ═══ Contact Card — Premium ═══ */
-const ContactCard: React.FC<{
-  icon: string;
+/* ═══════════════════════════════════════════════════════
+   CONTACT DATA & OVERLAY
+   ═══════════════════════════════════════════════════════ */
+
+interface FamilyMember {
   name: string;
   relation: string;
   phone: string;
   whatsapp: string;
+  icon: string;
+}
+
+interface ContactGroup {
+  id: string;
+  primary: FamilyMember;
+  others: FamilyMember[];
+}
+
+const FAMILY_CONTACTS: ContactGroup[] = [
+  {
+    id: 'groom-side',
+    primary: {
+      name: "Rajesh Sharma",
+      relation: "Father of the Groom",
+      phone: "+919999999999",
+      whatsapp: "919999999999",
+      icon: "🤵",
+    },
+    others: [
+      { name: "Sunita Sharma", relation: "Mother of the Groom", phone: "+918888888888", whatsapp: "918888888888", icon: "👵" },
+      { name: "Amit Sharma", relation: "Brother of the Groom", phone: "+917777777777", whatsapp: "917777777777", icon: "👦" },
+      { name: "Vinay Sharma", relation: "Uncle", phone: "+916666666666", whatsapp: "916666666666", icon: "👨" },
+    ]
+  },
+  {
+    id: 'bride-side',
+    primary: {
+      name: "Suresh Agarwal",
+      relation: "Father of the Bride",
+      phone: "+919999999998",
+      whatsapp: "919999999998",
+      icon: "👰",
+    },
+    others: [
+      { name: "Meena Agarwal", relation: "Mother of the Bride", phone: "+918888888887", whatsapp: "918888888887", icon: "👩" },
+      { name: "Neha Agarwal", relation: "Sister of the Bride", phone: "+917777777776", whatsapp: "917777777776", icon: "👧" },
+      { name: "Prakash Agarwal", relation: "Uncle", phone: "+916666666665", whatsapp: "916666666665", icon: "👨" },
+    ]
+  }
+];
+
+const FamilyContactsOverlay: React.FC<{
+  group: ContactGroup;
+  onClose: () => void;
+}> = ({ group, onClose }) => (
+  <motion.div
+    className="contact-overlay-backdrop"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    onClick={onClose}
+  >
+    <motion.div
+      className="contact-overlay-modal"
+      initial={{ y: 50, scale: 0.9, opacity: 0 }}
+      animate={{ y: 0, scale: 1, opacity: 1 }}
+      exit={{ y: 30, scale: 0.95, opacity: 0 }}
+      transition={{ type: "spring", damping: 25, stiffness: 300 }}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 transition-colors group"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground group-hover:text-primary">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      {/* Decorative center icon */}
+      <div className="flex justify-center mb-6">
+        <div className="w-16 h-16 rounded-full flex items-center justify-center bg-primary/5 border border-primary/20">
+          <span className="text-3xl">{group.primary.icon}</span>
+        </div>
+      </div>
+
+      <h3 className="font-heading text-3xl gold-shimmer-slow mb-1">{group.primary.name}</h3>
+      <p className="font-ui text-xs tracking-widest uppercase text-muted-foreground mb-8">{group.primary.relation}</p>
+
+      <div className="space-y-4 max-h-[50vh] overflow-y-auto px-2 custom-scrollbar">
+        {/* Primary Contacts list */}
+        <div className="bg-white/5 rounded-2xl p-4 border border-white/5 flex items-center justify-between gap-4">
+          <div className="text-left">
+            <p className="font-hindi text-lg leading-none">{group.primary.name}</p>
+            <p className="text-xs text-muted-foreground mt-1">{group.primary.relation}</p>
+          </div>
+          <div className="flex gap-2">
+            <a href={`tel:${group.primary.phone}`} className="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-primary-foreground hover:scale-110 transition-transform">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" /></svg>
+            </a>
+            <a href={`https://wa.me/${group.primary.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-[#25D366] text-white hover:scale-110 transition-transform">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" /></svg>
+            </a>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 py-2">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/20"></div>
+          <span className="font-ui text-[10px] tracking-widest text-muted-foreground uppercase">Family Members</span>
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/20"></div>
+        </div>
+
+        {group.others.map((member, i) => (
+          <div key={i} className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-primary/10">
+            <div className="flex items-center gap-3">
+              <span className="text-xl">{member.icon}</span>
+              <div className="text-left">
+                <p className="text-sm font-medium">{member.name}</p>
+                <p className="text-[10px] text-muted-foreground opacity-70">{member.relation}</p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <a href={`tel:${member.phone}`} className="p-2 text-primary hover:text-accent transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" /></svg></a>
+              <a href={`https://wa.me/${member.whatsapp}`} target="_blank" rel="noopener noreferrer" className="p-2 text-primary hover:text-[#25D366] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" /></svg></a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8">
+        <GoldDivider />
+      </div>
+    </motion.div>
+  </motion.div>
+);
+
+/* ═══ Contact Card — Premium ═══ */
+const ContactCard: React.FC<{
+  group: ContactGroup;
   delay: string;
   active: boolean;
-}> = ({ icon, name, relation, phone, whatsapp, delay, active }) => (
+  onClick: () => void;
+}> = ({ group, delay, active, onClick }) => (
   <div
     className="family-contact-card group"
     style={{ animation: active ? `contact-card-reveal 0.7s cubic-bezier(0.22,0.61,0.36,1) ${delay} both` : 'none' }}
+    onClick={onClick}
   >
-    {/* Animated border glow on hover */}
-    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" style={{
-      background: 'conic-gradient(from 0deg, transparent, hsl(var(--primary) / 0.15), transparent, hsl(var(--primary) / 0.1), transparent)',
-      padding: '1px',
-      mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-      WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-      WebkitMaskComposite: 'xor',
-      maskComposite: 'exclude',
-    }} />
-    {/* Inner hover glow */}
-    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
-      background: 'radial-gradient(ellipse at 50% 20%, hsl(var(--primary) / 0.08) 0%, transparent 65%)',
-    }} />
-
     <div className="relative z-10 flex flex-col items-center text-center">
       {/* Icon with animated ring */}
       <div className="relative mb-4">
@@ -182,7 +304,7 @@ const ContactCard: React.FC<{
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80" style={{ animation: 'spin 30s linear infinite' }}>
             <circle cx="40" cy="40" r="36" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.2" strokeDasharray="3 6" />
           </svg>
-          <span className="text-3xl md:text-4xl relative z-10" style={{ filter: 'drop-shadow(0 2px 8px hsl(var(--primary) / 0.25))' }}>{icon}</span>
+          <span className="text-3xl md:text-4xl relative z-10" style={{ filter: 'drop-shadow(0 2px 8px hsl(var(--primary) / 0.25))' }}>{group.primary.icon}</span>
         </div>
         {/* Pulse ring */}
         <div className="absolute inset-0 rounded-full" style={{
@@ -201,23 +323,13 @@ const ContactCard: React.FC<{
       </div>
 
       {/* Name & relation */}
-      <p className="font-body text-sm md:text-base font-medium mb-0.5" style={{ color: 'hsl(var(--text-cream) / 0.9)' }}>{name}</p>
-      <p className="font-ui text-[10px] md:text-xs tracking-wider uppercase mb-5" style={{ color: 'hsl(var(--text-cream) / 0.45)' }}>{relation}</p>
+      <h4 className="font-heading text-xl md:text-2xl gold-shimmer-slow mb-0.5">{group.primary.name}</h4>
+      <p className="font-ui text-[10px] md:text-xs tracking-widest uppercase mb-4" style={{ color: 'hsl(var(--text-cream) / 0.45)' }}>{group.primary.relation}</p>
 
-      {/* Action buttons */}
-      <div className="flex items-center justify-center gap-3">
-        <a href={`tel:${phone}`} className="family-contact-btn group/call" aria-label={`Call ${name}`}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-          </svg>
-          <span className="font-ui text-[10px] tracking-wide">Call</span>
-        </a>
-        <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="family-contact-btn family-contact-btn--whatsapp group/wa" aria-label={`WhatsApp ${name}`}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-          </svg>
-          <span className="font-ui text-[10px] tracking-wide">WhatsApp</span>
-        </a>
+      {/* Click to view text */}
+      <div className="flex items-center gap-1.5 text-primary/60 group-hover:text-primary transition-colors">
+        <span className="font-ui text-[9px] uppercase tracking-widest">Connect with family</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M12 5l7 7-7 7" /></svg>
       </div>
     </div>
   </div>
@@ -270,6 +382,7 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
   const [accepted, setAccepted] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
   const [buttonPulsing, setButtonPulsing] = useState(false);
+  const [activeContactGroup, setActiveContactGroup] = useState<ContactGroup | null>(null);
 
   // Celebration sequence stage
   // 0: Initial
@@ -673,26 +786,27 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
         <div className="w-full mt-10 mb-10">
           <ContactHeading active={active} />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <ContactCard
-              icon="🤵"
-              name="Rajesh Sharma"
-              relation="Father of the Groom"
-              phone="+919999999999"
-              whatsapp="919999999999"
-              delay="0.2s"
-              active={active}
-            />
-            <ContactCard
-              icon="👰"
-              name="Suresh Agarwal"
-              relation="Father of the Bride"
-              phone="+919999999998"
-              whatsapp="919999999998"
-              delay="0.3s"
-              active={active}
-            />
+            {FAMILY_CONTACTS.map((group, i) => (
+              <ContactCard
+                key={group.id}
+                group={group}
+                delay={`${0.2 + i * 0.15}s`}
+                active={active}
+                onClick={() => setActiveContactGroup(group)}
+              />
+            ))}
           </div>
         </div>
+
+        {/* ── Contact Overlay ── */}
+        <AnimatePresence>
+          {activeContactGroup && (
+            <FamilyContactsOverlay
+              group={activeContactGroup}
+              onClose={() => setActiveContactGroup(null)}
+            />
+          )}
+        </AnimatePresence>
 
         {/* ── Footer ── */}
         <footer className="rsvp-footer w-full" style={{ animation: active ? 'fade-in 0.5s ease-out 1.2s both' : 'none' }}>
