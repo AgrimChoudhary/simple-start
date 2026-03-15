@@ -17,84 +17,7 @@ const galleryImages = [
   { id: 6, alt: 'Mehndi hands holding each other with gold jewelry', color: 'hsl(38 25% 19%)' },
 ];
 
-/* ═══════════════════════════════════════════════
-   JHAROKHA ARCH — SVG Palace Window Frame
-   ═══════════════════════════════════════════════ */
-const JharokhaFrame: React.FC<{ children: React.ReactNode; active: boolean }> = ({ children, active }) => (
-  <div
-    className="relative mx-auto max-w-[640px] px-4 md:px-0"
-    style={{ animation: active ? 'gallery-frame-in 0.8s cubic-bezier(0.22,0.61,0.36,1) forwards' : 'none' }}
-  >
-    {/* Outer glow */}
-    <div className="absolute -inset-4 rounded-3xl pointer-events-none" style={{
-      background: 'radial-gradient(ellipse at 50% 30%, hsl(var(--primary) / 0.06) 0%, transparent 70%)',
-    }} />
 
-    {/* Frame container */}
-    <div className="relative">
-      {/* Arch SVG frame */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none z-10"
-        viewBox="0 0 640 400"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        {/* Outer arch border */}
-        <path
-          d="M0,400 L0,140 Q0,0 320,0 Q640,0 640,140 L640,400"
-          fill="none"
-          stroke="hsl(var(--primary))"
-          strokeWidth="3"
-          opacity="0.7"
-        />
-        {/* Inner arch detail */}
-        <path
-          d="M12,400 L12,145 Q12,12 320,12 Q628,12 628,145 L628,400"
-          fill="none"
-          stroke="hsl(var(--primary))"
-          strokeWidth="1"
-          opacity="0.2"
-        />
-        {/* Keystone ornament at top */}
-        <g transform="translate(310, 4)">
-          <path d="M10 0L12.5 8L20 10L12.5 12L10 20L7.5 12L0 10L7.5 8Z" fill="hsl(var(--primary))" opacity="0.5" />
-        </g>
-      </svg>
-
-      {/* Content clipped to arch shape */}
-      <div
-        className="relative overflow-hidden"
-        style={{
-          clipPath: 'polygon(0% 100%, 0% 35%, 5% 18%, 15% 7%, 30% 1.5%, 50% 0%, 70% 1.5%, 85% 7%, 95% 18%, 100% 35%, 100% 100%)',
-          borderRadius: '0 0 12px 12px',
-        }}
-      >
-        {/* Inner padding area */}
-        <div className="p-2" style={{ background: 'hsl(var(--card))' }}>
-          <div className="rounded-lg overflow-hidden">
-            {children}
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom corners — gold floral ornaments */}
-      <div className="absolute -bottom-1 -left-1 w-8 h-8 pointer-events-none" aria-hidden="true">
-        <svg viewBox="0 0 32 32" className="w-full h-full">
-          <path d="M4,28 C4,20 8,12 16,8" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0.4" />
-          <path d="M2,24 C6,18 10,14 14,10" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8" opacity="0.25" />
-          <circle cx="5" cy="27" r="2" fill="hsl(var(--primary))" opacity="0.3" />
-        </svg>
-      </div>
-      <div className="absolute -bottom-1 -right-1 w-8 h-8 pointer-events-none" aria-hidden="true">
-        <svg viewBox="0 0 32 32" className="w-full h-full" style={{ transform: 'scaleX(-1)' }}>
-          <path d="M4,28 C4,20 8,12 16,8" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0.4" />
-          <path d="M2,24 C6,18 10,14 14,10" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8" opacity="0.25" />
-          <circle cx="5" cy="27" r="2" fill="hsl(var(--primary))" opacity="0.3" />
-        </svg>
-      </div>
-    </div>
-  </div>
-);
 
 /* ═══════════════════════════════════════════════
    PHOTO CARD with shimmer placeholder
@@ -241,11 +164,10 @@ const Lightbox: React.FC<{
         {images.map((_, i) => (
           <div
             key={i}
-            className={`rounded-full transition-all duration-300 ${
-              i === currentIndex
-                ? 'w-6 h-2 bg-primary'
-                : 'w-2 h-2 bg-primary/30 hover:bg-primary/50'
-            }`}
+            className={`rounded-full transition-all duration-300 ${i === currentIndex
+              ? 'w-6 h-2 bg-primary'
+              : 'w-2 h-2 bg-primary/30 hover:bg-primary/50'
+              }`}
           />
         ))}
       </div>
@@ -339,55 +261,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
           <GoldDivider />
         </div>
 
-        {/* ── Jharokha Video Frame ── */}
-        <JharokhaFrame active={active}>
-          <div className="aspect-video flex items-center justify-center relative" style={{ background: 'hsl(var(--bg-card))' }}>
-            {/* Ambient glow behind play button */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-32 h-32 rounded-full" style={{
-                background: 'radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 70%)',
-              }} />
-            </div>
 
-            {/* Play button */}
-            <button
-              className="relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 group/play cursor-pointer"
-              style={{
-                background: 'hsl(var(--primary) / 0.15)',
-                border: '2px solid hsl(var(--primary) / 0.5)',
-                boxShadow: '0 0 30px hsl(var(--primary) / 0.1)',
-              }}
-              aria-label="Play pre-wedding video"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" className="text-primary ml-1 group-hover/play:scale-110 transition-transform">
-                <polygon points="6,3 20,12 6,21" fill="currentColor" />
-              </svg>
-              {/* Pulse ring */}
-              <div className="absolute inset-0 rounded-full border border-primary/30 animate-ping" style={{ animationDuration: '2s' }} />
-            </button>
-
-            {/* Video label */}
-            <p className="absolute bottom-3 left-0 right-0 text-center font-ui text-[11px] text-muted tracking-wider uppercase">
-              Pre-Wedding Video
-            </p>
-          </div>
-        </JharokhaFrame>
-
-        {/* Caption below frame */}
-        <p
-          className="text-center font-heading italic text-sm md:text-base text-muted mt-5 mb-2"
-          style={{ animation: active ? 'fade-in 0.4s ease-out 0.5s both' : 'none' }}
-        >
-          <span className="font-hindi not-italic" lang="hi">हमारी कहानी</span>
-          <span className="mx-2 text-primary/30">·</span>
-          Our Journey Together
-        </p>
-
-        {/* Marigold divider */}
-        <MarigoldDivider />
 
         {/* ── Photo Gallery ── */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-4">
           {galleryImages.map((img, i) => (
             <PhotoCard
               key={img.id}
@@ -398,6 +275,9 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
             />
           ))}
         </div>
+
+        <MarigoldDivider />
+
 
         {/* ── Next Button ── */}
         <div className="text-center pb-4">
@@ -431,3 +311,5 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
 };
 
 export default GallerySection;
+
+
