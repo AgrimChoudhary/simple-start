@@ -198,19 +198,14 @@ const FamilyContactsOverlay: React.FC<{
   group: ContactGroup;
   onClose: () => void;
 }> = ({ group, onClose }) => (
-  <motion.div
+  <div
     className="contact-overlay-backdrop"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
+    style={{ animation: 'fade-in 0.3s ease-out both' }}
     onClick={onClose}
   >
-    <motion.div
+    <div
       className="contact-overlay-modal"
-      initial={{ y: 50, scale: 0.9, opacity: 0 }}
-      animate={{ y: 0, scale: 1, opacity: 1 }}
-      exit={{ y: 30, scale: 0.95, opacity: 0 }}
-      transition={{ type: "spring", damping: 25, stiffness: 300 }}
+      style={{ animation: 'overlay-modal-in 0.4s cubic-bezier(0.22,0.61,0.36,1) both' }}
       onClick={(e) => e.stopPropagation()}
     >
       {/* Close button */}
