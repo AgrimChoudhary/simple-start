@@ -17,84 +17,7 @@ const galleryImages = [
   { id: 6, alt: 'Mehndi hands holding each other with gold jewelry', color: 'hsl(38 25% 19%)' },
 ];
 
-/* ═══════════════════════════════════════════════
-   JHAROKHA ARCH — SVG Palace Window Frame
-   ═══════════════════════════════════════════════ */
-const JharokhaFrame: React.FC<{ children: React.ReactNode; active: boolean }> = ({ children, active }) => (
-  <div
-    className="relative mx-auto max-w-[640px] px-4 md:px-0"
-    style={{ animation: active ? 'gallery-frame-in 0.8s cubic-bezier(0.22,0.61,0.36,1) forwards' : 'none' }}
-  >
-    {/* Outer glow */}
-    <div className="absolute -inset-4 rounded-3xl pointer-events-none" style={{
-      background: 'radial-gradient(ellipse at 50% 30%, hsl(var(--primary) / 0.06) 0%, transparent 70%)',
-    }} />
 
-    {/* Frame container */}
-    <div className="relative">
-      {/* Arch SVG frame */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none z-10"
-        viewBox="0 0 640 400"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        {/* Outer arch border */}
-        <path
-          d="M0,400 L0,140 Q0,0 320,0 Q640,0 640,140 L640,400"
-          fill="none"
-          stroke="hsl(var(--primary))"
-          strokeWidth="3"
-          opacity="0.7"
-        />
-        {/* Inner arch detail */}
-        <path
-          d="M12,400 L12,145 Q12,12 320,12 Q628,12 628,145 L628,400"
-          fill="none"
-          stroke="hsl(var(--primary))"
-          strokeWidth="1"
-          opacity="0.2"
-        />
-        {/* Keystone ornament at top */}
-        <g transform="translate(310, 4)">
-          <path d="M10 0L12.5 8L20 10L12.5 12L10 20L7.5 12L0 10L7.5 8Z" fill="hsl(var(--primary))" opacity="0.5" />
-        </g>
-      </svg>
-
-      {/* Content clipped to arch shape */}
-      <div
-        className="relative overflow-hidden"
-        style={{
-          clipPath: 'polygon(0% 100%, 0% 35%, 5% 18%, 15% 7%, 30% 1.5%, 50% 0%, 70% 1.5%, 85% 7%, 95% 18%, 100% 35%, 100% 100%)',
-          borderRadius: '0 0 12px 12px',
-        }}
-      >
-        {/* Inner padding area */}
-        <div className="p-2" style={{ background: 'hsl(var(--card))' }}>
-          <div className="rounded-lg overflow-hidden">
-            {children}
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom corners — gold floral ornaments */}
-      <div className="absolute -bottom-1 -left-1 w-8 h-8 pointer-events-none" aria-hidden="true">
-        <svg viewBox="0 0 32 32" className="w-full h-full">
-          <path d="M4,28 C4,20 8,12 16,8" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0.4" />
-          <path d="M2,24 C6,18 10,14 14,10" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8" opacity="0.25" />
-          <circle cx="5" cy="27" r="2" fill="hsl(var(--primary))" opacity="0.3" />
-        </svg>
-      </div>
-      <div className="absolute -bottom-1 -right-1 w-8 h-8 pointer-events-none" aria-hidden="true">
-        <svg viewBox="0 0 32 32" className="w-full h-full" style={{ transform: 'scaleX(-1)' }}>
-          <path d="M4,28 C4,20 8,12 16,8" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0.4" />
-          <path d="M2,24 C6,18 10,14 14,10" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8" opacity="0.25" />
-          <circle cx="5" cy="27" r="2" fill="hsl(var(--primary))" opacity="0.3" />
-        </svg>
-      </div>
-    </div>
-  </div>
-);
 
 /* ═══════════════════════════════════════════════
    PHOTO CARD with shimmer placeholder
@@ -241,11 +164,10 @@ const Lightbox: React.FC<{
         {images.map((_, i) => (
           <div
             key={i}
-            className={`rounded-full transition-all duration-300 ${
-              i === currentIndex
-                ? 'w-6 h-2 bg-primary'
-                : 'w-2 h-2 bg-primary/30 hover:bg-primary/50'
-            }`}
+            className={`rounded-full transition-all duration-300 ${i === currentIndex
+              ? 'w-6 h-2 bg-primary'
+              : 'w-2 h-2 bg-primary/30 hover:bg-primary/50'
+              }`}
           />
         ))}
       </div>
@@ -278,6 +200,126 @@ const MarigoldDivider = () => (
     <div className="h-px flex-1 max-w-[100px]" style={{
       background: 'linear-gradient(90deg, hsl(var(--primary) / 0.25), transparent)',
     }} />
+  </div>
+);
+
+/* ═══ Family Contact Card — Premium ═══ */
+const FamilyContactCard: React.FC<{
+  icon: string;
+  name: string;
+  relation: string;
+  phone: string;
+  whatsapp: string;
+  delay: string;
+  active: boolean;
+}> = ({ icon, name, relation, phone, whatsapp, delay, active }) => (
+  <div
+    className="family-contact-card group"
+    style={{ animation: active ? `contact-card-reveal 0.7s cubic-bezier(0.22,0.61,0.36,1) ${delay} both` : 'none' }}
+  >
+    {/* Animated border glow on hover */}
+    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none" style={{
+      background: 'conic-gradient(from 0deg, transparent, hsl(var(--primary) / 0.15), transparent, hsl(var(--primary) / 0.1), transparent)',
+      padding: '1px',
+      mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+      WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+      WebkitMaskComposite: 'xor',
+      maskComposite: 'exclude',
+    }} />
+    {/* Inner hover glow */}
+    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
+      background: 'radial-gradient(ellipse at 50% 20%, hsl(var(--primary) / 0.08) 0%, transparent 65%)',
+    }} />
+
+    <div className="relative z-10 flex flex-col items-center text-center">
+      {/* Icon with animated ring */}
+      <div className="relative mb-4">
+        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center relative" style={{
+          background: 'radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, hsl(var(--card) / 0.5) 70%)',
+          border: '1px solid hsl(var(--primary) / 0.2)',
+        }}>
+          {/* Spinning decorative ring */}
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80" style={{ animation: 'spin 30s linear infinite' }}>
+            <circle cx="40" cy="40" r="36" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.2" strokeDasharray="3 6" />
+          </svg>
+          <span className="text-3xl md:text-4xl relative z-10" style={{ filter: 'drop-shadow(0 2px 8px hsl(var(--primary) / 0.25))' }}>{icon}</span>
+        </div>
+        {/* Pulse ring */}
+        <div className="absolute inset-0 rounded-full" style={{
+          border: '1px solid hsl(var(--primary) / 0.1)',
+          animation: 'contact-icon-pulse 3s ease-in-out infinite',
+        }} />
+      </div>
+
+      {/* Ornamental mini divider */}
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-6 h-px" style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4))' }} />
+        <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden="true">
+          <path d="M4 0L5.5 4L4 8L2.5 4Z" fill="hsl(var(--primary))" opacity="0.4" />
+        </svg>
+        <div className="w-6 h-px" style={{ background: 'linear-gradient(90deg, hsl(var(--primary) / 0.4), transparent)' }} />
+      </div>
+
+      {/* Name & relation */}
+      <p className="font-body text-sm md:text-base font-medium mb-0.5" style={{ color: 'hsl(var(--text-cream) / 0.9)' }}>{name}</p>
+      <p className="font-ui text-[10px] md:text-xs tracking-wider uppercase mb-5" style={{ color: 'hsl(var(--text-cream) / 0.45)' }}>{relation}</p>
+
+      {/* Action buttons */}
+      <div className="flex items-center justify-center gap-3">
+        <a href={`tel:${phone}`} className="family-contact-btn group/call" aria-label={`Call ${name}`}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+          </svg>
+          <span className="font-ui text-[10px] tracking-wide">Call</span>
+        </a>
+        <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="family-contact-btn family-contact-btn--whatsapp group/wa" aria-label={`WhatsApp ${name}`}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+          </svg>
+          <span className="font-ui text-[10px] tracking-wide">WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+);
+
+/* ═══ Family Contact Section Heading ═══ */
+const FamilyContactHeading: React.FC<{ active: boolean }> = ({ active }) => (
+  <div className="w-full text-center mb-8" style={{ animation: active ? 'fade-slide-up 0.6s ease-out 0.7s both' : 'none' }}>
+    {/* Top ornamental line */}
+    <div className="flex items-center justify-center gap-3 mb-4">
+      <div className="h-px flex-1 max-w-[60px]" style={{
+        background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4))',
+      }} />
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style={{
+        animation: active ? 'contact-diamond-spin 1s ease-out 1s both' : 'none',
+      }}>
+        <path d="M10 1L13 10L10 19L7 10Z" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8" opacity="0.5" />
+        <path d="M10 4L12 10L10 16L8 10Z" fill="hsl(var(--primary))" opacity="0.15" />
+      </svg>
+      <div className="h-px flex-1 max-w-[60px]" style={{
+        background: 'linear-gradient(90deg, hsl(var(--primary) / 0.4), transparent)',
+      }} />
+    </div>
+
+    {/* Heading with Diyas */}
+    <div className="flex items-center justify-center gap-3 mb-2">
+      <DiyaIcon lit={active} />
+      <h3 className="font-heading text-[22px] md:text-[32px] gold-shimmer-slow tracking-wide leading-none">
+        Family Contacts
+      </h3>
+      <DiyaIcon lit={active} />
+    </div>
+
+    {/* Subtitle */}
+    <p className="font-body text-xs md:text-sm mt-2" style={{ color: 'hsl(var(--text-cream) / 0.5)' }}>
+      For any queries, feel free to reach out
+    </p>
+
+    {/* Gold divider */}
+    <div className="mt-4">
+      <GoldDivider />
+    </div>
   </div>
 );
 
@@ -339,55 +381,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
           <GoldDivider />
         </div>
 
-        {/* ── Jharokha Video Frame ── */}
-        <JharokhaFrame active={active}>
-          <div className="aspect-video flex items-center justify-center relative" style={{ background: 'hsl(var(--bg-card))' }}>
-            {/* Ambient glow behind play button */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-32 h-32 rounded-full" style={{
-                background: 'radial-gradient(circle, hsl(var(--primary) / 0.08) 0%, transparent 70%)',
-              }} />
-            </div>
 
-            {/* Play button */}
-            <button
-              className="relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-500 hover:scale-110 group/play cursor-pointer"
-              style={{
-                background: 'hsl(var(--primary) / 0.15)',
-                border: '2px solid hsl(var(--primary) / 0.5)',
-                boxShadow: '0 0 30px hsl(var(--primary) / 0.1)',
-              }}
-              aria-label="Play pre-wedding video"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" className="text-primary ml-1 group-hover/play:scale-110 transition-transform">
-                <polygon points="6,3 20,12 6,21" fill="currentColor" />
-              </svg>
-              {/* Pulse ring */}
-              <div className="absolute inset-0 rounded-full border border-primary/30 animate-ping" style={{ animationDuration: '2s' }} />
-            </button>
-
-            {/* Video label */}
-            <p className="absolute bottom-3 left-0 right-0 text-center font-ui text-[11px] text-muted tracking-wider uppercase">
-              Pre-Wedding Video
-            </p>
-          </div>
-        </JharokhaFrame>
-
-        {/* Caption below frame */}
-        <p
-          className="text-center font-heading italic text-sm md:text-base text-muted mt-5 mb-2"
-          style={{ animation: active ? 'fade-in 0.4s ease-out 0.5s both' : 'none' }}
-        >
-          <span className="font-hindi not-italic" lang="hi">हमारी कहानी</span>
-          <span className="mx-2 text-primary/30">·</span>
-          Our Journey Together
-        </p>
-
-        {/* Marigold divider */}
-        <MarigoldDivider />
 
         {/* ── Photo Gallery ── */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-4">
           {galleryImages.map((img, i) => (
             <PhotoCard
               key={img.id}
@@ -397,6 +394,33 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
               onClick={() => openLightbox(i)}
             />
           ))}
+        </div>
+
+        <MarigoldDivider />
+
+        {/* ── Family Contact Section ── */}
+        <div className="w-full mt-8 md:mt-12 mb-12">
+          <FamilyContactHeading active={active} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <FamilyContactCard
+              icon="🤵"
+              name="Rajesh Sharma"
+              relation="Father of the Groom"
+              phone="+919999999999"
+              whatsapp="919999999999"
+              delay="1s"
+              active={active}
+            />
+            <FamilyContactCard
+              icon="👰"
+              name="Suresh Agarwal"
+              relation="Father of the Bride"
+              phone="+919999999998"
+              whatsapp="919999999998"
+              delay="1.15s"
+              active={active}
+            />
+          </div>
         </div>
 
         {/* ── Next Button ── */}
@@ -431,3 +455,5 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
 };
 
 export default GallerySection;
+
+
