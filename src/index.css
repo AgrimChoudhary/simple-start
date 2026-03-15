@@ -3402,7 +3402,7 @@
 }
 
 /* ═══════════════════════════════════════════════════
-   FAMILY SECTION — Royal Card, Jharokha, Modal
+   FAMILY SECTION — Royal Rajasthani Luxury
    ═══════════════════════════════════════════════════ */
 
 /* Royal Card Animated Gradient Border */
@@ -3410,68 +3410,130 @@
   position: relative;
   border-radius: 1rem;
   z-index: 1;
+  overflow: hidden;
 }
 .royal-card-wrapper::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: -1.5px;
   border-radius: 1.05rem;
-  background: linear-gradient(
-    60deg,
+  background: conic-gradient(
+    from 0deg,
     hsl(var(--primary) / 0.05),
-    hsl(var(--primary) / 0.4),
+    hsl(var(--primary) / 0.45),
     hsl(var(--primary) / 0.05),
-    hsl(var(--primary) / 0.4)
+    hsl(var(--primary) / 0.3),
+    hsl(var(--primary) / 0.05),
+    hsl(var(--primary) / 0.45),
+    hsl(var(--primary) / 0.05)
   );
-  background-size: 300% 300%;
-  animation: family-border-flow 6s linear infinite;
+  animation: fam-border-spin 8s linear infinite;
   z-index: -1;
-  opacity: 0.3;
+  opacity: 0.35;
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.group:hover .royal-card-wrapper::before {
-  opacity: 0.6;
+.royal-card-wrapper:hover::before {
+  opacity: 0.7;
+  inset: -2px;
+  filter: blur(3px);
+}
+
+@keyframes fam-border-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Border spotlight following cursor */
+.fam-border-spotlight {
+  position: absolute;
   inset: -1.5px;
-  filter: blur(2px);
-}
-
-@keyframes family-border-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Premium Button — Gold Shine */
-.btn-royal {
-  background: linear-gradient(
-    90deg,
-    hsl(var(--gold-tertiary)) 0%,
-    hsl(var(--primary)) 25%,
-    hsl(36 30% 94%) 50%,
-    hsl(var(--primary)) 75%,
-    hsl(var(--gold-tertiary)) 100%
+  border-radius: 1.05rem;
+  pointer-events: none;
+  z-index: 15;
+  background: radial-gradient(
+    circle 120px at var(--mx) var(--my),
+    hsl(var(--primary) / 0.7),
+    hsl(var(--primary) / 0.3) 40%,
+    transparent 70%
   );
-  background-size: 200% auto;
-  animation: family-shine 4s linear infinite;
-  color: hsl(var(--background));
-  border: 1px solid hsl(var(--foreground) / 0.15);
-  box-shadow: 0 4px 15px hsl(var(--background) / 0.4);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
-.btn-royal:hover {
-  animation: family-shine 2s linear infinite;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px hsl(var(--primary) / 0.25);
+.royal-card-wrapper:hover .fam-border-spotlight {
+  opacity: 1;
 }
 
-@keyframes family-shine {
-  to { background-position: 200% center; }
+/* ── Luxury Button with Diamond Corners ── */
+.fam-btn-luxury {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 24px;
+  border-radius: 9999px;
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground));
+  background: transparent;
+  border: 1.5px solid hsl(var(--primary) / 0.4);
+  box-shadow: 0 0 15px hsl(var(--primary) / 0.06), inset 0 1px 0 hsl(var(--primary) / 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.fam-btn-luxury:hover {
+  border-color: hsl(var(--primary) / 0.7);
+  background: hsl(var(--primary) / 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px hsl(var(--primary) / 0.15), 0 0 20px hsl(var(--primary) / 0.08);
+}
+.fam-btn-diamond {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: hsl(var(--primary));
+  transform: rotate(45deg);
+  opacity: 0.4;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.fam-btn-luxury:hover .fam-btn-diamond {
+  opacity: 0.8;
+  transform: rotate(45deg) scale(1.3);
+}
+.fam-btn-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.12), transparent);
+  animation: fam-btn-sweep 4s ease-in-out infinite;
+}
+@keyframes fam-btn-sweep {
+  0% { left: -100%; }
+  40%, 100% { left: 100%; }
+}
+
+@media (min-width: 768px) {
+  .fam-btn-luxury {
+    padding: 10px 28px;
+    font-size: 10px;
+  }
 }
 
 /* Jharokha SVG Path Draw Animation */
 .jharokha-draw .jharokha-path {
   stroke-dasharray: 500;
   stroke-dashoffset: 500;
-  animation: jharokha-draw-in 2s ease-out forwards;
+  animation: jharokha-draw-in 2.2s ease-out forwards;
 }
 @keyframes jharokha-draw-in {
   to { stroke-dashoffset: 0; }
@@ -3482,52 +3544,67 @@
   animation: family-frame-glow-pulse 3s ease-in-out infinite;
 }
 @keyframes family-frame-glow-pulse {
-  0%, 100% { filter: drop-shadow(0 0 2px hsl(var(--primary) / 0.15)); }
-  50% { filter: drop-shadow(0 0 6px hsl(var(--primary) / 0.5)); }
+  0%, 100% { filter: drop-shadow(0 0 2px hsl(var(--primary) / 0.12)); }
+  50% { filter: drop-shadow(0 0 8px hsl(var(--primary) / 0.5)); }
 }
 
 /* Family Card Entrance */
 .family-card-enter {
   opacity: 0;
-  transform: translateY(30px) scale(0.97);
-  animation: family-card-in 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  transform: translateY(40px) scale(0.95) rotateX(5deg);
+  animation: family-card-in 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 @keyframes family-card-in {
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0) scale(1) rotateX(0deg);
   }
 }
 
-/* Modal Backdrop */
-.family-modal-backdrop {
-  animation: family-backdrop-in 0.3s ease-out;
+/* ── Member Card — Animated Border + Hover Glow ── */
+.fam-member-card {
+  border: 1px solid hsl(var(--primary) / 0.15);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
-@keyframes family-backdrop-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.fam-member-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 0.8rem;
+  background: conic-gradient(
+    from 0deg,
+    hsl(var(--primary) / 0.0),
+    hsl(var(--primary) / 0.3),
+    hsl(var(--primary) / 0.0),
+    hsl(var(--primary) / 0.2),
+    hsl(var(--primary) / 0.0)
+  );
+  animation: fam-member-border-spin 6s linear infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.fam-member-card:hover::before {
+  opacity: 1;
+}
+.fam-member-card:hover {
+  transform: translateY(-6px) scale(1.04);
+  border-color: hsl(var(--primary) / 0.4);
+  box-shadow:
+    0 12px 30px hsl(var(--background) / 0.6),
+    0 0 20px hsl(var(--primary) / 0.1);
 }
 
-/* Modal 3D Flip Entrance */
-.family-modal-enter {
-  animation: family-modal-flip 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-}
-@keyframes family-modal-flip {
-  from {
-    opacity: 0;
-    transform: perspective(800px) rotateX(12deg) scale(0.95) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: perspective(800px) rotateX(0deg) scale(1) translateY(0);
-  }
+@keyframes fam-member-border-spin {
+  to { transform: rotate(360deg); }
 }
 
 /* Member Card Staggered Entrance */
 .family-member-card {
   opacity: 0;
-  transform: translateY(20px) scale(0.95);
-  animation: family-member-in 0.4s ease-out forwards;
+  transform: translateY(25px) scale(0.93);
+  animation: family-member-in 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 @keyframes family-member-in {
   to {
@@ -3536,10 +3613,46 @@
   }
 }
 
-/* Member card hover */
-.family-member-card:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 8px 25px hsl(var(--primary) / 0.12);
+/* ── Modal Luxury Styling ── */
+.fam-modal-luxury {
+  background: hsl(var(--background) / 0.95);
+  box-shadow:
+    0 0 40px hsl(var(--background) / 0.5),
+    0 0 80px hsl(var(--primary) / 0.06),
+    inset 0 1px 0 hsl(var(--primary) / 0.1);
+}
+.fam-modal-border {
+  border: 1.5px solid hsl(var(--primary) / 0.2);
+  border-radius: 1rem;
+  animation: fam-modal-border-glow 4s ease-in-out infinite;
+}
+@keyframes fam-modal-border-glow {
+  0%, 100% { border-color: hsl(var(--primary) / 0.15); box-shadow: none; }
+  50% { border-color: hsl(var(--primary) / 0.35); box-shadow: 0 0 15px hsl(var(--primary) / 0.08); }
+}
+
+/* Modal Backdrop */
+.family-modal-backdrop {
+  animation: family-backdrop-in 0.35s ease-out;
+}
+@keyframes family-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal 3D Flip Entrance */
+.family-modal-enter {
+  animation: family-modal-flip 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+@keyframes family-modal-flip {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateX(15deg) scale(0.92) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg) scale(1) translateY(0);
+  }
 }
 
 /* Custom scrollbar for modal */
@@ -3560,10 +3673,11 @@
 /* Mobile adjustments */
 @media (max-width: 480px) {
   .family-card-enter {
-    animation-duration: 0.5s;
+    animation-duration: 0.6s;
   }
-  .btn-royal {
-    padding: 6px 16px;
+  .fam-btn-luxury {
+    padding: 7px 18px;
     font-size: 8px;
+    gap: 5px;
   }
 }
