@@ -205,7 +205,6 @@ const FamilyContactsOverlay: React.FC<{
   >
     <div
       className="contact-overlay-modal"
-      style={{ animation: 'overlay-modal-in 0.4s cubic-bezier(0.22,0.61,0.36,1) both' }}
       onClick={(e) => e.stopPropagation()}
     >
       {/* Close button */}
