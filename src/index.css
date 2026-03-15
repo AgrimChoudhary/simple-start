@@ -1825,33 +1825,124 @@
   }
 }
 
-/* Photo card */
-.gallery-photo-card {
-  @apply relative rounded-xl overflow-hidden cursor-pointer transition-all duration-500;
-  aspect-ratio: 4 / 5;
-  animation: gallery-photo-in 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  animation-play-state: paused;
-}
-
-.gallery-photo-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 30px hsl(var(--primary) / 0.12);
-}
-
-.gallery-photo-card:focus-visible {
-  outline: 2px solid hsl(var(--primary));
-  outline-offset: 2px;
-}
-
-@keyframes gallery-photo-in {
+/* Photo card entrance animation */
+@keyframes gallery-reveal-up {
   0% {
     opacity: 0;
-    transform: translateY(20px) scale(0.96);
+    transform: translateY(40px) scale(0.9) rotate(1deg);
+    filter: blur(10px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0) scale(1) rotate(0deg);
+    filter: blur(0px);
   }
+}
+
+/* Subtle zooming effect for images */
+@keyframes gallery-ken-burns {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1) translate(1%, 1%); }
+  100% { transform: scale(1); }
+}
+
+.gallery-photo-card {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  aspect-ratio: 4 / 5;
+  background: transparent; /* Changed from card bg to prevent layout boxes */
+  animation: gallery-reveal-up 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-play-state: paused;
+  /* overflow: hidden removed to allow ornaments to pop out */
+}
+
+.gallery-photo-card.active {
+  animation-play-state: running;
+}
+
+.gallery-photo-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 40px hsl(var(--primary) / 0.25);
+  z-index: 10;
+}
+
+.gallery-photo-card img {
+  transition: transform 1.5s ease-out;
+}
+
+.gallery-photo-card:hover img {
+  transform: scale(1.15) rotate(1deg);
+}
+
+/* Royal Floral Ornate Frame Styles */
+.floral-frame-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* overflow: hidden removed to prevent ornament clipping */
+}
+
+.gallery-photo-card:hover .floral-frame-wrapper {
+  /* Redundant transform removed - parent card handles movement */
+  z-index: 20;
+}
+
+/* Image container within the frame */
+.floral-image-container {
+  @apply relative w-full h-full rounded-lg overflow-hidden;
+  background: #fdfaf5;
+  border: 1px solid rgba(200, 164, 92, 0.3);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 0 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gallery-photo-card:hover .floral-image-container {
+  border-color: rgba(200, 164, 92, 0.5);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.4),
+    inset 0 0 30px rgba(200, 164, 92, 0.1);
+}
+
+/* 3D Gold Floral Ornaments - Always on TOP */
+.floral-ornament {
+  position: absolute;
+  pointer-events: none;
+  z-index: 50; /* Higher to be above everything */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  color: #c8a45c; /* Gold color */
+}
+
+.gallery-photo-card:hover .floral-ornament {
+  filter: drop-shadow(0 6px 12px rgba(200, 164, 92, 0.5));
+  transform: scale(1.15); /* More pronounced on hover */
+}
+
+/* Adjusted positions to be more "outside" the clip area */
+.ornament-tl { top: -12px; left: -12px; width: 90px; height: 90px; }
+.ornament-tr { top: -12px; right: -12px; width: 90px; height: 90px; transform: scaleX(-1); }
+.ornament-bl { bottom: -12px; left: -12px; width: 90px; height: 90px; transform: scaleY(-1); }
+.ornament-br { bottom: -12px; right: -12px; width: 90px; height: 90px; transform: scale(-1); }
+
+.ornament-side-l { top: 50%; left: -5px; transform: translateY(-50%); width: 30px; }
+.ornament-side-r { top: 50%; right: -5px; transform: translateY(-50%) scaleX(-1); width: 30px; }
+
+/* Inner gold lining - overlay on image */
+.floral-inner-lining {
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(200, 164, 92, 0.3);
+  pointer-events: none;
+  z-index: 35; /* Above image, below ornaments */
+}
+
+.gallery-photo-card:hover .floral-inner-lining {
+  border-color: rgba(200, 164, 92, 0.5);
+  box-shadow: inset 0 0 15px rgba(200, 164, 92, 0.1);
 }
 
 /* Gold shimmer sweep for placeholders */

@@ -11,12 +11,12 @@ interface GallerySectionProps {
 }
 
 const galleryImages = [
-  { id: 1, alt: 'Palace courtyard at night with golden lamplight and marigold garlands', color: 'hsl(38 30% 25%)' },
-  { id: 2, alt: 'Elegant couple silhouette under ornate Rajasthani arch', color: 'hsl(218 40% 18%)' },
-  { id: 3, alt: 'Marigold flowers and golden bangles on midnight blue velvet', color: 'hsl(38 35% 22%)' },
-  { id: 4, alt: 'Rajasthani haveli doorway at twilight with lit diyas', color: 'hsl(218 35% 16%)' },
-  { id: 5, alt: 'Indian wedding mandap with marigold garlands and fairy lights', color: 'hsl(25 30% 20%)' },
-  { id: 6, alt: 'Mehndi hands holding each other with gold jewelry', color: 'hsl(38 25% 19%)' },
+  { id: 1, src: '/images/gallery/moment-1.jpg', alt: 'Marriage Ritual', color: 'hsl(38 30% 25%)' },
+  { id: 2, src: '/images/gallery/moment-2.jpg', alt: 'Couple in Traditional Attire', color: 'hsl(218 40% 18%)' },
+  { id: 3, src: '/images/gallery/moment-3.jpg', alt: 'Wedding Couple', color: 'hsl(38 35% 22%)' },
+  { id: 4, src: '/images/gallery/moment-4.jpg', alt: 'Royal Wedding Pose', color: 'hsl(218 35% 16%)' },
+  { id: 5, src: '/images/gallery/moment-5.jpg', alt: 'Moment of Love', color: 'hsl(25 30% 20%)' },
+  { id: 6, src: '/images/gallery/moment-6.jpg', alt: 'Couple Portrait', color: 'hsl(38 28% 22%)' },
 ];
 
 /* ═══════════════════════════════════════════════
@@ -101,6 +101,70 @@ const JharokhaFrame: React.FC<{ children: React.ReactNode; active: boolean }> = 
 /* ═══════════════════════════════════════════════
    PHOTO CARD with shimmer placeholder
    ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   FLORAL ORNATE FRAME — Ivory & Embossed Gold
+   ═══════════════════════════════════════════════ */
+const FloralOrnateFrame: React.FC<{ children: React.ReactNode; active: boolean; index: number }> = ({ children, active, index }) => (
+  <div 
+    className={`floral-frame-wrapper ${active ? 'royal-frame-active' : ''}`}
+    style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+  >
+    {/* Floral corners inspired by the reference image */}
+    <div className="floral-ornament ornament-tl">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,10 C10,10 20,5 35,15 C45,22 40,35 40,35 C40,35 52,25 65,30 C80,35 75,55 75,55" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M15,15 C25,12 40,18 40,30 C40,42 28,48 18,40 C8,32 12,20 22,18" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
+        <circle cx="25" cy="25" r="3" fill="currentColor" />
+        <path d="M10,40 Q15,60 40,65" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
+        <path d="M40,10 Q60,15 65,40" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
+      </svg>
+    </div>
+    <div className="floral-ornament ornament-tr">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,10 C10,10 20,5 35,15 C45,22 40,35 40,35 C40,35 52,25 65,30 C80,35 75,55 75,55" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M15,15 C25,12 40,18 40,30 C40,42 28,48 18,40 C8,32 12,20 22,18" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
+        <circle cx="25" cy="25" r="3" fill="currentColor" />
+      </svg>
+    </div>
+    <div className="floral-ornament ornament-bl">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,10 C10,10 20,5 35,15 C45,22 40,35 40,35 C40,35 52,25 65,30 C80,35 75,55 75,55" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M15,15 C25,12 40,18 40,30 C40,42 28,48 18,40 C8,32 12,20 22,18" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
+        <circle cx="25" cy="25" r="3" fill="currentColor" />
+      </svg>
+    </div>
+    <div className="floral-ornament ornament-br">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,10 C10,10 20,5 35,15 C45,22 40,35 40,35 C40,35 52,25 65,30 C80,35 75,55 75,55" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M15,15 C25,12 40,18 40,30 C40,42 28,48 18,40 C8,32 12,20 22,18" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
+        <circle cx="25" cy="25" r="3" fill="currentColor" />
+      </svg>
+    </div>
+
+    {/* Side vines */}
+    <div className="floral-ornament ornament-side-l">
+      <svg viewBox="0 0 20 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,0 Q15,25 5,50 T10,100" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
+      </svg>
+    </div>
+    <div className="floral-ornament ornament-side-r">
+      <svg viewBox="0 0 20 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,0 Q15,25 5,50 T10,100" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
+      </svg>
+    </div>
+
+    {/* Image container handles clipping */}
+    <div className="floral-image-container">
+      {/* Inner gold lining - overlay on image */}
+      <div className="floral-inner-lining" />
+      {children}
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════
+   PHOTO CARD
+   ═══════════════════════════════════════════════ */
 const PhotoCard: React.FC<{
   image: typeof galleryImages[0];
   index: number;
@@ -109,39 +173,29 @@ const PhotoCard: React.FC<{
 }> = ({ image, index, active, onClick }) => (
   <button
     onClick={onClick}
-    className="gallery-photo-card group"
+    className={`gallery-photo-card group ${active ? 'active' : ''}`}
     style={{
-      animationDelay: active ? `${0.8 + index * 0.12}s` : '0s',
-      animationPlayState: active ? 'running' : 'paused',
+      animationDelay: active ? `${0.5 + index * 0.15}s` : '0s',
     }}
     aria-label={`View photo: ${image.alt}`}
   >
-    {/* Shimmer placeholder background */}
-    <div className="absolute inset-0 rounded-xl overflow-hidden" style={{ background: image.color }}>
-      {/* Gold shimmer sweep */}
-      <div className="gallery-shimmer-sweep" />
-      {/* Subtle texture */}
-      <div className="absolute inset-0 opacity-10" style={{
-        backgroundImage: `radial-gradient(circle at 30% 40%, hsl(var(--primary) / 0.2) 0%, transparent 50%),
-          radial-gradient(circle at 70% 60%, hsl(var(--primary) / 0.15) 0%, transparent 40%)`,
-      }} />
-    </div>
-
-    {/* Camera icon */}
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center bg-background/30 backdrop-blur-sm group-hover:border-primary/50 group-hover:scale-110 transition-all duration-500">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" className="opacity-40 group-hover:opacity-70 transition-opacity">
-          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
-          <circle cx="12" cy="13" r="4" />
-        </svg>
+    <FloralOrnateFrame active={active} index={index}>
+      {/* Background Color/Shimmer */}
+      <div className="absolute inset-0" style={{ background: image.color }}>
+        <div className="gallery-shimmer-sweep" />
       </div>
-    </div>
 
-    {/* Hover overlay */}
-    <div className="absolute inset-0 rounded-xl bg-primary/0 group-hover:bg-primary/8 transition-all duration-500" />
+      {/* Image - Full Cover */}
+      <img
+        src={image.src}
+        alt={image.alt}
+        className="relative w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+        loading="lazy"
+      />
 
-    {/* Gold border glow on hover */}
-    <div className="absolute inset-0 rounded-xl border border-primary/10 group-hover:border-primary/30 transition-colors duration-500" />
+      {/* Hover overlay */}
+      <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-all duration-500 z-20" />
+    </FloralOrnateFrame>
   </button>
 );
 
@@ -179,7 +233,7 @@ const Lightbox: React.FC<{
 
       {/* Image container */}
       <div
-        className="relative z-10 max-w-3xl w-full mx-4 aspect-[4/5] md:aspect-[3/2] rounded-2xl overflow-hidden"
+        className="relative z-10 max-w-4xl w-full mx-4 aspect-[4/5] md:aspect-[3/4] rounded-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         style={{
           background: image.color,
@@ -191,12 +245,17 @@ const Lightbox: React.FC<{
         <div className="absolute inset-0">
           <div className="gallery-shimmer-sweep" />
         </div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <p className="text-muted font-body text-sm text-center px-8 leading-relaxed">{image.alt}</p>
-        </div>
+
+        {/* High Resolution Image */}
+        <img
+          src={image.src}
+          alt={image.alt}
+          className="relative w-full h-full object-contain"
+          style={{ animation: 'fade-in 0.5s ease-out' }}
+        />
 
         {/* Gold frame border */}
-        <div className="absolute inset-0 rounded-2xl border border-primary/10 pointer-events-none" />
+        <div className="absolute inset-0 rounded-2xl border border-primary/20 pointer-events-none" />
       </div>
 
       {/* Close button */}
@@ -316,7 +375,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
       </div>
 
       {/* ── Content ── */}
-      <div className="relative z-10 w-full max-w-3xl mx-auto px-4 md:px-6 pt-10 pb-16">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8 pt-10 pb-16">
 
         {/* Section Heading */}
         {/* ── Family Section (shown first) ── */}
@@ -337,7 +396,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
 
 
         {/* ── Photo Gallery ── */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mb-10">
           {galleryImages.map((img, i) => (
             <PhotoCard
               key={img.id}
