@@ -53,7 +53,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
 
   return (
     <section className="os-container" aria-labelledby="opening-heading">
-      {/* ══════ SHARED ROYAL BACKGROUND ══════ */}
+      {/* ══════ ROYAL STAR BACKGROUND (Navy) ══════ */}
       <RoyalBackground />
 
       <div className="os-bg-grain" aria-hidden="true" />
@@ -106,8 +106,8 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
           <div className="os-portrait-glow-outer" aria-hidden="true" />
           <div className="os-portrait-glow-inner" aria-hidden="true" />
 
-          {/* Portrait circle */}
-          <div className="os-portrait-circle">
+          {/* Portrait frame */}
+          <div className="os-portrait-frame">
             <img
               src={coupleImage}
               alt="Harshit & Anshikha"

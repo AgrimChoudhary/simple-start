@@ -1252,10 +1252,10 @@
   inset: 0;
   background: linear-gradient(
     160deg,
-    hsl(220, 72%, 6%) 0%,
-    hsl(222, 68%, 9%) 30%,
-    hsl(218, 65%, 11%) 60%,
-    hsl(220, 70%, 7%) 100%
+    hsl(230, 80%, 6%) 0%,
+    hsl(228, 75%, 9%) 30%,
+    hsl(225, 70%, 12%) 60%,
+    hsl(230, 78%, 7%) 100%
   );
 }
 
@@ -2356,11 +2356,10 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    hsl(220 60% 4%) 0%,
-    hsl(218 55% 7%) 30%,
-    hsl(216 50% 9%) 50%,
-    hsl(218 55% 7%) 70%,
-    hsl(220 60% 4%) 100%
+    #050510 0%,
+    #0a0a1a 30%,
+    #000008 70%,
+    #02020a 100%
   );
   z-index: 0;
 }
@@ -2427,7 +2426,7 @@
 @keyframes os-particle-float {
   0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.1; }
   25% { transform: translate3d(12px, -20px, 0); opacity: 0.35; }
-  50% { transform: translate3d(-8px, -35px, 0); opacity: 0.5; }
+  50% { transform: translate3d(-8px, -35px, 0); opacity: 0.6; } /* Increased opacity for more starry feel */
   75% { transform: translate3d(15px, -15px, 0); opacity: 0.25; }
 }
 
@@ -2454,8 +2453,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 20px;
-  padding: 28px 20px;
+  gap: clamp(28px, 5vh, 48px);
+  padding: clamp(10px, 2vh, 28px) 16px;
   max-width: 480px;
   width: 100%;
 }
@@ -2474,14 +2473,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(200px, 52vw, 260px);
-  height: clamp(200px, 52vw, 260px);
+  width: clamp(160px, min(50vw, 30vh), 200px); /* bigger on mobile */
+  aspect-ratio: 1 / 1;
 }
 
 @media (min-width: 768px) {
   .os-portrait-hero {
-    width: clamp(260px, 30vw, 340px);
-    height: clamp(260px, 30vw, 340px);
+    width: clamp(130px, 18vw, 180px); /* desktop keeps it smaller */
+    aspect-ratio: 1 / 1;
   }
 }
 
@@ -2583,13 +2582,39 @@
   50% { opacity: 1; transform: scale(1.08); }
 }
 
-/* Portrait circle */
-.os-portrait-circle {
+/* Portrait frame (circle) */
+.os-portrait-frame {
   position: relative;
   width: 100%;
   height: 100%;
   border-radius: 50%;
   z-index: 2;
+  overflow: hidden;
+  animation: os-portrait-pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes os-portrait-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 204, 102, 0.2); }
+  100% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 204, 102, 0.4); }
+}
+
+.os-portrait-frame::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 230, 180, 0.4), transparent);
+  transform: skewX(-20deg);
+  animation: os-image-shine 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes os-image-shine {
+  0%, 30% { left: -100%; }
+  70%, 100% { left: 200%; }
 }
 
 .os-portrait-img {
@@ -2601,29 +2626,29 @@
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.os-portrait-circle:hover .os-portrait-img {
+.os-portrait-frame:hover .os-portrait-img {
   transform: scale(1.05);
 }
 
-/* Gold ring borders */
+/* Gold ring borders (circle) */
 .os-portrait-ring {
   position: absolute;
-  inset: -3px;
+  inset: -6px;
   border-radius: 50%;
-  border: 2.5px solid hsl(var(--gold-primary) / 0.7);
+  border: 4px solid #ffcc66; /* Bright gold from image */
   box-shadow:
-    0 0 25px hsl(var(--gold-primary) / 0.2),
-    0 0 60px hsl(var(--gold-primary) / 0.08),
-    inset 0 0 25px hsl(var(--gold-primary) / 0.1);
+    0 0 35px #ffaa00,
+    0 0 80px rgba(255, 170, 0, 0.4),
+    inset 0 0 30px rgba(255, 170, 0, 0.5);
   pointer-events: none;
-  animation: os-ring-glow 5s ease-in-out infinite;
+  animation: os-ring-glow 3s ease-in-out infinite alternate;
 }
 
 .os-portrait-ring-outer {
   position: absolute;
-  inset: -8px;
+  inset: -14px;
   border-radius: 50%;
-  border: 1px solid hsl(var(--gold-primary) / 0.2);
+  border: 1px solid rgba(255, 204, 102, 0.3);
   pointer-events: none;
 }
 
@@ -2653,25 +2678,37 @@
 .os-name {
   font-family: 'Cinzel Decorative', Georgia, serif;
   font-weight: 700;
-  font-size: clamp(28px, 8vw, 56px);
-  letter-spacing: clamp(3px, 1.5vw, 10px);
+  font-size: clamp(28px, 8.5vw, 36px); /* slightly bigger on mobile */
+  letter-spacing: clamp(1px, 0.5vw, 3px);
   line-height: 1.15;
-  background: linear-gradient(
-    90deg,
-    hsl(var(--gold-tertiary)),
-    hsl(var(--gold-primary)),
-    hsl(45 75% 65%),
-    hsl(var(--gold-secondary)),
-    hsl(var(--gold-primary)),
-    hsl(var(--gold-tertiary))
-  );
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: os-name-shimmer 5s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px hsl(var(--gold-primary) / 0.25))
-          drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+  color: #ffcc66;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  filter: drop-shadow(0 0 10px rgba(255, 204, 102, 0.3));
+}
+
+/* Desktop: keep names smaller */
+@media (min-width: 768px) {
+  .os-name {
+    font-size: clamp(20px, 2.5vw, 28px);
+  }
+}
+
+/* Push names block down so it clears the portrait glow on mobile */
+.os-names-block {
+  margin-top: clamp(16px, 3vh, 28px);
+}
+
+/* Mobile only: flex column + gap between HARSHIT & ANSHIKHA */
+@media (max-width: 767px) {
+  .os-names-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(8px, 2vw, 14px);
+  }
 }
 
 @keyframes os-name-shimmer {
@@ -2697,20 +2734,12 @@
 
 .os-ampersand {
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: clamp(20px, 5vw, 36px);
-  background: linear-gradient(
-    90deg,
-    hsl(var(--gold-tertiary)),
-    hsl(var(--gold-primary)),
-    hsl(var(--gold-secondary)),
-    hsl(var(--gold-primary)),
-    hsl(var(--gold-tertiary))
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gold-shimmer 4s linear infinite;
+  font-size: clamp(14px, 3vw, 24px);
+  color: #ffcc66;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
 }
 
 .os-amp-line {
@@ -2727,10 +2756,10 @@
 .os-married-text {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  font-size: clamp(13px, 3.5vw, 18px);
+  font-size: clamp(12px, 2.5vw, 16px);
   color: hsl(var(--foreground) / 0.5);
-  letter-spacing: 0.2em;
-  margin-top: 6px;
+  letter-spacing: 0.15em;
+  margin-top: 4px;
   text-shadow: 0 0 20px hsl(var(--gold-primary) / 0.1);
 }
 
@@ -2745,28 +2774,30 @@
 /* ══════════ DATE CARD ══════════ */
 .os-date-card {
   position: relative;
-  padding: 18px 28px;
-  border: 1px solid hsl(var(--gold-primary) / 0.22);
-  border-radius: 14px;
-  background: linear-gradient(
-    135deg,
-    hsl(var(--card) / 0.5) 0%,
-    hsl(var(--card) / 0.25) 50%,
-    hsl(var(--card) / 0.5) 100%
-  );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  max-width: 280px;
-  box-shadow:
-    0 4px 30px hsl(var(--gold-primary) / 0.08),
-    inset 0 1px 0 hsl(var(--gold-primary) / 0.1);
+  padding: clamp(12px, 2.5vh, 18px) clamp(20px, 4vw, 28px);
+  border: 1px solid rgba(255, 204, 102, 0.4);
+  border-radius: 0; /* Boxy look like the image */
+  background: transparent;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  max-width: 260px;
+  box-shadow: none;
   overflow: hidden;
+}
+
+/* Thin inner border like the image */
+.os-date-card::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed rgba(255, 204, 102, 0.3);
+  pointer-events: none;
 }
 
 @media (min-width: 768px) {
   .os-date-card {
-    padding: 24px 40px;
-    max-width: 320px;
+    padding: 16px 32px;
+    max-width: 300px;
   }
 }
 
@@ -2798,10 +2829,10 @@
 
 .os-date-hindi {
   font-family: 'Noto Sans Devanagari', 'Mukta', sans-serif;
-  font-size: 11px;
-  color: hsl(var(--gold-primary) / 0.55);
+  font-size: clamp(9px, 1.5vh, 11px);
+  color: rgba(255, 204, 102, 0.8);
   letter-spacing: 0.15em;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   position: relative;
   z-index: 2;
 }
@@ -2812,20 +2843,20 @@
 
 .os-date-main {
   font-family: 'Lora', Georgia, serif;
-  font-size: clamp(18px, 4.5vw, 24px);
+  font-size: clamp(14px, 3vh, 20px);
   font-weight: 500;
-  color: hsl(var(--foreground));
-  letter-spacing: 0.15em;
-  margin-bottom: 6px;
+  color: #ffcc66;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
   position: relative;
   z-index: 2;
 }
 
 .os-date-divider {
-  width: 36px;
+  width: 28px;
   height: 1px;
   background: hsl(var(--gold-primary) / 0.25);
-  margin: 0 auto 6px;
+  margin: 0 auto 4px;
   position: relative;
   z-index: 2;
 }
@@ -2833,9 +2864,9 @@
 .os-date-venue {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  font-size: clamp(12px, 3vw, 15px);
-  color: hsl(var(--foreground) / 0.5);
-  letter-spacing: 0.12em;
+  font-size: clamp(11px, 2vh, 14px);
+  color: rgba(255, 204, 102, 0.8);
+  letter-spacing: 0.1em;
   position: relative;
   z-index: 2;
 }
@@ -2845,34 +2876,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  margin-top: 4px;
+  gap: clamp(4px, 1.5vh, 12px);
+  margin-top: 0px;
 }
 
 .os-cta-button {
   position: relative;
-  padding: 14px 36px;
-  min-width: 200px;
-  border: 1.5px solid hsl(var(--gold-primary) / 0.4);
-  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.06) 0%, hsl(var(--gold-primary) / 0.02) 50%, hsl(var(--gold-primary) / 0.06) 100%);
-  color: hsl(var(--gold-primary));
-  border-radius: 8px;
+  padding: clamp(10px, 2vh, 14px) clamp(24px, 5vw, 36px);
+  min-width: 180px;
+  border: 1px solid rgba(255, 204, 102, 0.4);
+  background: transparent;
+  color: #ffcc66;
+  border-radius: 0; /* Boxy like image */
   cursor: pointer;
   overflow: visible;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow:
-    0 0 30px hsl(var(--gold-primary) / 0.06),
-    0 4px 20px hsl(var(--background) / 0.4),
-    inset 0 1px 0 hsl(var(--gold-primary) / 0.1);
-  animation: os-cta-pulse 4s ease-in-out infinite;
+  font-size: clamp(10px, 1.5vh, 12px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.os-cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgba(255, 204, 102, 0.3);
+  pointer-events: none;
 }
 
 @media (min-width: 768px) {
   .os-cta-button {
-    padding: 16px 48px;
-    min-width: 240px;
+    padding: 12px 40px;
+    min-width: 200px;
   }
 }
 
