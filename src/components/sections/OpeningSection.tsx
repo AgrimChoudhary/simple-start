@@ -1,7 +1,54 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 import RoyalBackground from '@/components/global/RoyalBackground';
-import coupleImage from '@/assets/couple-illustration.png';
+import HangingDecors from '@/components/global/HangingDecors';
+import PeacockCorner from '@/components/global/PeacockCorner';
+import coupleImage from '@/assets/indian-couple-traditional.png';
+
+/* ── ANIMATED FLANKING PEACOCKS (MAYUR) ── */
+const FlankingPeacocks: React.FC = () => (
+  <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+    <defs>
+      <linearGradient id="os-peacock-body" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#00E5FF"/>
+        <stop offset="50%" stopColor="#0277BD"/>
+        <stop offset="100%" stopColor="#1A237E"/>
+      </linearGradient>
+      <linearGradient id="os-peacock-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#AEEA00"/>
+        <stop offset="50%" stopColor="#00B0FF"/>
+        <stop offset="100%" stopColor="#000051"/>
+      </linearGradient>
+      
+      <g id="os-mini-peacock">
+        {/* Tail */}
+        <g className="os-peacock-tail">
+          <path d="M-10 10 C-30 -10, -50 20, -60 40 C-30 60, 0 30, 0 10Z" fill="#004D40"/>
+          <path d="M-5 15 C-20 0, -40 25, -45 40 C-20 50, 0 30, -5 15Z" fill="#00695C"/>
+          <ellipse cx="-45" cy="30" rx="3" ry="5" fill="#D4AF37" transform="rotate(-30 -45 30)"/>
+          <circle cx="-45" cy="30" r="1.5" fill="#0D47A1"/>
+          <ellipse cx="-35" cy="40" rx="4" ry="6" fill="#D4AF37" transform="rotate(-50 -35 40)"/>
+          <circle cx="-35" cy="40" r="2" fill="#0D47A1"/>
+          <ellipse cx="-20" cy="45" rx="3" ry="5" fill="#D4AF37" transform="rotate(-70 -20 45)"/>
+          <circle cx="-20" cy="45" r="1.5" fill="#0D47A1"/>
+        </g>
+        {/* Neck & Head */}
+        <g className="os-peacock-neck">
+          <path d="M8 12 C10 0, 15 -10, 20 -15 C25 -10, 25 0, 15 15" fill="url(#os-peacock-body)"/>
+          <circle cx="21" cy="-17" r="6" fill="#0277BD"/>
+          <polygon points="26,-18 32,-15 25,-14" fill="#FFD700"/>
+          <path d="M20 -23 L18 -30 M22 -23 L22 -32 M24 -23 L26 -30" stroke="#00E5FF" strokeWidth="0.8"/>
+          <circle cx="18" cy="-30" r="1" fill="#FFD700" className="os-peacock-crest-dot" />
+          <circle cx="22" cy="-32" r="1" fill="#FFD700" className="os-peacock-crest-dot" />
+          <circle cx="26" cy="-30" r="1" fill="#FFD700" className="os-peacock-crest-dot" />
+          <circle cx="22" cy="-18" r="1" fill="#FFF"/>
+        </g>
+        <ellipse cx="0" cy="15" rx="14" ry="10" fill="url(#os-peacock-body)" className="os-peacock-body" />
+        <path d="M0 10 C-10 10, -20 20, -10 25 C0 20, 10 15, 0 10Z" fill="url(#os-peacock-wing)" className="os-peacock-wing" />
+      </g>
+    </defs>
+  </svg>
+);
 
 interface OpeningSectionProps {
   active: boolean;
@@ -11,21 +58,13 @@ interface OpeningSectionProps {
 }
 
 const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrations, visited }) => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
 
   useEffect(() => {
     if (!active) return;
-    if (visited) { setStep(10); return; }
-    const timers = [
-      setTimeout(() => setStep(1), 300),
-      setTimeout(() => setStep(2), 800),
-      setTimeout(() => setStep(3), 1400),
-      setTimeout(() => setStep(4), 2000),
-      setTimeout(() => setStep(5), 2600),
-      setTimeout(() => setStep(6), 3200),
-    ];
-    return () => timers.forEach(clearTimeout);
-  }, [active, visited]);
+    const t = setTimeout(() => setStep(10), 200);
+    return () => clearTimeout(t);
+  }, [active]);
 
   // Gold particles
   const particles = useMemo(() =>
@@ -53,9 +92,21 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
 
   return (
     <section className="os-container" aria-labelledby="opening-heading">
-      {/* ══════ ROYAL STAR BACKGROUND (Navy) ══════ */}
+      {/* ── SHARED ROYAL BACKGROUND ── */}
       <RoyalBackground />
 
+      {/* ── HANGING DECORATIONS (TOP BANNER) ── */}
+      <HangingDecors />
+
+      {/* ── MAYUR (PEACOCK) CORNERS ── */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 50 }}>
+        <PeacockCorner pos="tl" />
+        <PeacockCorner pos="tr" />
+        <PeacockCorner pos="bl" />
+        <PeacockCorner pos="br" />
+      </div>
+
+      {/* ── ORNATE CORNER FRAMING ── */}
       <div className="os-bg-grain" aria-hidden="true" />
 
       {/* Gold floating particles */}
@@ -88,37 +139,62 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       <div className="os-content">
 
         {/* ── 1. CIRCULAR PORTRAIT — HERO ── */}
-        <div
-          className="os-portrait-hero"
-          style={{
-            opacity: step >= 2 ? 1 : 0,
-            transform: step >= 2 ? 'scale(1)' : 'scale(0.5)',
-            transition: 'opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.8s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
-        >
-          {/* Mandala rings behind portrait */}
-          <div className="os-mandala-ring os-mandala-ring-1" aria-hidden="true" />
-          <div className="os-mandala-ring os-mandala-ring-2" aria-hidden="true" />
-          <div className="os-mandala-ring os-mandala-ring-3" aria-hidden="true" />
-          <div className="os-mandala-ring os-mandala-ring-4" aria-hidden="true" />
-          
-          {/* Golden glow behind */}
-          <div className="os-portrait-glow-outer" aria-hidden="true" />
-          <div className="os-portrait-glow-inner" aria-hidden="true" />
+          <div
+            className="os-portrait-hero"
+            style={{
+              opacity: step >= 2 ? 1 : 0,
+              transform: `scale(${step >= 2 ? 1 : 0.8}) translateY(${step >= 2 ? '0' : '20px'})`,
+              transition: 'none',
+            }}
+          >
+            {/* ── NEW OUTER DECORATION (Lotus Petals) ── */}
+            <div className="os-portrait-decoration">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className={`os-decoration-petal os-petal-${i}`} />
+              ))}
+              <div className="os-decoration-ring-outer" />
+            </div>
 
-          {/* Portrait frame */}
-          <div className="os-portrait-frame">
-            <img
-              src={coupleImage}
-              alt="Harshit & Anshikha"
-              className="os-portrait-img"
-              loading="eager"
-            />
-            {/* Gold ring border */}
-            <div className="os-portrait-ring" aria-hidden="true" />
-            <div className="os-portrait-ring-outer" aria-hidden="true" />
+            {/* Multi-layered Mandala Rings */}
+            <div className="os-mandala-ring os-mandala-ring-1" />
+            <div className="os-mandala-ring os-mandala-ring-2" />
+            <div className="os-mandala-ring os-mandala-ring-3" />
+            <div className="os-mandala-ring os-mandala-ring-4" />
+
+            {/* ── NEW: ANIMATED DIYAS AROUND THE CIRCLE ── */}
+            <div className="os-portrait-diyas">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className={`os-diya-wrapper os-diya-pos-${i}`}>
+                   <div className="os-diya-container">
+                     <div className="os-diya-base"></div>
+                     <div className="os-diya-flame-container">
+                        <div className="os-diya-flame"></div>
+                        <div className="os-diya-flame-glow"></div>
+                     </div>
+                   </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Glowing Auras */}
+            <div className="os-portrait-glow-outer" />
+            <div className="os-portrait-glow-inner" />
+
+            {/* The Main Portrait Image Frame */}
+            <div className="os-portrait-frame">
+                <img
+                  src="/assets/opening-portrait.png"
+                  alt="Harshit and Anshikha"
+                  className="os-portrait-img"
+                />
+            </div>
+            
+            {/* Decorative Gold Rings overlaying the frame */}
+            <div className="os-portrait-ring-outer" />
+            <div className="os-portrait-ring-inner" />
+            <div className="os-portrait-ring" />
+
           </div>
-        </div>
 
         {/* ── 2. COUPLE NAMES ── */}
         <div className="os-names-block" id="opening-heading">
@@ -126,12 +202,28 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
             className="os-name"
             style={{
               opacity: step >= 3 ? 1 : 0,
-              transform: step >= 3 ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.8)',
-              transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+              transform: step >= 3 ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.95)',
+              transition: 'opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
             HARSHIT
           </h1>
+
+          {/* 🦚 Left Peacock */}
+          <div className="os-peacock-flank os-peacock-left" style={{ opacity: step >= 3 ? 1 : 0 }}>
+            <svg viewBox="-80 -40 120 120" width="100%" height="100%">
+              <use href="#os-mini-peacock" />
+            </svg>
+          </div>
+
+          {/* 🦚 Right Peacock */}
+          <div className="os-peacock-flank os-peacock-right" style={{ opacity: step >= 3 ? 1 : 0 }}>
+            <svg viewBox="-80 -40 120 120" width="100%" height="100%" style={{ transform: 'scaleX(-1)' }}>
+              <use href="#os-mini-peacock" />
+            </svg>
+          </div>
+
+          <FlankingPeacocks />
 
           {/* Ampersand with lines */}
           <div
@@ -139,7 +231,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
             style={{
               opacity: step >= 3 ? 1 : 0,
               transform: step >= 3 ? 'scale(1)' : 'scale(0)',
-              transition: 'opacity 0.8s ease-out 0.2s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s',
+              transition: 'opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
             <div className="os-amp-line" />
@@ -151,8 +243,8 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
             className="os-name"
             style={{
               opacity: step >= 3 ? 1 : 0,
-              transform: step >= 3 ? 'translateY(0) scale(1)' : 'translateY(-30px) scale(0.8)',
-              transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s',
+              transform: step >= 3 ? 'translateY(0) scale(1)' : 'translateY(-16px) scale(0.95)',
+              transition: 'opacity 0.5s ease-out 0.05s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s',
             }}
           >
             ANSHIKHA
@@ -162,67 +254,45 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
             className="os-married-text"
             style={{
               opacity: step >= 4 ? 1 : 0,
-              transform: step >= 4 ? 'translateY(0)' : 'translateY(12px)',
-              transition: 'opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s',
+              transform: step >= 4 ? 'translateY(0)' : 'translateY(8px)',
+              transition: 'opacity 0.4s ease-out 0.1s, transform 0.4s ease-out 0.1s',
             }}
           >
             are getting married
           </p>
         </div>
 
-        {/* ── 3. DATE CARD ── */}
-        <div
-          className="os-date-card"
-          style={{
-            opacity: step >= 5 ? 1 : 0,
-            transform: step >= 5 ? 'translateY(0) scale(1)' : 'translateY(25px) scale(0.9)',
-            transition: 'opacity 1s ease-out, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
-        >
-          <div className="os-date-shimmer" aria-hidden="true" />
-          {/* Corner ornaments */}
-          {['tl', 'tr', 'bl', 'br'].map(pos => (
-            <div key={pos} className={`os-date-corner os-date-corner-${pos}`}>
-              <svg viewBox="0 0 16 16" fill="none">
-                <path d="M0 16 L0 5 Q0 0 5 0 L16 0" stroke="hsl(38 36% 60%)" strokeWidth="0.8" fill="none" />
-                <circle cx="3" cy="3" r="1.5" fill="hsl(38 36% 60%)" opacity="0.4" />
-              </svg>
-            </div>
-          ))}
-          <p className="os-date-hindi">शुभ विवाह</p>
-          <p className="os-date-main">10th May 2026</p>
-          <div className="os-date-divider" />
-          <p className="os-date-venue">Jaipur, Rajasthan</p>
-        </div>
 
-        {/* ── 4. SCROLL TO CELEBRATE ── */}
-        <div
-          className="os-scroll-cta"
-          style={{
-            opacity: step >= 6 ? 1 : 0,
-            transform: step >= 6 ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'opacity 1s ease-out, transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
-        >
-          <button onClick={onViewCelebrations} className="os-cta-button group">
-            {/* Corner diamonds */}
-            <span className="os-cta-diamond os-cta-diamond-tl" aria-hidden="true" />
-            <span className="os-cta-diamond os-cta-diamond-tr" aria-hidden="true" />
-            <span className="os-cta-diamond os-cta-diamond-bl" aria-hidden="true" />
-            <span className="os-cta-diamond os-cta-diamond-br" aria-hidden="true" />
-            <span className="os-cta-inner">
-              <span className="os-cta-label">Scroll to Celebrate</span>
-              <span className="os-cta-arrow">↓</span>
-            </span>
-          </button>
 
-          {/* Scroll chevrons below button */}
-          <div className="os-scroll-chevrons" aria-hidden="true">
-            <span className="os-chevron os-chevron-1" />
-            <span className="os-chevron os-chevron-2" />
-            <span className="os-chevron os-chevron-3" />
+      </div>
+
+      {/* ── FIXED RIGHT-SIDE NEXT BUTTON ── */}
+      <div
+        style={{
+          position: 'absolute',
+          right: 'clamp(10px, 3vw, 28px)',
+          bottom: 'clamp(20px, 5vh, 48px)',
+          zIndex: 60,
+          opacity: step >= 6 ? 1 : 0,
+          transform: step >= 6 ? 'translateX(0)' : 'translateX(20px)',
+          transition: 'opacity 0.4s ease-out 0.2s, transform 0.4s ease-out 0.2s',
+          pointerEvents: step >= 6 ? 'auto' : 'none',
+        }}
+      >
+        <button onClick={onViewCelebrations} className="cel-next-btn" aria-label="Next Section">
+          <div className="cel-diya-container">
+            <div className="cel-diya-glow"></div>
+            <div className="cel-diya-flame"></div>
+            <span className="cel-diya-icon">🪔</span>
           </div>
-        </div>
+          <span>Next</span>
+          <span className="cel-btn-arrow">→</span>
+          <div className="cel-diya-container" style={{ transform: 'scaleX(-1)' }}>
+            <div className="cel-diya-glow"></div>
+            <div className="cel-diya-flame"></div>
+            <span className="cel-diya-icon">🪔</span>
+          </div>
+        </button>
       </div>
     </section>
   );
