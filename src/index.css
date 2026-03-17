@@ -1986,156 +1986,517 @@
 }
 
 /* ═══════════════════════════════════════════════
-   COUNTDOWN SECTION — Premium Styles
+   COUNTDOWN SECTION — Luxury Glassmorphism Redesign
    ═══════════════════════════════════════════════ */
 
-.countdown-section {
+.cd-section {
   @apply relative w-full flex flex-col items-center;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  background: hsl(var(--background));
   scroll-behavior: smooth;
 }
 
-/* Countdown box wrapper */
-.countdown-box-wrapper {
+/* ── Cards Container ── */
+.cd-cards-container {
+  margin-bottom: 2rem;
+}
+
+/* ── Outer Gold Frame ── */
+.cd-cards-frame {
   position: relative;
+  border-radius: 1.25rem;
+  padding: 2px;
+  background: linear-gradient(135deg,
+    hsl(var(--primary) / 0.15),
+    hsl(var(--primary) / 0.4),
+    hsl(var(--primary) / 0.15),
+    hsl(var(--primary) / 0.4));
+  background-size: 300% 300%;
+  animation: cd-frame-flow 8s linear infinite;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 60px hsl(var(--primary) / 0.08);
 }
 
-/* Heartbeat golden glow — double pulse */
-.countdown-heartbeat-glow {
+.cd-cards-frame-inner {
+  border-radius: 1.15rem;
+  padding: 24px 16px;
+  background: linear-gradient(145deg,
+    hsl(var(--primary) / 0.06),
+    hsl(var(--background) / 0.6),
+    hsl(var(--primary) / 0.04));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@media (min-width: 768px) {
+  .cd-cards-frame-inner { padding: 32px 28px; }
+}
+
+@keyframes cd-frame-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Cards Grid ── */
+.cd-cards-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .cd-cards-grid { gap: 24px; }
+}
+
+/* ── Individual Glass Card Wrapper ── */
+.cd-glass-card-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  will-change: transform, opacity;
+}
+
+/* ── Floating Badge Icon ── */
+.cd-card-badge {
   position: absolute;
-  inset: -8px;
+  top: -12px;
+  right: -8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 2px 10px hsl(var(--primary) / 0.4);
+  animation: cd-badge-float 3s ease-in-out infinite;
+}
+.cd-card-badge svg {
+  color: hsl(var(--primary-foreground)) !important;
+  width: 13px;
+  height: 13px;
+}
+
+@keyframes cd-badge-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ── Corner Accents ── */
+.cd-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: hsl(var(--primary) / 0.3);
+  z-index: 5;
+}
+.cd-corner-tl { top: 4px; left: 4px; border-top: 1px solid; border-left: 1px solid; }
+.cd-corner-tr { top: 4px; right: 4px; border-top: 1px solid; border-right: 1px solid; }
+.cd-corner-br { bottom: 30px; right: 4px; border-bottom: 1px solid; border-right: 1px solid; }
+
+/* ── The Glass Card ── */
+.cd-glass-card {
+  position: relative;
+  width: 72px;
+  height: 88px;
   border-radius: 16px;
-  animation: countdown-heartbeat 2s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(145deg,
+    hsl(42 30% 88% / 0.12),
+    hsl(42 60% 70% / 0.08),
+    hsl(42 50% 60% / 0.05));
+  border: 1px solid hsl(var(--primary) / 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.3),
+    0 0 20px hsl(var(--primary) / 0.06),
+    inset 0 1px 0 hsl(var(--primary) / 0.1);
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  cursor: default;
 }
 
-@keyframes countdown-heartbeat {
-  0%, 100% {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.06);
-    transform: scale(1);
-  }
-  7% {
-    box-shadow: 0 0 40px hsl(var(--primary) / 0.12);
-    transform: scale(1.04);
-  }
-  14% {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.06);
-    transform: scale(1);
-  }
-  21% {
-    box-shadow: 0 0 40px hsl(var(--primary) / 0.12);
-    transform: scale(1.04);
-  }
-  28% {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.06);
-    transform: scale(1);
-  }
-}
-
-/* The countdown box */
-.countdown-box {
-  @apply relative rounded-xl flex items-center justify-center;
-  width: 68px;
-  height: 68px;
-  background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(218 50% 12%) 100%);
-  border: 1px solid hsl(var(--primary) / 0.2);
-  box-shadow: 0 4px 16px hsl(var(--background) / 0.5), inset 0 1px 0 hsl(var(--primary) / 0.06);
+.cd-glass-card-wrap:hover .cd-glass-card {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow:
+    0 16px 48px rgba(0,0,0,0.4),
+    0 0 40px hsl(var(--primary) / 0.15),
+    inset 0 1px 0 hsl(var(--primary) / 0.15);
+  border-color: hsl(var(--primary) / 0.5);
 }
 
 @media (min-width: 768px) {
-  .countdown-box {
-    width: 84px;
-    height: 84px;
+  .cd-glass-card {
+    width: 110px;
+    height: 120px;
+    border-radius: 20px;
   }
 }
 
-.countdown-box-inner {
-  @apply relative z-10 flex items-center justify-center w-full h-full overflow-hidden;
-  perspective: 200px;
+/* ── Glass Inner Shine ── */
+.cd-glass-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg,
+    hsl(42 50% 80% / 0.08) 0%,
+    transparent 40%,
+    hsl(42 40% 70% / 0.04) 100%);
+  pointer-events: none;
 }
 
-.countdown-digit {
-  @apply font-display leading-none;
+/* ── Sweep Shimmer ── */
+.cd-glass-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg,
+    transparent 30%,
+    hsl(var(--primary) / 0.12) 48%,
+    hsl(var(--primary) / 0.2) 50%,
+    hsl(var(--primary) / 0.12) 52%,
+    transparent 70%);
+  background-size: 250% 100%;
+  animation: cd-sweep 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cd-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Digit ── */
+.cd-glass-digit {
+  font-family: 'Cinzel Decorative', Georgia, serif;
   font-size: 32px;
-  color: hsl(var(--primary));
-  transition: transform 0.3s ease-in-out;
+  font-weight: 700;
+  line-height: 1;
+  color: hsl(348 60% 28%);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: transform 0.35s ease;
+  will-change: transform;
 }
 
 @media (min-width: 768px) {
-  .countdown-digit { font-size: 44px; }
+  .cd-glass-digit { font-size: 48px; }
 }
 
-.countdown-digit--flip {
-  animation: countdown-flip 0.3s ease-in-out;
+.cd-digit-flip {
+  animation: cd-flip 0.35s ease-in-out;
 }
 
-@keyframes countdown-flip {
-  0% { transform: rotateX(0); opacity: 1; }
-  40% { transform: rotateX(-90deg); opacity: 0.5; }
-  60% { transform: rotateX(90deg); opacity: 0.5; }
-  100% { transform: rotateX(0); opacity: 1; }
+@keyframes cd-flip {
+  0% { transform: rotateX(0) scale(1); }
+  30% { transform: rotateX(-90deg) scale(0.9); }
+  60% { transform: rotateX(90deg) scale(0.9); }
+  100% { transform: rotateX(0) scale(1); }
 }
 
-/* Blessing card */
-.blessing-card {
-  @apply relative flex-shrink-0 rounded-xl p-4;
-  width: 260px;
-  background: hsl(var(--bg-card));
-  border: 1px solid hsl(var(--primary) / 0.1);
+/* ── Label ── */
+.cd-glass-label {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+  color: hsl(var(--primary) / 0.8);
+  letter-spacing: 0.15em;
+  text-transform: capitalize;
 }
 
-/* Auto-scroll track */
-.blessings-carousel-track {
+@media (min-width: 768px) {
+  .cd-glass-label { font-size: 14px; }
+}
+
+/* ── Event Card ── */
+.cd-event-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 320px;
+  margin: 20px auto 0;
+  padding: 12px 20px;
+  border-radius: 16px;
+  background: hsl(var(--primary) / 0.04);
+  border: 1px solid hsl(var(--primary) / 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  animation: cd-event-float 4s ease-in-out infinite;
+}
+
+.cd-event-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.12);
+  border: 1px solid hsl(var(--primary) / 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cd-event-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 30%,
+    hsl(var(--primary) / 0.08) 50%,
+    transparent 70%);
+  background-size: 250% 100%;
+  animation: cd-sweep 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cd-event-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ── Magic CTA Text ── */
+.cd-magic-text {
+  animation: cd-magic-pulse 3s ease-in-out infinite;
+}
+
+@keyframes cd-magic-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* ── Sparkle Particles ── */
+.cd-sparkle-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  box-shadow: 0 0 8px hsl(var(--primary));
+  animation: cd-sparkle-fly 0.7s ease-out forwards;
+}
+
+@keyframes cd-sparkle-fly {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--sx), var(--sy)) scale(0); opacity: 0; }
+}
+
+/* ═══ BLESSINGS WALL ═══ */
+
+.cd-blessings-area {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+  min-height: 180px;
+}
+
+.cd-bless-fade-l,
+.cd-bless-fade-r {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  z-index: 10;
+  pointer-events: none;
+}
+.cd-bless-fade-l {
+  left: 0;
+  background: linear-gradient(90deg, hsl(var(--background) / 0.9), transparent);
+}
+.cd-bless-fade-r {
+  right: 0;
+  background: linear-gradient(270deg, hsl(var(--background) / 0.9), transparent);
+}
+
+.cd-blessings-track {
   display: flex;
   gap: 16px;
   width: max-content;
-  animation: scroll-carousel 25s linear infinite;
+  animation: scroll-carousel 30s linear infinite;
 }
 
-.blessings-carousel-track:hover {
+.cd-blessings-track:hover {
   animation-play-state: paused;
 }
 
-/* Blessing form */
-.blessing-form-container {
-  @apply rounded-2xl p-6 md:p-8;
-  background: hsl(var(--bg-card));
-  border: 1px solid hsl(var(--primary) / 0.15);
-  box-shadow: 0 4px 24px hsl(var(--background) / 0.5);
+/* ── Blessing Bubble Card ── */
+.cd-blessing-bubble {
+  flex-shrink: 0;
+  width: 240px;
+  animation: cd-bubble-float 6s ease-in-out infinite alternate;
 }
 
-.countdown-input {
-  @apply w-full bg-transparent rounded-lg px-4 py-3 font-ui text-sm transition-all duration-300;
+.cd-blessing-inner {
+  position: relative;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid hsl(var(--primary) / 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.cd-blessing-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.04), transparent, hsl(var(--primary) / 0.02));
+  pointer-events: none;
+}
+
+.cd-blessing-bubble:hover .cd-blessing-inner {
+  border-color: hsl(var(--primary) / 0.4);
+  box-shadow: 0 8px 30px hsl(var(--primary) / 0.1);
+  transform: translateY(-6px) scale(1.02);
+}
+
+@keyframes cd-bubble-float {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-12px); }
+}
+
+.cd-blessing-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.12);
   border: 1px solid hsl(var(--primary) / 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cd-blessing-avatar span {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: hsl(var(--primary));
+}
+
+/* ── Send Blessing Card ── */
+.cd-send-card {
+  position: relative;
+  border-radius: 1.25rem;
+  padding: 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid hsl(var(--primary) / 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  transition: all 0.4s ease;
+}
+
+.cd-send-card:hover {
+  border-color: hsl(var(--primary) / 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 50px rgba(0,0,0,0.4), 0 0 30px hsl(var(--primary) / 0.06);
+}
+
+@media (min-width: 768px) {
+  .cd-send-card { padding: 32px; }
+}
+
+/* ── Input Group ── */
+.cd-input-group {
+  position: relative;
+}
+
+.cd-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid hsl(var(--primary) / 0.2);
   color: hsl(var(--text-cream));
-  min-height: 48px;
-}
-
-.countdown-input::placeholder {
-  color: hsl(var(--gold-tertiary) / 0.4);
-}
-
-.countdown-input:focus {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
   outline: none;
-  border-color: hsl(var(--primary));
-  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1), 0 0 12px hsl(var(--primary) / 0.08);
-}
-
-.countdown-send-btn {
-  @apply w-full py-3.5 rounded-xl font-ui font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-300;
-  background: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
   min-height: 48px;
 }
 
-.countdown-send-btn:hover {
-  background: hsl(var(--accent));
-  box-shadow: 0 4px 20px hsl(var(--primary) / 0.25);
+.cd-textarea {
+  resize: none;
+  min-height: 80px;
 }
 
-.countdown-send-btn:active { transform: scale(0.97); }
+.cd-input::placeholder {
+  color: hsl(var(--gold-tertiary) / 0.35);
+}
+
+.cd-input:focus {
+  border-color: hsl(var(--primary) / 0.6);
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.08), 0 0 20px hsl(var(--primary) / 0.06);
+}
+
+.cd-input-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 13px;
+  opacity: 0;
+  background: linear-gradient(135deg,
+    hsl(var(--primary) / 0.1),
+    transparent,
+    hsl(var(--primary) / 0.05));
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cd-input:focus ~ .cd-input-glow {
+  opacity: 1;
+}
+
+/* ── Send Button ── */
+.cd-send-btn {
+  position: relative;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  color: hsl(var(--primary-foreground));
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px hsl(var(--primary) / 0.2);
+}
+
+.cd-send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px hsl(var(--primary) / 0.35);
+}
+
+.cd-send-btn:active {
+  transform: scale(0.97);
+}
+
+.cd-send-btn-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 30%,
+    rgba(255,255,255,0.2) 50%,
+    transparent 70%);
+  background-size: 250% 100%;
+  animation: cd-sweep 3s ease-in-out infinite;
+  pointer-events: none;
+}
 
 /* ═══════════════════════════════════════════════
    RSVP SECTION — Premium Styles
