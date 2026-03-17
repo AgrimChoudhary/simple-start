@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react'
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
+import RoyalBackground from '@/components/global/RoyalBackground';
 
 interface CountdownSectionProps {
   active: boolean;
@@ -267,31 +268,12 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ active, onNext }) =
   }, []);
 
   return (
-    <section className="cd-section" aria-labelledby="countdown-heading" onClick={handleClick}>
-      {/* ── Layered Starry Background ── */}
+    <section className="countdown-section" aria-labelledby="countdown-heading" onClick={handleClick}>
+      {/* ── SHARED ROYAL BACKGROUND ── */}
+      <RoyalBackground />
+
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Navy starry image */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'url(/images/starry-navy-bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }} />
-        {/* Dark overlay */}
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(to bottom, rgba(5,10,25,0.82), rgba(7,15,35,0.92))',
-        }} />
-        {/* Radial glow accents */}
-        <div className="absolute inset-0" style={{
-          background: `
-            radial-gradient(ellipse 70% 40% at 50% 15%, rgba(100,145,255,0.08) 0%, transparent 60%),
-            radial-gradient(ellipse 50% 35% at 20% 80%, rgba(212,175,55,0.05) 0%, transparent 50%),
-            radial-gradient(ellipse 50% 35% at 80% 70%, rgba(212,175,55,0.04) 0%, transparent 50%)
-          `,
-        }} />
-        {/* Starfield canvas */}
-        <StarfieldCanvas />
-        {/* Jaali overlay */}
-        <div className="jaali-overlay" />
+        <div className="celebrations-particles" />
       </div>
 
       <SectionBorderFrame active={active} variant="standard" />

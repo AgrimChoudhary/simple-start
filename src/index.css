@@ -729,13 +729,134 @@
 @keyframes fade-slide-up {
   0% {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
+/* ═══════════════════════════════════════════════
+   FAMILY SECTION — Premium Luxury Enhancements
+   ═══════════════════════════════════════════════ */
+
+.family-card-enter {
+  animation: fade-slide-up 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes royal-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.1), 0 0 40px hsl(var(--primary) / 0.05);
+    border-color: hsl(var(--primary) / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.25), 0 0 70px hsl(var(--primary) / 0.1);
+    border-color: hsl(var(--primary) / 0.5);
+  }
+}
+
+.royal-card-wrapper {
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.royal-card-wrapper:hover {
+  animation: royal-glow-pulse 3s infinite ease-in-out;
+}
+
+/* Jharokha frame pulse for images */
+@keyframes frame-gold-pulse {
+  0%, 100% { border-color: hsl(var(--primary) / 0.3); transform: scale(1); }
+  50% { border-color: hsl(var(--primary) / 0.8); transform: scale(1.02); }
+}
+
+.animate-frame-pulse {
+  animation: frame-gold-pulse 4s infinite ease-in-out;
+}
+
+/* Diya flame flicker (Reusing or refining) */
+@keyframes diya-royal-flicker {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.9; }
+  50% { transform: scale(1.1) translateY(-2px); opacity: 1; }
+}
+
+.diya-flame-luxury {
+  animation: diya-royal-flicker 0.8s infinite ease-in-out;
+  filter: drop-shadow(0 0 8px hsl(45 100% 50% / 0.6));
+}
+
+/* Button Luxury Styling */
+.fam-btn-luxury {
+  @apply relative px-8 py-2.5 rounded-lg overflow-hidden border border-primary/30 flex items-center gap-2 text-xs md:text-sm font-display tracking-widest text-primary transition-all duration-500 bg-background/40 hover:bg-primary/10 hover:border-primary/60;
+}
+
+.fam-btn-diamond {
+  @apply absolute w-1.5 h-1.5 bg-primary/40 rotate-45;
+}
+
+.fam-btn-shimmer {
+  @apply absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -translate-x-full;
+  animation: button-shimmer 4s infinite ease-in-out;
+}
+
+/* Jharokha drawing animation */
+.jharokha-path {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  transition: stroke-dashoffset 2s ease-out;
+}
+
+.jharokha-draw .jharokha-path {
+  stroke-dashoffset: 0;
+}
+
+/* Border spotlight for 3D feel */
+.fam-border-spotlight {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 120px at var(--mx) var(--my), hsl(var(--primary) / 0.15), transparent 80%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.royal-card-wrapper:hover .fam-border-spotlight {
+  opacity: 1;
+}
+
+/* Modal Luxury */
+.fam-modal-luxury {
+  border: 1px solid hsl(var(--primary) / 0.3);
+  box-shadow: 0 0 50px hsl(var(--background) / 0.8), 0 0 30px hsl(var(--primary) / 0.1);
+}
+
+.fam-modal-border {
+  border: 4px double hsl(var(--primary) / 0.15);
+  margin: 8px;
+}
+
+.family-modal-enter {
+  animation: modal-royal-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modal-royal-reveal {
+  0% { opacity: 0; transform: scale(0.9) translateY(40px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.family-member-card {
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.family-member-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  background: hsl(var(--background) / 0.8) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 15px hsl(var(--primary) / 0.15);
+}
+
 
 @keyframes draw-divider {
   0% { 
@@ -2955,6 +3076,74 @@
   animation: corner-bloom 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.4s both;
 }
 
+/* ═══════════════════════════════════════
+   ORNATE FLORAL BORDERS (New Enhancement)
+   ═══════════════════════════════════════ */
+
+@keyframes floral-draw {
+  from { stroke-dashoffset: 800; opacity: 0; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes gold-shimmer-sweep {
+  0% { transform: translateX(-100%) skewX(-45deg); }
+  50% { transform: translateX(100%) skewX(-45deg); }
+  100% { transform: translateX(100%) skewX(-45deg); }
+}
+
+@keyframes floral-corner-float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(2px, -2px) rotate(1deg); }
+  66% { transform: translate(-1px, 1px) rotate(-1deg); }
+}
+
+@keyframes border-line-glow-pulse {
+  0%, 100% { stroke-opacity: 0.5; filter: drop-shadow(0 0 2px hsl(var(--primary) / 0.3)); }
+  50% { stroke-opacity: 1; filter: drop-shadow(0 0 6px hsl(var(--primary) / 0.7)); }
+}
+
+.floral-corner-path {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transform-origin: center;
+}
+
+.animate-floral-draw {
+  animation: floral-draw 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-floral-float {
+  animation: floral-corner-float 6s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: border-line-glow-pulse 4s ease-in-out infinite;
+}
+
+.ornate-border-container {
+  position: absolute;
+  inset: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.ornate-border-small {
+  inset: -12px;
+  width: calc(100% + 24px);
+  height: calc(100% + 24px);
+}
+
+.gold-shimmer-sweep-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.15), transparent);
+    width: 30%;
+    animation: gold-shimmer-sweep 6s infinite;
+    pointer-events: none;
+}
+
 /* ═══════════════════════════════════════════════
    OPENING SECTION — Premium Royal Rajasthani Styles
    ═══════════════════════════════════════════════ */
@@ -3028,6 +3217,43 @@
   background-size: 200px;
   mix-blend-mode: overlay;
   pointer-events: none;
+}
+
+/* ── Floral Frame & Bubbles (Refinement) ── */
+@keyframes floral-frame-reveal {
+  0% { opacity: 0; transform: scale(0.9) translateY(20px); filter: blur(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
+}
+
+@keyframes bubble-float {
+  0% { transform: translateY(100%) translateX(0); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.3; }
+  100% { transform: translateY(-120%) translateX(15px); opacity: 0; }
+}
+
+@keyframes bubble-float-reverse {
+  0% { transform: translateY(-120%) translateX(0); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.3; }
+  100% { transform: translateY(100%) translateX(-15px); opacity: 0; }
+}
+
+.floral-frame-active {
+  animation: floral-frame-reveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.bubble {
+  position: absolute;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), rgba(255, 215, 0, 0.1));
+  border-radius: 50%;
+  pointer-events: none;
+  animation: bubble-float linear infinite;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.bubble-reverse {
+  animation-name: bubble-float-reverse;
 }
 
 /* ══════════ PARTICLES ══════════ */
