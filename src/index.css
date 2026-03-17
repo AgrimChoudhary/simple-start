@@ -3007,6 +3007,17 @@
   background: hsl(var(--background));
 }
 
+/* Countdown section — scrollable to fit Blessings wall */
+.countdown-section {
+  @apply relative w-full flex flex-col items-center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: hsl(var(--background));
+  -webkit-overflow-scrolling: touch;
+}
+
 .jaali-overlay {
   position: absolute;
   inset: 0;
