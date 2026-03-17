@@ -268,7 +268,7 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ active, onNext }) =
   }, []);
 
   return (
-    <section className="countdown-section" aria-labelledby="countdown-heading" onClick={handleClick}>
+    <section className="cd-section" aria-labelledby="countdown-heading" onClick={handleClick}>
       {/* ── SHARED ROYAL BACKGROUND ── */}
       <RoyalBackground />
 
