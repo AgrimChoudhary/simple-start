@@ -3125,248 +3125,324 @@
   animation: gal-star-pulse 2s ease-in-out infinite;
 }
 
-/* ══ Premium Blessing Card ══ */
-.cd-blessing-card {
+/* ════════════════════════════════════════════════════════════════
+   WISH CARDS — Luxury Animated Border Design
+   ════════════════════════════════════════════════════════════════ */
+
+.wish-card {
   position: relative;
-  width: 280px;
+  width: 300px;
   flex-shrink: 0;
   border-radius: 16px;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 2px;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.3), transparent 40%, hsl(var(--primary) / 0.15));
+  transition: all 0.4s ease;
 }
 
-.cd-blessing-card-active {
-  transform: scale(1.02);
+.wish-card:hover {
+  transform: translateY(-4px);
 }
 
-.cd-blessing-corners {
+/* Animated gradient border */
+.wish-card-border {
   position: absolute;
-  inset: -4px;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.cd-blessing-card-inner {
-  position: relative;
-  padding: 1.25rem;
-  border-radius: 14px;
-  background: linear-gradient(145deg, hsl(var(--card) / 0.95), hsl(var(--background) / 0.9));
-  border: 1px solid hsl(var(--primary) / 0.2);
-  backdrop-filter: blur(12px);
-  overflow: hidden;
-}
-
-.cd-blessing-card:hover .cd-blessing-card-inner {
-  border-color: hsl(var(--primary) / 0.4);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-}
-
-.cd-blessing-top-border {
-  position: absolute;
-  top: 0;
-  left: 20%;
-  right: 20%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5), transparent);
-  border-radius: 0 0 2px 2px;
-}
-
-.cd-blessing-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.cd-blessing-avatar-premium {
-  position: relative;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.08));
-  border: 1.5px solid hsl(var(--primary) / 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.cd-blessing-avatar-premium span {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 11px;
-  font-weight: 600;
-  color: hsl(var(--primary));
-}
-
-.cd-avatar-glow {
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: radial-gradient(circle, hsl(var(--primary) / 0.15) 0%, transparent 70%);
-  animation: cd-avatar-pulse 3s ease-in-out infinite;
-}
-
-@keyframes cd-avatar-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
-}
-
-.cd-blessing-name-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.cd-blessing-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: hsl(var(--primary));
-  letter-spacing: 0.02em;
-}
-
-.cd-blessing-emoji {
-  font-size: 0.9rem;
-}
-
-.cd-blessing-message {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: hsl(var(--text-cream) / 0.9);
-  margin-bottom: 0.75rem;
-}
-
-.cd-blessing-flourish {
-  display: flex;
-  justify-content: center;
-}
-
-.cd-blessing-glow {
-  position: absolute;
-  inset: -2px;
+  inset: 0;
   border-radius: 16px;
-  background: radial-gradient(ellipse at 50% 50%, hsl(var(--primary) / 0.05) 0%, transparent 70%);
+  padding: 2px;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 20%,
+    hsl(var(--primary) / 0.6) 40%,
+    hsl(var(--primary)) 50%,
+    hsl(var(--primary) / 0.6) 60%,
+    transparent 80%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: wish-border-rotate 4s linear infinite;
   opacity: 0;
   transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: -1;
 }
 
-.cd-blessing-card:hover .cd-blessing-glow {
+.wish-card:hover .wish-card-border {
   opacity: 1;
 }
 
-/* ══ Carousel Container ══ */
-.cd-carousel-container {
+@keyframes wish-border-rotate {
+  to { --border-angle: 360deg; }
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.wish-card-inner {
   position: relative;
-  padding: 1rem 0;
+  padding: 1.25rem;
+  border-radius: 14px;
+  background: linear-gradient(145deg, hsl(var(--card) / 0.98), hsl(var(--background) / 0.95));
+  border: 1px solid hsl(var(--primary) / 0.15);
+  height: 100%;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Avatar section */
+.wish-avatar-section {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 0.75rem;
+}
+
+.wish-avatar-photo,
+.wish-avatar-initials {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wish-avatar-photo {
+  border: 2px solid hsl(var(--primary) / 0.4);
+}
+
+.wish-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wish-avatar-initials {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.25), hsl(var(--primary) / 0.1));
+  border: 2px solid hsl(var(--primary) / 0.35);
+}
+
+.wish-avatar-initials span {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: hsl(var(--primary));
+}
+
+.wish-avatar-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--primary) / 0.2);
+  pointer-events: none;
+}
+
+/* Content */
+.wish-content {
+  flex: 1;
+}
+
+.wish-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: hsl(var(--primary));
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.wish-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: hsl(var(--text-cream) / 0.9);
+}
+
+.wish-corner-flourish {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  opacity: 0.5;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   WISH MARQUEE — Continuous Smooth Scroll
+   ════════════════════════════════════════════════════════════════ */
+
+.wish-marquee-container {
+  position: relative;
   margin-bottom: 2rem;
 }
 
-.cd-carousel-viewport {
-  overflow: hidden;
-  border-radius: 8px;
-  margin: 0 2.5rem;
+/* Desktop navigation — sides */
+.wish-nav-desktop {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  pointer-events: none;
+  z-index: 20;
 }
 
 @media (min-width: 768px) {
-  .cd-carousel-viewport {
-    margin: 0 3rem;
+  .wish-nav-desktop {
+    display: flex;
   }
 }
 
-.cd-carousel-track {
+.wish-nav-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
   display: flex;
-  gap: 1rem;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  align-items: center;
+  justify-content: center;
+  background: hsl(var(--card) / 0.95);
+  border: 1.5px solid hsl(var(--primary) / 0.3);
+  color: hsl(var(--primary));
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
-.cd-carousel-slide {
-  flex-shrink: 0;
-  width: 100%;
+.wish-nav-btn:hover {
+  background: hsl(var(--primary) / 0.15);
+  border-color: hsl(var(--primary) / 0.5);
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.2);
 }
 
-@media (min-width: 640px) {
-  .cd-carousel-slide {
-    width: calc(50% - 0.5rem);
-  }
+/* Marquee viewport */
+.wish-marquee-viewport {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 0;
 }
 
-@media (min-width: 1024px) {
-  .cd-carousel-slide {
-    width: calc(33.333% - 0.667rem);
-  }
-}
-
-/* Carousel Navigation Arrows */
-.cd-carousel-arrow {
+.wish-fade-left,
+.wish-fade-right {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 20;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.wish-fade-left {
+  left: 0;
+  background: linear-gradient(90deg, hsl(var(--background)), transparent);
+}
+
+.wish-fade-right {
+  right: 0;
+  background: linear-gradient(270deg, hsl(var(--background)), transparent);
+}
+
+@media (min-width: 768px) {
+  .wish-fade-left,
+  .wish-fade-right {
+    width: 100px;
+  }
+}
+
+.wish-marquee-track {
+  display: flex;
+  gap: 1.25rem;
+  will-change: transform;
+}
+
+/* Wish count display */
+.wish-count-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.wish-count-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background: hsl(var(--primary) / 0.08);
+  border: 1px solid hsl(var(--primary) / 0.2);
+}
+
+.wish-count-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  color: hsl(var(--text-cream) / 0.8);
+}
+
+.wish-paused-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: hsl(var(--muted-foreground));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile navigation — bottom */
+.wish-nav-mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .wish-nav-mobile {
+    display: none;
+  }
+}
+
+.wish-nav-btn-mobile {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: hsl(var(--card) / 0.95);
+  background: hsl(var(--card) / 0.9);
   border: 1px solid hsl(var(--primary) / 0.3);
   color: hsl(var(--primary));
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.cd-arrow-left { left: 0; }
-.cd-arrow-right { right: 0; }
-
-.cd-carousel-arrow:hover {
-  background: hsl(var(--primary) / 0.15);
-  border-color: hsl(var(--primary) / 0.5);
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.15);
+.wish-nav-btn-mobile:active {
+  transform: scale(0.95);
 }
 
-/* Carousel Dots */
-.cd-carousel-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
+.wish-nav-mobile-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.8rem;
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
 }
 
-.cd-carousel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: hsl(var(--primary) / 0.25);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+/* ════════════════════════════════════════════════════════════════
+   WISH FORM — Premium Luxury Design
+   ════════════════════════════════════════════════════════════════ */
 
-.cd-carousel-dot:hover {
-  background: hsl(var(--primary) / 0.5);
-}
-
-.cd-dot-active {
-  width: 24px;
-  border-radius: 4px;
-  background: hsl(var(--primary));
-}
-
-.cd-carousel-paused {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  background: hsl(var(--card) / 0.8);
-  backdrop-filter: blur(4px);
-}
-
-/* ══ Premium Send Card ══ */
+/* Keep the send card premium wrapper */
 .cd-send-card-premium {
   position: relative;
   border-radius: 20px;
@@ -3381,9 +3457,9 @@
   z-index: 5;
 }
 
-.cd-send-inner {
+.wish-form-inner {
   position: relative;
-  padding: 1.5rem;
+  padding: 1.75rem;
   border-radius: 18px;
   background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--background) / 0.95));
   border: 1px solid hsl(var(--primary) / 0.2);
@@ -3392,140 +3468,232 @@
 }
 
 @media (min-width: 768px) {
-  .cd-send-inner {
-    padding: 2rem;
+  .wish-form-inner {
+    padding: 2rem 2.5rem;
   }
 }
 
-.cd-send-title {
+.wish-form-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.25rem;
   background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #D4AF37 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.cd-guest-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  background: hsl(var(--primary) / 0.08);
-  border: 1px solid hsl(var(--primary) / 0.2);
-  margin-bottom: 1rem;
+.wish-form-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  color: hsl(var(--muted-foreground));
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
-.cd-guest-avatar {
-  width: 32px;
-  height: 32px;
+/* Guest identity row */
+.wish-guest-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: hsl(var(--primary) / 0.05);
+  border: 1px solid hsl(var(--primary) / 0.15);
+  margin-bottom: 1.25rem;
+}
+
+.wish-guest-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.wish-guest-photo,
+.wish-guest-initials {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.15));
-  border: 1px solid hsl(var(--primary) / 0.4);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 10px;
-  font-weight: 600;
-  color: hsl(var(--primary));
 }
 
-.cd-guest-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
-  color: hsl(var(--text-cream) / 0.8);
-}
-
-.cd-guest-name strong {
-  color: hsl(var(--primary));
-  font-weight: 600;
-}
-
-.cd-input-group-premium {
+.wish-guest-photo {
+  border: 2px solid hsl(var(--primary) / 0.5);
   position: relative;
-  margin-bottom: 1rem;
 }
 
-.cd-textarea-premium {
+.wish-guest-photo-img {
   width: 100%;
-  min-height: 100px;
-  padding: 1rem;
-  border-radius: 12px;
-  background: hsl(var(--background) / 0.6);
-  border: 1px solid hsl(var(--primary) / 0.2);
-  color: hsl(var(--text-cream));
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
-  line-height: 1.5;
-  resize: none;
-  transition: all 0.3s ease;
+  height: 100%;
+  object-fit: cover;
 }
 
-.cd-textarea-premium:focus {
-  outline: none;
-  border-color: hsl(var(--primary) / 0.5);
-  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
-}
-
-.cd-textarea-premium::placeholder {
-  color: hsl(var(--text-cream) / 0.4);
-  font-style: italic;
-}
-
-.cd-textarea-footer {
+.wish-photo-remove {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: hsl(0 70% 50%);
+  border: 2px solid hsl(var(--background));
+  color: white;
   display: flex;
-  justify-content: flex-end;
-  margin-top: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.cd-char-count {
+.wish-photo-remove:hover {
+  transform: scale(1.1);
+}
+
+.wish-guest-initials {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.25), hsl(var(--primary) / 0.1));
+  border: 2px solid hsl(var(--primary) / 0.4);
+}
+
+.wish-guest-initials span {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: hsl(var(--primary));
+}
+
+.wish-photo-upload-btn {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  border: 2px solid hsl(var(--background));
+  color: hsl(var(--background));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wish-photo-upload-btn:hover {
+  transform: scale(1.1);
+  background: hsl(var(--primary) / 0.8);
+}
+
+.wish-guest-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.wish-guest-name-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: hsl(var(--text-cream) / 0.9);
+}
+
+.wish-guest-name-label strong {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
+
+.wish-photo-hint {
   font-family: 'Inter', sans-serif;
   font-size: 0.7rem;
   color: hsl(var(--muted-foreground));
 }
 
-.cd-success-message {
+/* Textarea */
+.wish-textarea-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.wish-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border-radius: 12px;
+  background: hsl(var(--background) / 0.6);
+  border: 1.5px solid hsl(var(--primary) / 0.2);
+  color: hsl(var(--text-cream));
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.wish-textarea:focus {
+  outline: none;
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.08);
+}
+
+.wish-textarea::placeholder {
+  color: hsl(var(--text-cream) / 0.35);
+  font-style: italic;
+}
+
+.wish-textarea-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.4rem;
+}
+
+.wish-char-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: hsl(var(--muted-foreground));
+}
+
+/* Success message */
+.wish-success-msg {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  background: hsl(142 76% 36% / 0.15);
+  gap: 0.6rem;
+  padding: 0.9rem;
+  border-radius: 10px;
+  background: hsl(142 76% 36% / 0.12);
   border: 1px solid hsl(142 76% 36% / 0.3);
-  color: hsl(142 76% 50%);
+  color: hsl(142 76% 45%);
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  animation: cd-success-in 0.4s ease-out;
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+  animation: wish-success-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes cd-success-in {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes wish-success-in {
+  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.cd-success-icon {
-  width: 18px;
-  height: 18px;
+.wish-success-icon {
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: hsl(142 76% 36%);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
-  font-weight: bold;
 }
 
-.cd-send-btn-premium {
+/* Send button */
+.wish-send-btn {
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
   padding: 1rem 1.5rem;
   border-radius: 12px;
   background: linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%);
@@ -3533,61 +3701,64 @@
   border: none;
   color: hsl(218 65% 8%);
   font-family: 'Cinzel Decorative', serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
   overflow: hidden;
   transition: all 0.4s ease;
-  box-shadow: 0 4px 20px hsl(var(--primary) / 0.25);
+  box-shadow: 0 4px 20px hsl(var(--primary) / 0.3);
 }
 
-.cd-send-btn-premium:hover:not(:disabled) {
+.wish-send-btn:hover:not(:disabled) {
   background-position: 100% 50%;
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px hsl(var(--primary) / 0.35);
+  box-shadow: 0 8px 32px hsl(var(--primary) / 0.4);
 }
 
-.cd-send-btn-premium:active:not(:disabled) {
+.wish-send-btn:active:not(:disabled) {
   transform: scale(0.98);
 }
 
-.cd-send-btn-premium:disabled {
+.wish-send-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.cd-btn-text {
+.wish-btn-text {
   position: relative;
   z-index: 2;
 }
 
-.cd-btn-sparkle {
-  position: relative;
-  z-index: 2;
-  margin-left: 0.5rem;
-}
-
-.cd-btn-loading {
+.wish-btn-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   position: relative;
   z-index: 2;
 }
 
-.cd-btn-glow {
+.wish-btn-shine {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
-  background-size: 250% 100%;
+  background: linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+  background-size: 200% 100%;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.cd-send-btn-premium:hover:not(:disabled) .cd-btn-glow {
+.wish-send-btn:hover:not(:disabled) .wish-btn-shine {
   opacity: 1;
-  animation: cd-sweep 2s ease-in-out infinite;
+  animation: wish-btn-shine-sweep 1.5s ease-in-out infinite;
 }
+
+@keyframes wish-btn-shine-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Old form styles removed - now using wish-* classes */
 
 /* ═══════════════════════════════════════════════
    RSVP SECTION — Premium Styles
@@ -5397,7 +5568,7 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═════���═════════════════════════════════════════════
    FAMILY SECTION — Royal Rajasthani Luxury
    ════════════════════════════════════════════════�����══ */
 
