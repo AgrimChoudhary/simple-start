@@ -450,10 +450,27 @@ const JharokhaSVG: React.FC<{ active: boolean; size?: 'large' | 'small' }> = ({ 
 };
 
 /* ═══════════════════════════════════════════════════════
+   MINI DIYA — Small animated flame element
+   ═══════════════════════════════════════════════════════ */
+const MiniDiya: React.FC<{ position: 'top-left' | 'top-right' }> = ({ position }) => (
+  <div className={`fam-mini-diya fam-mini-diya-${position}`}>
+    <div className="fam-diya-base" />
+    <div className="fam-diya-flame-wrap">
+      <div className="fam-diya-flame" />
+      <div className="fam-diya-flame-glow" />
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════
    ENHANCED JHAROKHA FRAME — Royal Palace Window Style
    ═══════════════════════════════════════════════════════ */
 const EnhancedJharokhaFrame: React.FC<{ active: boolean; children: React.ReactNode }> = ({ active, children }) => (
   <div className="fam-jharokha-wrapper">
+    {/* Mini Diyas at top corners — like Opening section */}
+    <MiniDiya position="top-left" />
+    <MiniDiya position="top-right" />
+    
     {/* Outer glow effect */}
     <div className={`fam-jharokha-glow ${active ? 'fam-jharokha-glow-active' : ''}`} />
     

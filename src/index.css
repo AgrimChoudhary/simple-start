@@ -4429,7 +4429,7 @@
 
 /* ═══════════════════════════════════════════════════
    FAMILY SECTION — Royal Rajasthani Luxury
-   ═══════════════════════════════════════════════════ */
+   ════════════════════════════════════════════════���══ */
 
 /* Royal Card Animated Gradient Border */
 .royal-card-wrapper {
@@ -4966,35 +4966,51 @@
   overflow: hidden;
 }
 
-/* Rotating Glow Border - same as cel-glow-border-layer */
+/* Subtle Ambient Glow — Premium Natural Effect */
 .fam-glow-border-layer {
   position: absolute;
-  inset: -50%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg 45deg,
-    rgba(212, 175, 55, 0.6) 60deg 90deg,
-    transparent 100deg 180deg,
-    rgba(212, 175, 55, 0.4) 200deg 240deg,
-    transparent 260deg 360deg
-  );
-  animation: fam-border-rotate 6s linear infinite;
-  opacity: 0.4;
-  transition: opacity 0.5s ease;
+  inset: -1px;
+  border-radius: 1.35rem;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  background: transparent;
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
 
+/* Active state: subtle border glow */
 .fam-royal-border-active .fam-glow-border-layer {
-  opacity: 0.7;
+  opacity: 1;
+  border-color: rgba(212, 175, 55, 0.25);
 }
 
+/* Hover: Soft outward glow from behind — natural and premium */
 .fam-card-inner:hover .fam-glow-border-layer {
   opacity: 1;
-  animation-duration: 3s;
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 
+    0 0 20px rgba(212, 175, 55, 0.08),
+    0 0 40px rgba(212, 175, 55, 0.05),
+    0 0 60px rgba(212, 175, 55, 0.03);
 }
 
-@keyframes fam-border-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Ambient card glow behind — applied to outer wrapper */
+.fam-card-outer::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 1.5rem;
+  background: radial-gradient(ellipse at 50% 50%, 
+    rgba(212, 175, 55, 0.06) 0%, 
+    transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.fam-card-outer:hover::before {
+  opacity: 1;
 }
 
 /* Inner container */
@@ -5215,13 +5231,15 @@
   }
 }
 
+/* Jharokha glow — very subtle, premium */
 .fam-jharokha-glow {
   position: absolute;
-  inset: -15px;
+  inset: -10px;
   border-radius: 50% 50% 8px 8px;
-  background: radial-gradient(ellipse at 50% 30%, hsl(var(--primary) / 0.15) 0%, transparent 70%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
 .fam-jharokha-glow-active {
@@ -5230,12 +5248,7 @@
 
 .fam-card-inner:hover .fam-jharokha-glow {
   opacity: 1;
-  animation: fam-glow-pulse 2s ease-in-out infinite;
-}
-
-@keyframes fam-glow-pulse {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; }
+  background: radial-gradient(ellipse at 50% 30%, rgba(212, 175, 55, 0.12) 0%, transparent 65%);
 }
 
 .fam-jharokha-svg {
@@ -5489,34 +5502,145 @@
   50% { transform: scale(1.05); opacity: 0.8; }
 }
 
-/* ── Card Bottom Peacock Decoration — Themed ── */
+/* ── Card Bottom Peacock Decoration — Refined & Smaller ── */
 .fam-card-bottom-decor {
-  margin-top: 1.25rem;
+  margin-top: 0.75rem;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  min-height: 60px;
+  min-height: 45px;
   z-index: 5;
   position: relative;
+  opacity: 0.85;
+  transition: opacity 0.4s ease;
+}
+
+.fam-card-inner:hover .fam-card-bottom-decor {
+  opacity: 1;
 }
 
 .fam-peacock-decor {
-  max-width: 220px;
-  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
-  transition: transform 0.5s ease;
+  max-width: 160px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  transition: transform 0.5s ease, filter 0.5s ease;
 }
 
 .fam-card-inner:hover .fam-peacock-decor {
-  transform: scale(1.05);
+  transform: scale(1.03);
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
 }
 
 @media (min-width: 768px) {
   .fam-card-bottom-decor {
-    margin-top: 1.5rem;
-    min-height: 70px;
+    margin-top: 1rem;
+    min-height: 55px;
   }
   .fam-peacock-decor {
-    max-width: 240px;
+    max-width: 180px;
+  }
+}
+
+/* ── Mini Diyas — Around Jharokha Frame ── */
+.fam-mini-diya {
+  position: absolute;
+  width: 20px;
+  height: 28px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fam-mini-diya-top-left {
+  top: -8px;
+  left: -8px;
+}
+
+.fam-mini-diya-top-right {
+  top: -8px;
+  right: -8px;
+}
+
+.fam-diya-base {
+  width: 16px;
+  height: 8px;
+  background: linear-gradient(to bottom, #D4AF37, #8B6914);
+  border-radius: 0 0 50% 50%;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.fam-diya-base::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 3px;
+  background: #D4AF37;
+  border-radius: 50%;
+}
+
+.fam-diya-flame-wrap {
+  position: absolute;
+  bottom: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.fam-diya-flame {
+  width: 6px;
+  height: 12px;
+  background: linear-gradient(to bottom, transparent 0%, #FFD700 20%, #FF9800 50%, #FF5722 100%);
+  border-radius: 50% 50% 20% 20%;
+  animation: fam-flame-flicker 0.15s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+.fam-diya-flame-glow {
+  position: absolute;
+  top: -2px;
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, rgba(255, 152, 0, 0.5) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: fam-glow-pulse 1s ease-in-out infinite;
+}
+
+@keyframes fam-flame-flicker {
+  0% { transform: scaleX(1) scaleY(1) rotate(-2deg); }
+  100% { transform: scaleX(0.9) scaleY(1.05) rotate(2deg); }
+}
+
+@keyframes fam-glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.15); }
+}
+
+@media (min-width: 768px) {
+  .fam-mini-diya {
+    width: 24px;
+    height: 32px;
+  }
+  .fam-diya-base {
+    width: 18px;
+    height: 9px;
+  }
+  .fam-diya-base::after {
+    width: 20px;
+  }
+  .fam-diya-flame {
+    width: 7px;
+    height: 14px;
+  }
+  .fam-mini-diya-top-left {
+    top: -10px;
+    left: -10px;
+  }
+  .fam-mini-diya-top-right {
+    top: -10px;
+    right: -10px;
   }
 }
 
