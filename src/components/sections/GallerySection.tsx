@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import DiyaIcon from '@/components/global/DiyaIcon';
-import PeacockCorner from '@/components/global/PeacockCorner';
+import RoyalJharokhaFrame from '@/components/global/RoyalJharokhaFrame';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 import RoyalBackground from '@/components/global/RoyalBackground';
 import FamilySection from '@/components/sections/FamilySection';
@@ -21,7 +21,8 @@ const galleryImages = [
 ];
 
 /* ═══════════════════════════════════════════════
-   ENHANCED PHOTO FRAME — Premium with PeacockCorner
+   ENHANCED PHOTO FRAME — Royal Jharokha Design
+   Rajasthani palace-inspired with animated gold borders
    ═══════════════════════════════════════════════ */
 const EnhancedPhotoFrame: React.FC<{ 
   children: React.ReactNode; 
@@ -33,34 +34,20 @@ const EnhancedPhotoFrame: React.FC<{
     className={`gal-photo-frame ${active ? 'gal-frame-active' : ''}`}
     style={{ animationDelay: `${0.4 + index * 0.12}s` }}
   >
-    {/* Subtle ambient glow behind frame */}
-    <div className="gal-frame-glow" />
-    
-    {/* PeacockCorner ornaments — themed consistency */}
-    <div className="gal-peacock-corners">
-      <PeacockCorner pos="tl" />
-      <PeacockCorner pos="tr" />
-      <PeacockCorner pos="bl" />
-      <PeacockCorner pos="br" />
-    </div>
-    
-    {/* Inner border frame */}
-    <div className="gal-inner-border" />
-    
-    {/* Image container */}
-    <div className="gal-image-container">
-      {children}
-      
-      {/* Caption overlay - reveals on hover */}
-      {caption && (
-        <div className="gal-caption-overlay">
-          <span className="gal-caption-text">{caption}</span>
-        </div>
-      )}
-    </div>
-    
-    {/* Shimmer sweep effect on hover */}
-    <div className="gal-frame-shimmer" />
+    {/* Royal Jharokha Frame with animated gold border */}
+    <RoyalJharokhaFrame animated={true} variant="standard">
+      {/* Image container */}
+      <div className="gal-image-container">
+        {children}
+        
+        {/* Caption overlay - reveals on hover */}
+        {caption && (
+          <div className="gal-caption-overlay">
+            <span className="gal-caption-text">{caption}</span>
+          </div>
+        )}
+      </div>
+    </RoyalJharokhaFrame>
   </div>
 );
 
@@ -124,31 +111,22 @@ const Lightbox: React.FC<{
       {/* Backdrop with blur */}
       <div className="gal-lightbox-backdrop" />
 
-      {/* Image container with PeacockCorner frame */}
+      {/* Image container with Royal Jharokha frame */}
       <div className="gal-lightbox-container" onClick={(e) => e.stopPropagation()}>
-        {/* PeacockCorner frame */}
-        <div className="gal-lightbox-peacock-frame">
-          <PeacockCorner pos="tl" />
-          <PeacockCorner pos="tr" />
-          <PeacockCorner pos="bl" />
-          <PeacockCorner pos="br" />
-        </div>
-        
-        {/* Inner frame border */}
-        <div className="gal-lightbox-inner-border" />
-        
-        {/* Image wrapper */}
-        <div className="gal-lightbox-image-wrap" style={{ background: image.color }}>
-          {/* Shimmer placeholder */}
-          <div className="gal-shimmer-sweep" />
-          
-          {/* High Resolution Image */}
-          <img
-            src={image.src}
-            alt={image.alt}
-            className="gal-lightbox-image"
-          />
-        </div>
+        <RoyalJharokhaFrame animated={true} variant="ornate" className="gal-lightbox-jharokha">
+          {/* Image wrapper */}
+          <div className="gal-lightbox-image-wrap" style={{ background: image.color }}>
+            {/* Shimmer placeholder */}
+            <div className="gal-shimmer-sweep" />
+            
+            {/* High Resolution Image */}
+            <img
+              src={image.src}
+              alt={image.alt}
+              className="gal-lightbox-image"
+            />
+          </div>
+        </RoyalJharokhaFrame>
         
         {/* Caption */}
         <div className="gal-lightbox-caption">

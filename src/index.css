@@ -1919,6 +1919,254 @@
   align-items: center;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   ROYAL JHAROKHA FRAME — Rajasthani Palace-Inspired Photo Frames
+   Elegant gold borders with animated effects, mobile-first design
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* CSS Custom Property for border rotation */
+@property --jharokha-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Main frame container */
+.royal-jharokha-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animated rotating gradient border - hidden by default, shown on hover */
+.jharokha-border-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 12px;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--jharokha-angle),
+    #D4AF37 0%,
+    #FFD700 15%,
+    #FFF9C4 25%,
+    #FFD700 35%,
+    #B8860B 50%,
+    #D4AF37 65%,
+    #FFD700 75%,
+    #FFF9C4 85%,
+    #D4AF37 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.royal-jharokha-animated .jharokha-border-glow {
+  animation: jharokha-rotate 4s linear infinite;
+}
+
+@keyframes jharokha-rotate {
+  to { --jharokha-angle: 360deg; }
+}
+
+/* Show animated border on hover */
+.royal-jharokha-frame:hover .jharokha-border-glow {
+  opacity: 1;
+}
+
+/* Static gold border base */
+.jharokha-border-base {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  pointer-events: none;
+  z-index: 4;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.royal-jharokha-frame:hover .jharokha-border-base {
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 
+    0 0 20px rgba(212, 175, 55, 0.15),
+    inset 0 0 15px rgba(212, 175, 55, 0.05);
+}
+
+/* Corner ornaments container */
+.jharokha-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Corner SVG styles */
+.jharokha-corner-svg {
+  filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.3));
+  transition: filter 0.4s ease;
+}
+
+.royal-jharokha-frame:hover .jharokha-corner-svg {
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
+}
+
+/* Corner flourish animation */
+.jharokha-flourish {
+  transition: opacity 0.4s ease;
+}
+
+.royal-jharokha-frame:hover .jharokha-flourish {
+  opacity: 0.8;
+}
+
+/* Gem pulse animation */
+.jharokha-gem {
+  animation: jharokha-gem-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes jharokha-gem-pulse {
+  0%, 100% { opacity: 0.6; r: 1.5; }
+  50% { opacity: 1; r: 2; }
+}
+
+/* Inner decorative border */
+.jharokha-inner-border {
+  position: absolute;
+  inset: 8px;
+  border-radius: 6px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Inner decorative lines */
+.jharokha-inner-line {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    rgba(212, 175, 55, 0.25) 20%, 
+    rgba(255, 215, 0, 0.4) 50%, 
+    rgba(212, 175, 55, 0.25) 80%, 
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.jharokha-inner-top { top: 4px; }
+.jharokha-inner-bottom { bottom: 4px; }
+
+.royal-jharokha-frame:hover .jharokha-inner-line {
+  opacity: 1;
+}
+
+/* Content container */
+.jharokha-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Shimmer sweep effect */
+.jharokha-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 215, 0, 0.08) 45%,
+    rgba(255, 215, 0, 0.15) 50%,
+    rgba(255, 215, 0, 0.08) 55%,
+    transparent 70%
+  );
+  background-size: 300% 100%;
+  background-position: 200% 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.royal-jharokha-frame:hover .jharokha-shimmer {
+  opacity: 1;
+  animation: jharokha-shimmer-sweep 1.5s ease-out;
+}
+
+@keyframes jharokha-shimmer-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ═══ Variant: Ornate ═══ */
+.royal-jharokha-ornate .jharokha-border-base {
+  border-width: 2px;
+}
+
+.royal-jharokha-ornate .jharokha-corner {
+  width: 38px;
+  height: 38px;
+}
+
+/* ═══ Variant: Minimal ═══ */
+.royal-jharokha-minimal .jharokha-corners {
+  display: none;
+}
+
+.royal-jharokha-minimal .jharokha-inner-border {
+  display: none;
+}
+
+/* ═══ Mobile-first responsive adjustments ═══ */
+@media (max-width: 480px) {
+  .jharokha-corner {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  
+  .jharokha-border-glow {
+    inset: -1px;
+    border-radius: 10px;
+  }
+  
+  .jharokha-inner-line {
+    left: 15%;
+    right: 15%;
+  }
+}
+
+@media (min-width: 768px) {
+  .jharokha-corner {
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .jharokha-corner {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  
+  .jharokha-border-glow {
+    inset: -3px;
+    border-radius: 14px;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════
    GALLERY SECTION — Premium Luxury Styles (Enhanced)
    ═══════════════════════════════════════════════════════════ */
@@ -2114,65 +2362,16 @@
   transform: translateY(-6px) scale(1.02);
 }
 
-/* Subtle ambient glow behind frame */
-.gal-frame-glow {
-  position: absolute;
-  inset: -4px;
-  border-radius: 14px;
-  background: radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
+/* Photo frame now uses RoyalJharokhaFrame component */
 
-.gal-photo-card:hover .gal-frame-glow {
-  opacity: 1;
-  box-shadow: 
-    0 0 25px rgba(212, 175, 55, 0.1),
-    0 0 50px rgba(212, 175, 55, 0.05);
-}
-
-/* PeacockCorner wrapper */
-.gal-peacock-corners {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 20;
-}
-
-/* Inner border */
-.gal-inner-border {
-  position: absolute;
-  inset: 6px;
-  border-radius: 8px;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  pointer-events: none;
-  z-index: 15;
-  transition: border-color 0.4s ease;
-}
-
-.gal-photo-card:hover .gal-inner-border {
-  border-color: rgba(212, 175, 55, 0.35);
-}
-
-/* Image container */
+/* Image container — works with RoyalJharokhaFrame */
 .gal-image-container {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 6px;
   overflow: hidden;
   background: hsl(var(--card));
-  border: 1.5px solid rgba(212, 175, 55, 0.25);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-  transition: all 0.5s ease;
-}
-
-.gal-photo-card:hover .gal-image-container {
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 
-    0 15px 40px rgba(0, 0, 0, 0.35),
-    inset 0 0 20px rgba(212, 175, 55, 0.05);
 }
 
 /* Photo image */
@@ -2251,38 +2450,7 @@
   }
 }
 
-/* Frame shimmer on hover */
-.gal-frame-shimmer {
-  position: absolute;
-  inset: 0;
-  border-radius: 10px;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.gal-frame-shimmer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transform: skewX(-20deg);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.gal-photo-card:hover .gal-frame-shimmer::after {
-  opacity: 1;
-  animation: gal-frame-shimmer-sweep 1s ease-out;
-}
-
-@keyframes gal-frame-shimmer-sweep {
-  0% { left: -100%; }
-  100% { left: 150%; }
-}
+/* Frame shimmer now handled by RoyalJharokhaFrame */
 
 /* ── Navigation Button ── */
 .gal-nav-wrapper {
@@ -2362,32 +2530,35 @@
   }
 }
 
-.gal-lightbox-peacock-frame {
-  position: absolute;
-  inset: -8px;
-  pointer-events: none;
-  z-index: 5;
+/* Royal Jharokha frame in lightbox */
+.gal-lightbox-jharokha {
+  width: 100%;
+  height: 100%;
 }
 
-.gal-lightbox-inner-border {
-  position: absolute;
-  inset: 8px;
-  border-radius: 14px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  pointer-events: none;
-  z-index: 5;
+.gal-lightbox-jharokha .jharokha-border-glow {
+  opacity: 1; /* Always show animated border in lightbox */
+}
+
+.gal-lightbox-jharokha .jharokha-corner {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+@media (min-width: 768px) {
+  .gal-lightbox-jharokha .jharokha-corner {
+    width: 56px !important;
+    height: 56px !important;
+  }
 }
 
 .gal-lightbox-image-wrap {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 16px;
+  border-radius: 8px;
   overflow: hidden;
-  border: 2px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 
-    0 25px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(212, 175, 55, 0.08);
+  background: hsl(var(--card));
 }
 
 .gal-lightbox-image {
