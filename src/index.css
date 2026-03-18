@@ -4738,6 +4738,55 @@
   }
 }
 
+/* Diya Header Icon - themed same as other sections */
+.fam-header-diya {
+  flex-shrink: 0;
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--primary) / 0.3);
+  background: linear-gradient(135deg, hsl(var(--background) / 0.8), hsl(var(--card) / 0.6));
+  backdrop-filter: blur(8px);
+  animation: fam-diya-glow 3s ease-in-out infinite;
+  box-shadow: 0 4px 15px hsl(var(--primary) / 0.1);
+}
+
+.fam-diya-icon {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+@media (min-width: 768px) {
+  .fam-diya-icon {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+@keyframes fam-diya-glow {
+  0%, 100% { 
+    box-shadow: 0 4px 15px hsl(var(--primary) / 0.1), 0 0 20px rgba(255, 152, 0, 0.1);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 6px 25px hsl(var(--primary) / 0.2), 0 0 30px rgba(255, 152, 0, 0.25);
+    transform: scale(1.03);
+  }
+}
+
+/* Gold star divider - same as Events section */
+.fam-divider-star {
+  font-size: 10px;
+  color: #FFD700;
+  opacity: 0.7;
+  animation: fam-star-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fam-star-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Legacy support */
 .fam-header-icon {
   flex-shrink: 0;
   padding: 0.5rem;
@@ -4906,15 +4955,114 @@
   background: radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.05) 0%, transparent 70%);
 }
 
-/* ── Royal Card Border ── */
+/* ── Royal Card Border — Themed same as Events Section ── */
 .fam-royal-border {
   position: absolute;
   inset: 0;
   border-radius: 1.25rem;
   pointer-events: none;
   z-index: 10;
+  padding: 2.5px;
+  overflow: hidden;
 }
 
+/* Rotating Glow Border - same as cel-glow-border-layer */
+.fam-glow-border-layer {
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 45deg,
+    rgba(212, 175, 55, 0.6) 60deg 90deg,
+    transparent 100deg 180deg,
+    rgba(212, 175, 55, 0.4) 200deg 240deg,
+    transparent 260deg 360deg
+  );
+  animation: fam-border-rotate 6s linear infinite;
+  opacity: 0.4;
+  transition: opacity 0.5s ease;
+}
+
+.fam-royal-border-active .fam-glow-border-layer {
+  opacity: 0.7;
+}
+
+.fam-card-inner:hover .fam-glow-border-layer {
+  opacity: 1;
+  animation-duration: 3s;
+}
+
+@keyframes fam-border-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Inner container */
+.fam-border-inner-container {
+  position: absolute;
+  inset: 2.5px;
+  border-radius: 1.1rem;
+  background: transparent;
+  z-index: 1;
+}
+
+/* Decorative inner frame line */
+.fam-border-frame-line {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 0.9rem;
+  pointer-events: none;
+}
+
+/* Frame shimmer effect */
+.fam-frame-shimmer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  pointer-events: none;
+}
+
+.fam-frame-shimmer::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0) 48%,
+    rgba(255, 215, 0, 0.15) 50%,
+    rgba(255, 255, 255, 0) 52%,
+    transparent 55%
+  );
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.fam-card-inner:hover .fam-frame-shimmer::after {
+  opacity: 1;
+  animation: fam-shimmer-sweep-frame 1.2s infinite;
+}
+
+@keyframes fam-shimmer-sweep-frame {
+  0% { transform: rotate(45deg) translateX(-100%); }
+  100% { transform: rotate(45deg) translateX(100%); }
+}
+
+/* PeacockCorner wrapper */
+.fam-peacock-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Legacy .fam-border-outer for backwards compatibility */
 .fam-border-outer {
   position: absolute;
   inset: 0;
@@ -5182,96 +5330,117 @@
   animation: fam-gold-shimmer 4s ease-in-out infinite;
 }
 
-/* ── Royal Button ── */
+/* ── Royal Button — Themed same as cel-map-btn ── */
 .fam-royal-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.625rem 1.5rem;
-  border-radius: 9999px;
-  border: none;
-  background: transparent;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: 1.5px solid #D4AF37;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+  color: #FFD700;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
   z-index: 5;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,215,0,0.1);
 }
 
 .fam-royal-btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px) scale(1.03);
+  border-color: #FFD700;
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.4), 
+    0 0 20px rgba(255,215,0,0.2),
+    inset 0 1px 0 rgba(255,215,0,0.2);
+}
+
+.fam-royal-btn:active {
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Inner glow ring */
+.fam-royal-btn::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  pointer-events: none;
 }
 
 .fam-royal-btn-bg {
   position: absolute;
   inset: 0;
-  border-radius: 9999px;
-  background: linear-gradient(135deg, 
-    hsl(var(--primary) / 0.08), 
-    hsl(var(--primary) / 0.15));
+  border-radius: 30px;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(15, 23, 42, 0.3) 100%);
   transition: background 0.4s ease;
 }
 
 .fam-royal-btn:hover .fam-royal-btn-bg {
-  background: linear-gradient(135deg, 
-    hsl(var(--primary) / 0.15), 
-    hsl(var(--primary) / 0.25));
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
 }
 
 .fam-royal-btn-border {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  border: 1.5px solid hsl(var(--primary) / 0.4);
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-.fam-royal-btn:hover .fam-royal-btn-border {
-  border-color: hsl(var(--primary) / 0.7);
-  box-shadow: 0 0 15px hsl(var(--primary) / 0.2);
+  display: none; /* Using native border instead */
 }
 
 .fam-royal-btn-content {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
   z-index: 5;
 }
 
 .fam-royal-btn-icon {
-  color: hsl(var(--primary));
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
+  color: #FFD700;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 3px rgba(255,215,0,0.3));
 }
 
 .fam-royal-btn:hover .fam-royal-btn-icon {
   opacity: 1;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px rgba(255,215,0,0.5));
 }
 
 .fam-royal-btn-text {
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: 0.6rem;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: hsl(var(--foreground));
+  color: #FFD700;
   white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
 @media (min-width: 768px) {
   .fam-royal-btn {
-    padding: 0.75rem 1.75rem;
+    padding: 14px 28px;
+    font-size: 12px;
   }
   .fam-royal-btn-text {
-    font-size: 0.65rem;
+    font-size: 11px;
   }
 }
 
 .fam-royal-btn-shimmer {
   position: absolute;
   inset: 0;
-  border-radius: 9999px;
+  border-radius: 30px;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .fam-royal-btn-shimmer::after {
@@ -5279,18 +5448,76 @@
   position: absolute;
   top: 0;
   left: -100%;
-  width: 100%;
+  width: 50%;
   height: 100%;
   background: linear-gradient(90deg, 
     transparent, 
-    hsl(var(--primary) / 0.15), 
+    rgba(255,215,0,0.2), 
     transparent);
-  animation: fam-btn-shimmer-sweep 4s ease-in-out infinite;
+  transform: skewX(-20deg);
+  animation: fam-btn-shimmer-sweep 3s ease-in-out infinite;
+}
+
+.fam-royal-btn:hover .fam-royal-btn-shimmer::after {
+  animation-duration: 1.5s;
 }
 
 @keyframes fam-btn-shimmer-sweep {
   0% { left: -100%; }
-  40%, 100% { left: 100%; }
+  50%, 100% { left: 150%; }
+}
+
+/* Button hover pulse effect */
+.fam-royal-btn::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(255,215,0,0.3), transparent, rgba(255,215,0,0.2));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.fam-royal-btn:hover::after {
+  opacity: 1;
+  animation: fam-btn-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fam-btn-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* ── Card Bottom Peacock Decoration — Themed ── */
+.fam-card-bottom-decor {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 60px;
+  z-index: 5;
+  position: relative;
+}
+
+.fam-peacock-decor {
+  max-width: 220px;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
+  transition: transform 0.5s ease;
+}
+
+.fam-card-inner:hover .fam-peacock-decor {
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .fam-card-bottom-decor {
+    margin-top: 1.5rem;
+    min-height: 70px;
+  }
+  .fam-peacock-decor {
+    max-width: 240px;
+  }
 }
 
 /* ── Section Footer ── */

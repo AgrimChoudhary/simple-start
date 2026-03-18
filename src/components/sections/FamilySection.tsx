@@ -1,5 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Eye, X } from 'lucide-react';
+import PeacockCorner from '@/components/global/PeacockCorner';
+import DiyaIcon from '@/components/global/DiyaIcon';
 
 // Import Images
 import groomFatherImg from '@/assets/family/groom_father.png';
@@ -160,6 +162,94 @@ const JaaliPattern: React.FC<{ className?: string }> = ({ className = '' }) => (
 );
 
 /* ═══════════════════════════════════════════════════
+   SHARED PEACOCK SVG DEFS — Same as Events Section
+   ═══════════════════════════════════════════════════ */
+const SharedPeacockDefs: React.FC = () => (
+  <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+    <defs>
+      <linearGradient id="fam-pbod" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#00E5FF"/>
+        <stop offset="50%" stopColor="#0277BD"/>
+        <stop offset="100%" stopColor="#1A237E"/>
+      </linearGradient>
+      <linearGradient id="fam-pwin" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#AEEA00"/>
+        <stop offset="50%" stopColor="#00B0FF"/>
+        <stop offset="100%" stopColor="#000051"/>
+      </linearGradient>
+      
+      {/* Peacock SVG Template */}
+      <g id="fam-mini-peacock">
+        {/* Tail */}
+        <g className="cel-peacock-tail-group">
+          <path d="M-10 10 C-30 -10, -50 20, -60 40 C-30 60, 0 30, 0 10Z" fill="#004D40"/>
+          <path d="M-5 15 C-20 0, -40 25, -45 40 C-20 50, 0 30, -5 15Z" fill="#00695C"/>
+          {/* Eyes on tail */}
+          <ellipse cx="-45" cy="30" rx="3" ry="5" fill="#D4AF37" transform="rotate(-30 -45 30)"/>
+          <circle cx="-45" cy="30" r="1.5" fill="#0D47A1"/>
+          <ellipse cx="-35" cy="40" rx="4" ry="6" fill="#D4AF37" transform="rotate(-50 -35 40)"/>
+          <circle cx="-35" cy="40" r="2" fill="#0D47A1"/>
+          <ellipse cx="-20" cy="45" rx="3" ry="5" fill="#D4AF37" transform="rotate(-70 -20 45)"/>
+          <circle cx="-20" cy="45" r="1.5" fill="#0D47A1"/>
+        </g>
+        {/* Neck & Head */}
+        <g className="cel-peacock-neck-group">
+          <path d="M8 12 C10 0, 15 -10, 20 -15 C25 -10, 25 0, 15 15" fill="url(#fam-pbod)"/>
+          <circle cx="21" cy="-17" r="6" fill="#0277BD"/>
+          {/* Beak */}
+          <polygon points="26,-18 32,-15 25,-14" fill="#FFD700"/>
+          {/* Crest */}
+          <path d="M20 -23 L18 -30 M22 -23 L22 -32 M24 -23 L26 -30" stroke="#00E5FF" strokeWidth="0.8"/>
+          <circle cx="18" cy="-30" r="1" fill="#FFD700" className="cel-peacock-crest-dot" />
+          <circle cx="22" cy="-32" r="1" fill="#FFD700" className="cel-peacock-crest-dot" />
+          <circle cx="26" cy="-30" r="1" fill="#FFD700" className="cel-peacock-crest-dot" />
+          {/* Eye */}
+          <circle cx="22" cy="-18" r="1" fill="#FFF"/>
+        </g>
+        {/* Body */}
+        <ellipse cx="0" cy="15" rx="14" ry="10" fill="url(#fam-pbod)" className="cel-peacock-body" />
+        {/* Wing */}
+        <path d="M0 10 C-10 10, -20 20, -10 25 C0 20, 10 15, 0 10Z" fill="url(#fam-pwin)" className="cel-peacock-wing" />
+      </g>
+    </defs>
+  </svg>
+);
+
+/* ═══════════════════════════════════════════════════
+   CARD BOTTOM DECOR — Flanking Peacocks with Diya
+   ═══════════════════════════════════════════════════ */
+const CardBottomDecor: React.FC = () => (
+  <div className="fam-card-bottom-decor">
+    <svg viewBox="0 0 280 80" width="100%" height="auto" className="fam-peacock-decor">
+      {/* Platform */}
+      <ellipse cx="140" cy="65" rx="50" ry="10" fill="rgba(15, 23, 42, 0.8)" stroke="#D4AF37" strokeWidth="1.5"/>
+      <ellipse cx="140" cy="65" rx="40" ry="7" fill="none" stroke="#D4AF37" strokeWidth="0.8" strokeDasharray="3 2" opacity="0.6"/>
+
+      {/* Flanking Peacocks */}
+      <g transform="translate(50, 45) scale(0.7)">
+        <use href="#fam-mini-peacock" />
+      </g>
+      <g transform="translate(230, 45) scale(-0.7, 0.7)">
+        <use href="#fam-mini-peacock" />
+      </g>
+
+      {/* Center Diya */}
+      <g transform="translate(125, 40) scale(0.8)">
+        <ellipse cx="15" cy="15" rx="12" ry="4" fill="#B8860B"/>
+        <path d="M3 15 Q3 28 15 28 Q27 28 27 15Z" fill="#D4AF37"/>
+        {/* Animated Flame */}
+        <g className="cel-diya-flame-inner">
+          <ellipse cx="15" cy="6" rx="3" ry="6" fill="#FF9800"/>
+          <ellipse cx="15" cy="8" rx="1.5" ry="4" fill="#FFF59D"/>
+        </g>
+        {/* Flame Glow */}
+        <circle cx="15" cy="8" r="10" fill="rgba(255, 152, 0, 0.3)" className="cel-diya-flame-glow" style={{ mixBlendMode: 'screen' }}/>
+      </g>
+    </svg>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════
    FLOATING SPARKLES — Luxurious Particle Effect
    ═══════════════════════════════════════════════════ */
 const FloatingSparkles: React.FC<{ active: boolean }> = ({ active }) => {
@@ -195,92 +285,29 @@ const FloatingSparkles: React.FC<{ active: boolean }> = ({ active }) => {
 };
 
 /* ═══════════════════════════════════════════════════════
-   ROYAL RAJASTHANI CORNER ORNAMENT — Enhanced SVG
-   ═══════════════════════════════════════════════════════ */
-const RajasthaniCornerOrnament: React.FC<{ position: 'tl' | 'tr' | 'bl' | 'br' }> = ({ position }) => {
-  const transforms: Record<string, string> = {
-    tl: '',
-    tr: 'scaleX(-1)',
-    bl: 'scaleY(-1)',
-    br: 'scale(-1)',
-  };
-  
-  return (
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: transforms[position] }}>
-      <defs>
-        <linearGradient id={`corner-gold-${position}`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FFD700" />
-          <stop offset="50%" stopColor="#FFF9C4" />
-          <stop offset="100%" stopColor="#D4AF37" />
-        </linearGradient>
-      </defs>
-      {/* Main flowing vine */}
-      <path 
-        d="M5,5 Q15,5 20,15 Q25,25 20,35 Q15,45 25,55 Q35,65 25,75" 
-        stroke={`url(#corner-gold-${position})`} 
-        strokeWidth="2" 
-        fill="none"
-        strokeLinecap="round"
-        className="fam-corner-vine"
-      />
-      {/* Decorative leaves */}
-      <path 
-        d="M20,15 Q30,10 35,20 Q30,25 20,20" 
-        fill={`url(#corner-gold-${position})`}
-        opacity="0.6"
-        className="fam-corner-leaf"
-      />
-      <path 
-        d="M20,35 Q10,30 5,40 Q10,45 20,40" 
-        fill={`url(#corner-gold-${position})`}
-        opacity="0.5"
-        className="fam-corner-leaf"
-      />
-      <path 
-        d="M25,55 Q35,50 40,60 Q35,65 25,60" 
-        fill={`url(#corner-gold-${position})`}
-        opacity="0.4"
-        className="fam-corner-leaf"
-      />
-      {/* Center diamond dot */}
-      <circle cx="20" cy="25" r="2.5" fill={`url(#corner-gold-${position})`} className="fam-corner-dot" />
-      {/* Dotted accent line */}
-      <path 
-        d="M5,5 L35,5 L35,35" 
-        stroke={`url(#corner-gold-${position})`}
-        strokeWidth="1" 
-        strokeDasharray="3 3" 
-        fill="none"
-        opacity="0.4"
-      />
-    </svg>
-  );
-};
-
-/* ═══════════════════════════════════════════════════════
-   ROYAL CARD BORDER — Animated Double-line Frame
+   ROYAL CARD BORDER — Themed with PeacockCorner (Same as Events)
    ═══════════════════════════════════════════════════════ */
 const RoyalCardBorder: React.FC<{ active: boolean }> = ({ active }) => (
   <div className={`fam-royal-border ${active ? 'fam-royal-border-active' : ''}`}>
-    {/* Outer border - animated */}
-    <div className="fam-border-outer" />
-    {/* Inner border - subtle */}
-    <div className="fam-border-inner" />
-    {/* Corner ornaments */}
-    <div className="fam-corner fam-corner-tl">
-      <RajasthaniCornerOrnament position="tl" />
+    {/* Rotating glow border - same as Events section */}
+    <div className="fam-glow-border-layer" />
+    
+    {/* Inner container */}
+    <div className="fam-border-inner-container">
+      {/* Decorative inner framing line */}
+      <div className="fam-border-frame-line" />
+      
+      {/* Shimmer effect layer */}
+      <div className="fam-frame-shimmer" />
     </div>
-    <div className="fam-corner fam-corner-tr">
-      <RajasthaniCornerOrnament position="tr" />
+    
+    {/* PeacockCorner ornaments - SAME as Events section for theming */}
+    <div className="fam-peacock-corners">
+      <PeacockCorner pos="tl" />
+      <PeacockCorner pos="tr" />
+      <PeacockCorner pos="bl" />
+      <PeacockCorner pos="br" />
     </div>
-    <div className="fam-corner fam-corner-bl">
-      <RajasthaniCornerOrnament position="bl" />
-    </div>
-    <div className="fam-corner fam-corner-br">
-      <RajasthaniCornerOrnament position="br" />
-    </div>
-    {/* Gold shimmer sweep */}
-    <div className="fam-border-shimmer" />
   </div>
 );
 
@@ -591,6 +618,12 @@ const FamilyCard: React.FC<{
           </span>
           <span className="fam-royal-btn-shimmer" />
         </button>
+        
+        {/* Bottom Peacock Decor - themed same as Events section */}
+        <CardBottomDecor />
+        
+        {/* Shared Peacock SVG Definitions */}
+        <SharedPeacockDefs />
       </div>
     </div>
   );
@@ -754,15 +787,13 @@ const FamilySection: React.FC<FamilySectionProps> = ({ active }) => {
 
   return (
     <div className="fam-section">
-      {/* Section Heading — Royal Style */}
+      {/* Section Heading — Royal Style with Diya (Themed) */}
       <div className={`fam-section-header ${headingVisible ? 'fam-header-visible' : ''}`}>
-        {/* Top decorative line */}
-        <div className="fam-header-line fam-header-line-top" />
-        
         {/* Main heading row */}
         <div className="fam-header-content">
-          <div className="fam-header-icon">
-            <KalashIcon />
+          {/* Left Diya - same as other sections */}
+          <div className="fam-header-diya">
+            <DiyaIcon lit={active} className="fam-diya-icon" />
           </div>
           
           <div className="fam-header-text">
@@ -770,20 +801,16 @@ const FamilySection: React.FC<FamilySectionProps> = ({ active }) => {
             <p className="fam-header-hindi" lang="hi">हमारे परिवार</p>
           </div>
           
-          <div className="fam-header-icon">
-            <KalashIcon />
+          {/* Right Diya */}
+          <div className="fam-header-diya">
+            <DiyaIcon lit={active} className="fam-diya-icon" />
           </div>
         </div>
         
-        {/* Decorative divider */}
+        {/* Gold divider - same style as Events section */}
         <div className="fam-header-divider">
           <div className="fam-divider-line" />
-          <div className="fam-divider-ornament">
-            <svg viewBox="0 0 40 20" fill="none" className="w-10 h-5">
-              <path d="M0,10 Q10,0 20,10 Q30,20 40,10" stroke="currentColor" strokeWidth="1.5" fill="none" />
-              <circle cx="20" cy="10" r="3" fill="currentColor" />
-            </svg>
-          </div>
+          <span className="fam-divider-star">&#10022;</span>
           <div className="fam-divider-line" />
         </div>
       </div>
