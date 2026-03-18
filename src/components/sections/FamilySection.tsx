@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Eye, X } from 'lucide-react';
+import PeacockCorner from '@/components/global/PeacockCorner';
 import DiyaIcon from '@/components/global/DiyaIcon';
-import GoldDivider from '@/components/global/GoldDivider';
 
 // Import Images
 import groomFatherImg from '@/assets/family/groom_father.png';
@@ -83,8 +83,45 @@ const familyData: FamilySide[] = [
   },
 ];
 
+/* ═══════════════════════════════════════════════════
+   ROYAL KALASH ICON — Traditional Rajasthani Element
+   ═══════════════════════════════════════════════════ */
+const KalashIcon: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <svg viewBox="0 0 48 56" className={`w-8 h-10 md:w-10 md:h-12 ${className}`} aria-hidden="true">
+    <defs>
+      <linearGradient id="kalash-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFD700" />
+        <stop offset="50%" stopColor="#FFF9C4" />
+        <stop offset="100%" stopColor="#D4AF37" />
+      </linearGradient>
+      <filter id="kalash-glow">
+        <feGaussianBlur stdDeviation="1.5" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+    {/* Coconut */}
+    <ellipse cx="24" cy="8" rx="6" ry="5" fill="url(#kalash-gold)" filter="url(#kalash-glow)">
+      <animate attributeName="ry" values="5;5.5;5" dur="2s" repeatCount="indefinite" />
+    </ellipse>
+    {/* Mango leaves */}
+    <path d="M18,10 Q14,6 10,10 Q14,14 18,10" fill="#4CAF50" opacity="0.8" />
+    <path d="M30,10 Q34,6 38,10 Q34,14 30,10" fill="#4CAF50" opacity="0.8" />
+    <path d="M24,5 Q24,0 24,2" stroke="#4CAF50" strokeWidth="1.5" fill="none" />
+    {/* Pot rim */}
+    <ellipse cx="24" cy="16" rx="10" ry="3" fill="url(#kalash-gold)" />
+    {/* Pot body */}
+    <path d="M14,16 Q12,30 16,42 Q20,50 24,52 Q28,50 32,42 Q36,30 34,16" fill="url(#kalash-gold)" />
+    {/* Decorative band */}
+    <ellipse cx="24" cy="30" rx="9" ry="2" fill="none" stroke="#B8860B" strokeWidth="1" opacity="0.6" />
+    <ellipse cx="24" cy="38" rx="7" ry="1.5" fill="none" stroke="#B8860B" strokeWidth="0.8" opacity="0.4" />
+  </svg>
+);
+
 /* ═══════════════════════════════════════
-   RAJASTHANI JAALI PATTERN (SVG)
+   RAJASTHANI JAALI PATTERN (SVG) — Enhanced
    ═══════════════════════════════════════ */
 const JaaliPattern: React.FC<{ className?: string }> = ({ className = '' }) => (
   <svg
@@ -94,127 +131,183 @@ const JaaliPattern: React.FC<{ className?: string }> = ({ className = '' }) => (
     aria-hidden="true"
   >
     <defs>
-      <pattern id="jaali-family" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-        {/* Arch motif */}
-        <path d="M20,0 Q20,15 10,20 Q0,25 0,40" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.12" />
-        <path d="M20,0 Q20,15 30,20 Q40,25 40,40" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.12" />
-        {/* Diamond at intersection */}
-        <path d="M20,18 L22,20 L20,22 L18,20 Z" fill="hsl(var(--primary))" opacity="0.08" />
-        {/* Horizontal arch */}
-        <path d="M0,20 Q15,20 20,10 Q25,20 40,20" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.06" />
+      <pattern id="jaali-family" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+        {/* Central medallion */}
+        <circle cx="25" cy="25" r="8" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5" opacity="0.15" />
+        <circle cx="25" cy="25" r="4" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.3" opacity="0.1" />
+        {/* Arch motifs - top and bottom */}
+        <path d="M25,0 Q25,12 15,17 Q5,22 0,25" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.12" />
+        <path d="M25,0 Q25,12 35,17 Q45,22 50,25" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.12" />
+        <path d="M25,50 Q25,38 15,33 Q5,28 0,25" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.12" />
+        <path d="M25,50 Q25,38 35,33 Q45,28 50,25" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.4" opacity="0.12" />
+        {/* Diamond at center */}
+        <path d="M25,21 L28,25 L25,29 L22,25 Z" fill="hsl(var(--primary))" opacity="0.1" />
+        {/* Corner dots */}
+        <circle cx="0" cy="0" r="1.5" fill="hsl(var(--primary))" opacity="0.08" />
+        <circle cx="50" cy="0" r="1.5" fill="hsl(var(--primary))" opacity="0.08" />
+        <circle cx="0" cy="50" r="1.5" fill="hsl(var(--primary))" opacity="0.08" />
+        <circle cx="50" cy="50" r="1.5" fill="hsl(var(--primary))" opacity="0.08" />
       </pattern>
+      <linearGradient id="jaali-fade" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="white" stopOpacity="0.5" />
+        <stop offset="50%" stopColor="white" stopOpacity="1" />
+        <stop offset="100%" stopColor="white" stopOpacity="0.5" />
+      </linearGradient>
+      <mask id="jaali-mask">
+        <rect width="200" height="300" fill="url(#jaali-fade)" />
+      </mask>
     </defs>
-    <rect width="200" height="300" fill="url(#jaali-family)" />
+    <rect width="200" height="300" fill="url(#jaali-family)" mask="url(#jaali-mask)" />
   </svg>
 );
 
-/* ═══════════════════════════════════════
-   BUBBLES BACKGROUND (Dynamic Effect)
-   ═══════════════════════════════════════ */
-const BubblesBackground: React.FC = () => {
-  const upwardBubbles = Array.from({ length: 10 });
-  const downwardBubbles = Array.from({ length: 10 });
+/* ═══════════════════════════════════════════════════
+   SHARED PEACOCK SVG DEFS — Same as Events Section
+   ═══════════════════════════════════════════════════ */
+const SharedPeacockDefs: React.FC = () => (
+  <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+    <defs>
+      <linearGradient id="fam-pbod" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#00E5FF"/>
+        <stop offset="50%" stopColor="#0277BD"/>
+        <stop offset="100%" stopColor="#1A237E"/>
+      </linearGradient>
+      <linearGradient id="fam-pwin" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#AEEA00"/>
+        <stop offset="50%" stopColor="#00B0FF"/>
+        <stop offset="100%" stopColor="#000051"/>
+      </linearGradient>
+      
+      {/* Peacock SVG Template */}
+      <g id="fam-mini-peacock">
+        {/* Tail */}
+        <g className="cel-peacock-tail-group">
+          <path d="M-10 10 C-30 -10, -50 20, -60 40 C-30 60, 0 30, 0 10Z" fill="#004D40"/>
+          <path d="M-5 15 C-20 0, -40 25, -45 40 C-20 50, 0 30, -5 15Z" fill="#00695C"/>
+          {/* Eyes on tail */}
+          <ellipse cx="-45" cy="30" rx="3" ry="5" fill="#D4AF37" transform="rotate(-30 -45 30)"/>
+          <circle cx="-45" cy="30" r="1.5" fill="#0D47A1"/>
+          <ellipse cx="-35" cy="40" rx="4" ry="6" fill="#D4AF37" transform="rotate(-50 -35 40)"/>
+          <circle cx="-35" cy="40" r="2" fill="#0D47A1"/>
+          <ellipse cx="-20" cy="45" rx="3" ry="5" fill="#D4AF37" transform="rotate(-70 -20 45)"/>
+          <circle cx="-20" cy="45" r="1.5" fill="#0D47A1"/>
+        </g>
+        {/* Neck & Head */}
+        <g className="cel-peacock-neck-group">
+          <path d="M8 12 C10 0, 15 -10, 20 -15 C25 -10, 25 0, 15 15" fill="url(#fam-pbod)"/>
+          <circle cx="21" cy="-17" r="6" fill="#0277BD"/>
+          {/* Beak */}
+          <polygon points="26,-18 32,-15 25,-14" fill="#FFD700"/>
+          {/* Crest */}
+          <path d="M20 -23 L18 -30 M22 -23 L22 -32 M24 -23 L26 -30" stroke="#00E5FF" strokeWidth="0.8"/>
+          <circle cx="18" cy="-30" r="1" fill="#FFD700" className="cel-peacock-crest-dot" />
+          <circle cx="22" cy="-32" r="1" fill="#FFD700" className="cel-peacock-crest-dot" />
+          <circle cx="26" cy="-30" r="1" fill="#FFD700" className="cel-peacock-crest-dot" />
+          {/* Eye */}
+          <circle cx="22" cy="-18" r="1" fill="#FFF"/>
+        </g>
+        {/* Body */}
+        <ellipse cx="0" cy="15" rx="14" ry="10" fill="url(#fam-pbod)" className="cel-peacock-body" />
+        {/* Wing */}
+        <path d="M0 10 C-10 10, -20 20, -10 25 C0 20, 10 15, 0 10Z" fill="url(#fam-pwin)" className="cel-peacock-wing" />
+      </g>
+    </defs>
+  </svg>
+);
+
+/* ═══════════════════════════════════════════════════
+   CARD BOTTOM DECOR — Flanking Peacocks with Diya
+   ═══════════════════════════════════════════════════ */
+const CardBottomDecor: React.FC = () => (
+  <div className="fam-card-bottom-decor">
+    <svg viewBox="0 0 280 80" width="100%" height="auto" className="fam-peacock-decor">
+      {/* Platform */}
+      <ellipse cx="140" cy="65" rx="50" ry="10" fill="rgba(15, 23, 42, 0.8)" stroke="#D4AF37" strokeWidth="1.5"/>
+      <ellipse cx="140" cy="65" rx="40" ry="7" fill="none" stroke="#D4AF37" strokeWidth="0.8" strokeDasharray="3 2" opacity="0.6"/>
+
+      {/* Flanking Peacocks */}
+      <g transform="translate(50, 45) scale(0.7)">
+        <use href="#fam-mini-peacock" />
+      </g>
+      <g transform="translate(230, 45) scale(-0.7, 0.7)">
+        <use href="#fam-mini-peacock" />
+      </g>
+
+      {/* Center Diya */}
+      <g transform="translate(125, 40) scale(0.8)">
+        <ellipse cx="15" cy="15" rx="12" ry="4" fill="#B8860B"/>
+        <path d="M3 15 Q3 28 15 28 Q27 28 27 15Z" fill="#D4AF37"/>
+        {/* Animated Flame */}
+        <g className="cel-diya-flame-inner">
+          <ellipse cx="15" cy="6" rx="3" ry="6" fill="#FF9800"/>
+          <ellipse cx="15" cy="8" rx="1.5" ry="4" fill="#FFF59D"/>
+        </g>
+        {/* Flame Glow */}
+        <circle cx="15" cy="8" r="10" fill="rgba(255, 152, 0, 0.3)" className="cel-diya-flame-glow" style={{ mixBlendMode: 'screen' }}/>
+      </g>
+    </svg>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════
+   FLOATING SPARKLES — Luxurious Particle Effect
+   ═══════════════════════════════════════════════════ */
+const FloatingSparkles: React.FC<{ active: boolean }> = ({ active }) => {
+  const sparkles = React.useMemo(() => 
+    Array.from({ length: 12 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      delay: Math.random() * 4,
+      duration: 4 + Math.random() * 3,
+      size: 2 + Math.random() * 3,
+    })), []
+  );
+  
+  if (!active) return null;
   
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Upward bubbles */}
-      {upwardBubbles.map((_, i) => {
-        const size = Math.random() * 20 + 10;
-        const left = Math.random() * 100;
-        const duration = Math.random() * 10 + 5;
-        const delay = Math.random() * 5;
-        return (
-          <div
-            key={`up-${i}`}
-            className="bubble"
-            style={{
-              width: `${size}px`,
-              height: `${size}px`,
-              left: `${left}%`,
-              animationDuration: `${duration}s`,
-              animationDelay: `${delay}s`,
-              opacity: Math.random() * 0.4 + 0.1,
-            }}
-          />
-        );
-      })}
-      
-      {/* Downward bubbles (Reverse flow) */}
-      {downwardBubbles.map((_, i) => {
-        const size = Math.random() * 20 + 10;
-        const left = Math.random() * 100;
-        const duration = Math.random() * 10 + 5;
-        const delay = Math.random() * 5;
-        return (
-          <div
-            key={`down-${i}`}
-            className="bubble bubble-reverse"
-            style={{
-              width: `${size}px`,
-              height: `${size}px`,
-              left: `${left}%`,
-              animationDuration: `${duration}s`,
-              animationDelay: `${delay}s`,
-              opacity: Math.random() * 0.4 + 0.1,
-            }}
-          />
-        );
-      })}
+      {sparkles.map((s) => (
+        <div
+          key={s.id}
+          className="fam-sparkle"
+          style={{
+            left: `${s.left}%`,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+            animationDuration: `${s.duration}s`,
+            animationDelay: `${s.delay}s`,
+          }}
+        />
+      ))}
     </div>
   );
 };
 
-/* ═══════════════════════════════════════════════
-   FLORAL ORNATE FRAME — Ivory & Embossed Gold 
-   (Synced with Gallery Section)
-   ═══════════════════════════════════════════════ */
-const FloralOrnateFrame: React.FC<{ children: React.ReactNode; active: boolean }> = ({ children, active }) => (
-  <div className={`floral-frame-wrapper ${active ? 'floral-frame-active' : ''}`}>
-    {/* Floral corners using SVGs from Gallery */}
-    <div className="floral-ornament ornament-tl">
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10,10 C10,10 20,5 35,15 C45,22 40,35 40,35 C40,35 52,25 65,30 C80,35 75,55 75,55" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M15,15 C25,12 40,18 40,30 C40,42 28,48 18,40 C8,32 12,20 22,18" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
-        <circle cx="25" cy="25" r="3" fill="currentColor" />
-        <path d="M10,40 Q15,60 40,65" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
-        <path d="M40,10 Q60,15 65,40" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
-      </svg>
+/* ═══════════════════════════════════════════════════════
+   ROYAL CARD BORDER — Themed with PeacockCorner (Same as Events)
+   ═══════════════════════════════════════════════════════ */
+const RoyalCardBorder: React.FC<{ active: boolean }> = ({ active }) => (
+  <div className={`fam-royal-border ${active ? 'fam-royal-border-active' : ''}`}>
+    {/* Rotating glow border - same as Events section */}
+    <div className="fam-glow-border-layer" />
+    
+    {/* Inner container */}
+    <div className="fam-border-inner-container">
+      {/* Decorative inner framing line */}
+      <div className="fam-border-frame-line" />
+      
+      {/* Shimmer effect layer */}
+      <div className="fam-frame-shimmer" />
     </div>
-    <div className="floral-ornament ornament-tr">
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'scaleX(-1)' }}>
-        <path d="M10,10 C10,10 20,5 35,15 C45,22 40,35 40,35 C40,35 52,25 65,30 C80,35 75,55 75,55" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M15,15 C25,12 40,18 40,30 C40,42 28,48 18,40 C8,32 12,20 22,18" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
-        <circle cx="25" cy="25" r="3" fill="currentColor" />
-      </svg>
+    
+    {/* PeacockCorner ornaments - SAME as Events section for theming */}
+    <div className="fam-peacock-corners">
+      <PeacockCorner pos="tl" />
+      <PeacockCorner pos="tr" />
+      <PeacockCorner pos="bl" />
+      <PeacockCorner pos="br" />
     </div>
-    <div className="floral-ornament ornament-bl">
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'scaleY(-1)' }}>
-        <path d="M10,10 C10,10 20,5 35,15 C45,22 40,35 40,35 C40,35 52,25 65,30 C80,35 75,55 75,55" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M15,15 C25,12 40,18 40,30 C40,42 28,48 18,40 C8,32 12,20 22,18" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
-        <circle cx="25" cy="25" r="3" fill="currentColor" />
-      </svg>
-    </div>
-    <div className="floral-ornament ornament-br">
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'scale(-1)' }}>
-        <path d="M10,10 C10,10 20,5 35,15 C45,22 40,35 40,35 C40,35 52,25 65,30 C80,35 75,55 75,55" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M15,15 C25,12 40,18 40,30 C40,42 28,48 18,40 C8,32 12,20 22,18" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1" />
-        <circle cx="25" cy="25" r="3" fill="currentColor" />
-      </svg>
-    </div>
-
-    {/* Side vines */}
-    <div className="floral-ornament ornament-side-l">
-      <svg viewBox="0 0 20 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10,0 Q15,25 5,50 T10,100" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
-      </svg>
-    </div>
-    <div className="floral-ornament ornament-side-r">
-      <svg viewBox="0 0 20 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'scaleX(-1)' }}>
-        <path d="M10,0 Q15,25 5,50 T10,100" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
-      </svg>
-    </div>
-
-    {children}
   </div>
 );
 
@@ -300,7 +393,7 @@ const OrnateBorder: React.FC<{ active: boolean; size?: 'large' | 'small' }> = ({
   );
 };
 
-/* ═══════════════════════════════════════
+/* ═════════════════════════════��═════════
    JHAROKHA SVG FRAME (Arch + Jali)
    ═══════════════════════════════════════ */
 const JharokhaSVG: React.FC<{ active: boolean; size?: 'large' | 'small' }> = ({ active, size = 'large' }) => {
@@ -356,9 +449,106 @@ const JharokhaSVG: React.FC<{ active: boolean; size?: 'large' | 'small' }> = ({ 
   );
 };
 
-/* ═══════════════════════════════════════
-   MAIN FAMILY CARD (with 3D cursor tilt)
-   ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   MINI DIYA — Small animated flame element
+   ═══════════════════════════════════════════════════════ */
+const MiniDiya: React.FC<{ position: 'top-left' | 'top-right' }> = ({ position }) => (
+  <div className={`fam-mini-diya fam-mini-diya-${position}`}>
+    <div className="fam-diya-base" />
+    <div className="fam-diya-flame-wrap">
+      <div className="fam-diya-flame" />
+      <div className="fam-diya-flame-glow" />
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════
+   ENHANCED JHAROKHA FRAME — Royal Palace Window Style
+   ═══════════════════════════════════════════════════════ */
+const EnhancedJharokhaFrame: React.FC<{ active: boolean; children: React.ReactNode }> = ({ active, children }) => (
+  <div className="fam-jharokha-wrapper">
+    {/* Mini Diyas at top corners — like Opening section */}
+    <MiniDiya position="top-left" />
+    <MiniDiya position="top-right" />
+    
+    {/* Outer glow effect */}
+    <div className={`fam-jharokha-glow ${active ? 'fam-jharokha-glow-active' : ''}`} />
+    
+    {/* Main arch frame SVG */}
+    <svg
+      className={`fam-jharokha-svg ${active ? 'fam-jharokha-draw' : ''}`}
+      viewBox="0 0 200 280"
+      fill="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="jharokha-gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#D4AF37" />
+          <stop offset="30%" stopColor="#FFD700" />
+          <stop offset="50%" stopColor="#FFF9C4" />
+          <stop offset="70%" stopColor="#FFD700" />
+          <stop offset="100%" stopColor="#D4AF37" />
+        </linearGradient>
+        <filter id="jharokha-glow-filter">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      
+      {/* Outer arch frame */}
+      <path
+        d="M10,280 L10,100 Q10,10 100,10 Q190,10 190,100 L190,280"
+        stroke="url(#jharokha-gold-gradient)"
+        strokeWidth="3"
+        fill="none"
+        strokeLinecap="round"
+        filter="url(#jharokha-glow-filter)"
+        className="fam-jharokha-path"
+      />
+      
+      {/* Inner arch detail */}
+      <path
+        d="M20,280 L20,105 Q20,25 100,25 Q180,25 180,105 L180,280"
+        stroke="url(#jharokha-gold-gradient)"
+        strokeWidth="1.5"
+        fill="none"
+        opacity="0.6"
+        className="fam-jharokha-path"
+      />
+      
+      {/* Keystone ornament at top */}
+      <g transform="translate(85, 2)">
+        <path d="M15,0 L20,8 L30,10 L20,12 L15,20 L10,12 L0,10 L10,8 Z" fill="url(#jharokha-gold-gradient)" />
+        <circle cx="15" cy="10" r="3" fill="#FFF9C4" opacity="0.8" />
+      </g>
+      
+      {/* Decorative side columns */}
+      <rect x="8" y="100" width="4" height="180" fill="url(#jharokha-gold-gradient)" opacity="0.3" rx="2" />
+      <rect x="188" y="100" width="4" height="180" fill="url(#jharokha-gold-gradient)" opacity="0.3" rx="2" />
+      
+      {/* Side ornamental dots */}
+      <circle cx="10" cy="140" r="4" fill="url(#jharokha-gold-gradient)" opacity="0.6" />
+      <circle cx="190" cy="140" r="4" fill="url(#jharokha-gold-gradient)" opacity="0.6" />
+      <circle cx="10" cy="200" r="3" fill="url(#jharokha-gold-gradient)" opacity="0.4" />
+      <circle cx="190" cy="200" r="3" fill="url(#jharokha-gold-gradient)" opacity="0.4" />
+      
+      {/* Decorative horizontal band */}
+      <path d="M25,260 L175,260" stroke="url(#jharokha-gold-gradient)" strokeWidth="1" strokeDasharray="8 4" opacity="0.5" />
+    </svg>
+    
+    {/* Image container with arch clip */}
+    <div className="fam-jharokha-image-container">
+      {children}
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════
+   MAIN FAMILY CARD — Royal Rajasthani Design
+   ═══════════════════════════════════════════════════════ */
 const FamilyCard: React.FC<{
   data: FamilySide;
   active: boolean;
@@ -368,93 +558,89 @@ const FamilyCard: React.FC<{
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-  const [spotlightPos, setSpotlightPos] = useState({ x: '50%', y: '50%' });
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Reveal animation on active
+  useEffect(() => {
+    if (active) {
+      const timer = setTimeout(() => setIsVisible(true), 200 + index * 150);
+      return () => clearTimeout(timer);
+    }
+  }, [active, index]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || window.innerWidth < 768) return; // Disable tilt on mobile
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = -(y - centerY) / 20;
-    const rotateY = (x - centerX) / 20;
+    const rotateX = -(y - centerY) / 25;
+    const rotateY = (x - centerX) / 25;
     setTilt({ x: rotateX, y: rotateY });
-    setSpotlightPos({ x: `${x}px`, y: `${y}px` });
   }, []);
 
   return (
     <div
-      className="relative z-10 w-full sm:max-w-md mx-auto cursor-default family-card-enter"
-      style={{
-        animationDelay: active ? `${0.3 + index * 0.25}s` : '0s',
-        animationPlayState: active ? 'running' : 'paused',
-        perspective: '1200px',
-      }}
+      className={`fam-card-outer ${isVisible ? 'fam-card-visible' : ''}`}
+      style={{ animationDelay: `${index * 0.2}s` }}
     >
       <div
         ref={cardRef}
-        className="relative royal-card-wrapper border border-primary/20 rounded-2xl p-6 md:p-8 backdrop-blur-xl flex flex-col items-center group"
+        className="fam-card-inner group"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => { setIsHovered(false); setTilt({ x: 0, y: 0 }); }}
         style={{
-          background: 'hsl(var(--background) / 0.85)',
-          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${isHovered ? '-12px' : '0px'})`,
-          transformStyle: 'preserve-3d',
+          transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${isHovered ? '-8px' : '0px'}) scale(${isHovered ? 1.02 : 1})`,
         }}
       >
-        {/* ── Floral Frame Wrapper (Gallery Design) ── */}
-        <div className="absolute inset-0 z-0">
-          <FloralOrnateFrame active={active}>
-            {/* ── Bubbles Background ── */}
-            <BubblesBackground />
-            
-            {/* Background Texture/Overlay */}
-            <div className="absolute inset-0 bg-card/60 backdrop-blur-[2px] z-0" />
-            <div className="jaali-overlay opacity-[0.05] z-0" />
-          </FloralOrnateFrame>
+        {/* Royal border with corner ornaments */}
+        <RoyalCardBorder active={isVisible} />
+        
+        {/* Floating sparkles effect */}
+        <FloatingSparkles active={isVisible && isHovered} />
+        
+        {/* Background with Jaali pattern */}
+        <div className="fam-card-bg">
+          <JaaliPattern className="opacity-30" />
+          <div className="fam-card-bg-gradient" />
         </div>
 
-        {/* Jharokha Photo Frame */}
-        <div className="relative w-36 md:w-44 aspect-[3/4] mb-6 z-10 transition-transform duration-700 group-hover:scale-105">
-          <div
-            className="w-full h-full rounded-t-full rounded-b-lg border-2 border-primary/40 overflow-hidden shadow-2xl"
-          >
-            <img 
-              src={data.mainImage} 
-              alt={data.title} 
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
-            />
-          </div>
-          <JharokhaSVG active={active} />
+        {/* Enhanced Jharokha Photo Frame */}
+        <EnhancedJharokhaFrame active={isVisible}>
+          <img 
+            src={data.mainImage} 
+            alt={data.title} 
+            className="fam-card-photo" 
+          />
+        </EnhancedJharokhaFrame>
+
+        {/* Title Section */}
+        <div className="fam-card-title-section">
+          <p className="fam-card-subtitle">{data.title}</p>
+          <p className="fam-card-hindi" lang="hi">{data.hindiTitle}</p>
         </div>
 
-        {/* Subtitle */}
-        <p className="font-display text-primary tracking-[0.25em] uppercase text-[10px] md:text-xs mb-1.5 opacity-80 z-10">
-          {data.title}
-        </p>
-        <p className="font-hindi text-[13px] text-muted mb-4 z-10 tracking-widest" lang="hi">{data.hindiTitle}</p>
+        {/* Parents' Names with gold shimmer */}
+        <h3 className="fam-card-parents">{data.parents}</h3>
 
-        {/* Parents' Names */}
-        <h3 className="font-heading text-xl sm:text-2xl lg:text-[22px] xl:text-2xl text-foreground mb-6 text-center leading-tight z-10 gold-shimmer-slow px-2 whitespace-nowrap">
-          {data.parents}
-        </h3>
-
-        {/* Luxury Button */}
-        <button
-          onClick={onOpenModal}
-          className="fam-btn-luxury group/btn z-10"
-        >
-          <span className="fam-btn-diamond top-0 left-0" />
-          <span className="fam-btn-diamond top-0 right-0" />
-          <span className="fam-btn-diamond bottom-0 left-0" />
-          <span className="fam-btn-diamond bottom-0 right-0" />
-          <Eye size={14} className="opacity-70 group-hover/btn:opacity-100 transition-opacity" />
-          <span className="relative font-semibold">View Family Details</span>
-          <span className="fam-btn-shimmer" />
+        {/* Royal Luxury Button */}
+        <button onClick={onOpenModal} className="fam-royal-btn group/btn">
+          <span className="fam-royal-btn-bg" />
+          <span className="fam-royal-btn-border" />
+          <span className="fam-royal-btn-content">
+            <Eye size={14} className="fam-royal-btn-icon" />
+            <span className="fam-royal-btn-text">View Family Details</span>
+          </span>
+          <span className="fam-royal-btn-shimmer" />
         </button>
-
+        
+        {/* Bottom Peacock Decor - themed same as Events section */}
+        <CardBottomDecor />
+        
+        {/* Shared Peacock SVG Definitions */}
+        <SharedPeacockDefs />
       </div>
     </div>
   );
@@ -602,34 +788,52 @@ interface FamilySectionProps {
 
 const FamilySection: React.FC<FamilySectionProps> = ({ active }) => {
   const [modalSide, setModalSide] = useState<'groom' | 'bride' | null>(null);
+  const [headingVisible, setHeadingVisible] = useState(false);
   const openModal = useCallback((side: 'groom' | 'bride') => setModalSide(side), []);
   const closeModal = useCallback(() => setModalSide(null), []);
 
   const modalData = modalSide ? familyData.find(f => f.side === modalSide) : null;
 
+  // Animate heading on active
+  useEffect(() => {
+    if (active) {
+      const timer = setTimeout(() => setHeadingVisible(true), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [active]);
+
   return (
-    <div className="mb-20 px-4">
-      {/* Section Heading */}
-      <div className="text-center mb-12 relative" style={{ animation: active ? 'fade-slide-up 0.8s ease-out' : 'none' }}>
-        <div className="flex items-center justify-center gap-4 mb-2">
-          <div className="p-2 rounded-full border border-primary/20 backdrop-blur-md">
-            <DiyaIcon lit={active} className="diya-flame-luxury scale-125" />
+    <div className="fam-section">
+      {/* Section Heading — Royal Style with Diya (Themed) */}
+      <div className={`fam-section-header ${headingVisible ? 'fam-header-visible' : ''}`}>
+        {/* Main heading row */}
+        <div className="fam-header-content">
+          {/* Left Diya - same as other sections */}
+          <div className="fam-header-diya">
+            <DiyaIcon lit={active} className="fam-diya-icon" />
           </div>
-          <h2 className="font-heading text-3xl md:text-5xl gold-shimmer-slow leading-tight tracking-tight px-4 font-bold">
-            Our Families
-          </h2>
-          <div className="p-2 rounded-full border border-primary/20 backdrop-blur-md">
-            <DiyaIcon lit={active} className="diya-flame-luxury scale-125" />
+          
+          <div className="fam-header-text">
+            <h2 className="fam-header-title">Our Families</h2>
+            <p className="fam-header-hindi" lang="hi">हमारे परिवार</p>
+          </div>
+          
+          {/* Right Diya */}
+          <div className="fam-header-diya">
+            <DiyaIcon lit={active} className="fam-diya-icon" />
           </div>
         </div>
-        <p className="font-hindi text-base md:text-lg text-muted/80 mt-2 tracking-widest font-medium" lang="hi">हमारे परिवार</p>
-        <div className="mt-6 flex justify-center">
-            <GoldDivider />
+        
+        {/* Gold divider - same style as Events section */}
+        <div className="fam-header-divider">
+          <div className="fam-divider-line" />
+          <span className="fam-divider-star">&#10022;</span>
+          <div className="fam-divider-line" />
         </div>
       </div>
 
-      {/* Family Cards */}
-      <div className="flex flex-col lg:flex-row gap-10 md:gap-16 justify-center items-stretch max-w-7xl mx-auto mb-16 px-4">
+      {/* Family Cards — Side by side on desktop, stacked on mobile */}
+      <div className="fam-cards-container">
         {familyData.map((family, i) => (
           <FamilyCard
             key={family.side}
@@ -641,21 +845,20 @@ const FamilySection: React.FC<FamilySectionProps> = ({ active }) => {
         ))}
       </div>
 
-      {/* Decorative separator */}
-      <div className="flex items-center justify-center gap-8 mt-12 opacity-60" aria-hidden="true">
-        <div className="h-px flex-1 max-w-[150px]" style={{
-          background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4))',
-        }} />
-        <svg width="32" height="32" viewBox="0 0 24 24" className="text-primary animate-pulse">
-          <circle cx="12" cy="12" r="4" fill="currentColor" opacity="0.6" />
-          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
-            <ellipse key={angle} cx="12" cy="4" rx="2" ry="4.5" fill="currentColor" opacity="0.3"
-              transform={`rotate(${angle} 12 12)`} />
-          ))}
-        </svg>
-        <div className="h-px flex-1 max-w-[150px]" style={{
-          background: 'linear-gradient(90deg, hsl(var(--primary) / 0.4), transparent)',
-        }} />
+      {/* Bottom Decorative Element */}
+      <div className="fam-section-footer" aria-hidden="true">
+        <div className="fam-footer-line" />
+        <div className="fam-footer-lotus">
+          <svg viewBox="0 0 48 24" fill="none" className="w-12 h-6">
+            {/* Lotus petals */}
+            <path d="M24,20 Q20,12 16,16 Q12,20 8,14 Q4,8 0,12" stroke="hsl(var(--primary))" strokeWidth="1.5" fill="none" opacity="0.5" />
+            <path d="M24,20 Q28,12 32,16 Q36,20 40,14 Q44,8 48,12" stroke="hsl(var(--primary))" strokeWidth="1.5" fill="none" opacity="0.5" />
+            {/* Center */}
+            <circle cx="24" cy="18" r="4" fill="hsl(var(--primary))" opacity="0.3" />
+            <circle cx="24" cy="18" r="2" fill="hsl(var(--primary))" opacity="0.6" />
+          </svg>
+        </div>
+        <div className="fam-footer-line" />
       </div>
 
       {/* Modal */}
