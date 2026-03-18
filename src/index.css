@@ -3040,6 +3040,555 @@
   pointer-events: none;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   ENHANCED COUNTDOWN & BLESSINGS — Premium Luxury Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* Glass card accent overlay */
+.cd-glass-accent {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Corner for all 4 positions */
+.cd-corner-bl { bottom: 30px; left: 4px; border-bottom: 1px solid; border-left: 1px solid; }
+
+/* ── Blessings Section Layout ── */
+.cd-blessings-section {
+  margin-top: 3.5rem;
+}
+
+.cd-blessings-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.cd-blessings-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.cd-blessings-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 600;
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 25%, #FFF9C4 50%, #FFD700 75%, #D4AF37 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gal-gold-shimmer 4s ease-in-out infinite;
+}
+
+.cd-blessings-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  color: hsl(var(--muted-foreground));
+  margin-top: 0.25rem;
+}
+
+.cd-blessings-hindi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+  opacity: 0.8;
+}
+
+.cd-blessings-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.cd-divider-line {
+  flex: 1;
+  max-width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.35));
+}
+
+.cd-divider-line:last-child {
+  background: linear-gradient(90deg, hsl(var(--primary) / 0.35), transparent);
+}
+
+.cd-divider-star {
+  font-size: 10px;
+  color: #FFD700;
+  opacity: 0.7;
+  animation: gal-star-pulse 2s ease-in-out infinite;
+}
+
+/* ══ Premium Blessing Card ══ */
+.cd-blessing-card {
+  position: relative;
+  width: 280px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cd-blessing-card-active {
+  transform: scale(1.02);
+}
+
+.cd-blessing-corners {
+  position: absolute;
+  inset: -4px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.cd-blessing-card-inner {
+  position: relative;
+  padding: 1.25rem;
+  border-radius: 14px;
+  background: linear-gradient(145deg, hsl(var(--card) / 0.95), hsl(var(--background) / 0.9));
+  border: 1px solid hsl(var(--primary) / 0.2);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+.cd-blessing-card:hover .cd-blessing-card-inner {
+  border-color: hsl(var(--primary) / 0.4);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cd-blessing-top-border {
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5), transparent);
+  border-radius: 0 0 2px 2px;
+}
+
+.cd-blessing-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cd-blessing-avatar-premium {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.08));
+  border: 1.5px solid hsl(var(--primary) / 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cd-blessing-avatar-premium span {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: hsl(var(--primary));
+}
+
+.cd-avatar-glow {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.15) 0%, transparent 70%);
+  animation: cd-avatar-pulse 3s ease-in-out infinite;
+}
+
+@keyframes cd-avatar-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.cd-blessing-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cd-blessing-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: hsl(var(--primary));
+  letter-spacing: 0.02em;
+}
+
+.cd-blessing-emoji {
+  font-size: 0.9rem;
+}
+
+.cd-blessing-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: hsl(var(--text-cream) / 0.9);
+  margin-bottom: 0.75rem;
+}
+
+.cd-blessing-flourish {
+  display: flex;
+  justify-content: center;
+}
+
+.cd-blessing-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at 50% 50%, hsl(var(--primary) / 0.05) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cd-blessing-card:hover .cd-blessing-glow {
+  opacity: 1;
+}
+
+/* ══ Carousel Container ══ */
+.cd-carousel-container {
+  position: relative;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.cd-carousel-viewport {
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 0 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .cd-carousel-viewport {
+    margin: 0 3rem;
+  }
+}
+
+.cd-carousel-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cd-carousel-slide {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .cd-carousel-slide {
+    width: calc(50% - 0.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cd-carousel-slide {
+    width: calc(33.333% - 0.667rem);
+  }
+}
+
+/* Carousel Navigation Arrows */
+.cd-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsl(var(--card) / 0.95);
+  border: 1px solid hsl(var(--primary) / 0.3);
+  color: hsl(var(--primary));
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cd-arrow-left { left: 0; }
+.cd-arrow-right { right: 0; }
+
+.cd-carousel-arrow:hover {
+  background: hsl(var(--primary) / 0.15);
+  border-color: hsl(var(--primary) / 0.5);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.15);
+}
+
+/* Carousel Dots */
+.cd-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.cd-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.25);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cd-carousel-dot:hover {
+  background: hsl(var(--primary) / 0.5);
+}
+
+.cd-dot-active {
+  width: 24px;
+  border-radius: 4px;
+  background: hsl(var(--primary));
+}
+
+.cd-carousel-paused {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: hsl(var(--card) / 0.8);
+  backdrop-filter: blur(4px);
+}
+
+/* ══ Premium Send Card ══ */
+.cd-send-card-premium {
+  position: relative;
+  border-radius: 20px;
+  overflow: visible;
+  margin-top: 1.5rem;
+}
+
+.cd-send-corners {
+  position: absolute;
+  inset: -6px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.cd-send-inner {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--background) / 0.95));
+  border: 1px solid hsl(var(--primary) / 0.2);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 768px) {
+  .cd-send-inner {
+    padding: 2rem;
+  }
+}
+
+.cd-send-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cd-guest-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: hsl(var(--primary) / 0.08);
+  border: 1px solid hsl(var(--primary) / 0.2);
+  margin-bottom: 1rem;
+}
+
+.cd-guest-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.15));
+  border: 1px solid hsl(var(--primary) / 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: hsl(var(--primary));
+}
+
+.cd-guest-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  color: hsl(var(--text-cream) / 0.8);
+}
+
+.cd-guest-name strong {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
+
+.cd-input-group-premium {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.cd-textarea-premium {
+  width: 100%;
+  min-height: 100px;
+  padding: 1rem;
+  border-radius: 12px;
+  background: hsl(var(--background) / 0.6);
+  border: 1px solid hsl(var(--primary) / 0.2);
+  color: hsl(var(--text-cream));
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.cd-textarea-premium:focus {
+  outline: none;
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+}
+
+.cd-textarea-premium::placeholder {
+  color: hsl(var(--text-cream) / 0.4);
+  font-style: italic;
+}
+
+.cd-textarea-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.cd-char-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.cd-success-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: hsl(142 76% 36% / 0.15);
+  border: 1px solid hsl(142 76% 36% / 0.3);
+  color: hsl(142 76% 50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  animation: cd-success-in 0.4s ease-out;
+}
+
+@keyframes cd-success-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cd-success-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: hsl(142 76% 36%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.cd-send-btn-premium {
+  position: relative;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #D4AF37 100%);
+  background-size: 200% 200%;
+  border: none;
+  color: hsl(218 65% 8%);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 20px hsl(var(--primary) / 0.25);
+}
+
+.cd-send-btn-premium:hover:not(:disabled) {
+  background-position: 100% 50%;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px hsl(var(--primary) / 0.35);
+}
+
+.cd-send-btn-premium:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.cd-send-btn-premium:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cd-btn-text {
+  position: relative;
+  z-index: 2;
+}
+
+.cd-btn-sparkle {
+  position: relative;
+  z-index: 2;
+  margin-left: 0.5rem;
+}
+
+.cd-btn-loading {
+  position: relative;
+  z-index: 2;
+}
+
+.cd-btn-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+  background-size: 250% 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cd-send-btn-premium:hover:not(:disabled) .cd-btn-glow {
+  opacity: 1;
+  animation: cd-sweep 2s ease-in-out infinite;
+}
+
 /* ═══════════════════════════════════════════════
    RSVP SECTION — Premium Styles
    ═══════════════════════════════════════════════ */
