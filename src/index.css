@@ -4681,6 +4681,649 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   FAMILY SECTION — Enhanced Royal Rajasthani Design (Mobile-First)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Main Section Container */
+.fam-section {
+  padding: 2rem 1rem 3rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .fam-section {
+    padding: 3rem 1.5rem 4rem;
+  }
+}
+
+/* ── Section Header Styles ── */
+.fam-section-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fam-header-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fam-header-line {
+  height: 1px;
+  margin: 0 auto 1.5rem;
+  max-width: 200px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4), transparent);
+  animation: fam-line-expand 1s ease-out 0.3s both;
+}
+
+@keyframes fam-line-expand {
+  from { width: 0; opacity: 0; }
+  to { width: 100%; opacity: 1; }
+}
+
+.fam-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .fam-header-content {
+    gap: 1.5rem;
+  }
+}
+
+.fam-header-icon {
+  flex-shrink: 0;
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--primary) / 0.25);
+  background: hsl(var(--background) / 0.6);
+  backdrop-filter: blur(8px);
+  animation: fam-icon-pulse 3s ease-in-out infinite;
+}
+
+@keyframes fam-icon-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.1);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    transform: scale(1.05);
+  }
+}
+
+.fam-header-text {
+  text-align: center;
+}
+
+.fam-header-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.75rem, 6vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 25%, #FFF9C4 50%, #FFD700 75%, #D4AF37 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fam-gold-shimmer 4s ease-in-out infinite;
+  text-shadow: none;
+}
+
+@keyframes fam-gold-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.fam-header-hindi {
+  font-family: 'Noto Sans Devanagari', 'Mukta', sans-serif;
+  font-size: clamp(0.875rem, 3vw, 1.125rem);
+  color: hsl(var(--muted-foreground));
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+  opacity: 0.8;
+}
+
+.fam-header-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.fam-divider-line {
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.35));
+}
+
+.fam-divider-line:last-child {
+  background: linear-gradient(90deg, hsl(var(--primary) / 0.35), transparent);
+}
+
+.fam-divider-ornament {
+  color: hsl(var(--primary));
+  opacity: 0.6;
+  animation: fam-ornament-float 3s ease-in-out infinite;
+}
+
+@keyframes fam-ornament-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ── Cards Container ── */
+.fam-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 0 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .fam-cards-container {
+    flex-direction: row;
+    gap: 2.5rem;
+    justify-content: center;
+    align-items: stretch;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fam-cards-container {
+    gap: 3.5rem;
+  }
+}
+
+/* ── Card Outer Wrapper ── */
+.fam-card-outer {
+  flex: 1;
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(50px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fam-card-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ── Card Inner ── */
+.fam-card-inner {
+  position: relative;
+  padding: 1.75rem 1.25rem 2rem;
+  border-radius: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+  will-change: transform;
+  background: linear-gradient(145deg, 
+    hsl(var(--card) / 0.95), 
+    hsl(var(--background) / 0.9));
+  backdrop-filter: blur(12px);
+}
+
+@media (min-width: 768px) {
+  .fam-card-inner {
+    padding: 2rem 1.75rem 2.5rem;
+  }
+}
+
+.fam-card-inner:hover {
+  box-shadow: 
+    0 25px 50px hsl(var(--background) / 0.6),
+    0 0 40px hsl(var(--primary) / 0.08);
+}
+
+/* ── Card Background ── */
+.fam-card-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.fam-card-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.05) 0%, transparent 70%);
+}
+
+/* ── Royal Card Border ── */
+.fam-royal-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.fam-border-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  border: 2px solid hsl(var(--primary) / 0.25);
+  transition: border-color 0.5s ease;
+}
+
+.fam-royal-border-active .fam-border-outer {
+  border-color: hsl(var(--primary) / 0.4);
+  animation: fam-border-glow 4s ease-in-out infinite;
+}
+
+@keyframes fam-border-glow {
+  0%, 100% { 
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.05);
+  }
+  50% { 
+    border-color: hsl(var(--primary) / 0.6);
+    box-shadow: 0 0 25px hsl(var(--primary) / 0.15);
+  }
+}
+
+.fam-border-inner {
+  position: absolute;
+  inset: 6px;
+  border-radius: 1rem;
+  border: 1px solid hsl(var(--primary) / 0.1);
+}
+
+.fam-border-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  background: linear-gradient(90deg, 
+    transparent 30%, 
+    hsl(var(--primary) / 0.08) 50%, 
+    transparent 70%);
+  background-size: 200% 100%;
+  animation: fam-shimmer-sweep 5s ease-in-out infinite;
+}
+
+@keyframes fam-shimmer-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Corner Ornaments ── */
+.fam-corner {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s;
+}
+
+.fam-royal-border-active .fam-corner {
+  opacity: 1;
+}
+
+.fam-corner-tl { top: -8px; left: -8px; }
+.fam-corner-tr { top: -8px; right: -8px; }
+.fam-corner-bl { bottom: -8px; left: -8px; }
+.fam-corner-br { bottom: -8px; right: -8px; }
+
+@media (min-width: 768px) {
+  .fam-corner {
+    width: 60px;
+    height: 60px;
+  }
+  .fam-corner-tl { top: -10px; left: -10px; }
+  .fam-corner-tr { top: -10px; right: -10px; }
+  .fam-corner-bl { bottom: -10px; left: -10px; }
+  .fam-corner-br { bottom: -10px; right: -10px; }
+}
+
+.fam-corner-vine {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: fam-vine-draw 1.5s ease-out 0.5s forwards;
+}
+
+@keyframes fam-vine-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.fam-corner-leaf {
+  opacity: 0;
+  animation: fam-leaf-fade 0.8s ease-out 1s forwards;
+}
+
+@keyframes fam-leaf-fade {
+  to { opacity: 1; }
+}
+
+.fam-corner-dot {
+  animation: fam-dot-pulse 2s ease-in-out infinite 1.5s;
+}
+
+@keyframes fam-dot-pulse {
+  0%, 100% { r: 2.5; opacity: 1; }
+  50% { r: 3.5; opacity: 0.7; }
+}
+
+/* ── Floating Sparkles ── */
+.fam-sparkle {
+  position: absolute;
+  background: hsl(var(--primary));
+  border-radius: 50%;
+  opacity: 0;
+  animation: fam-sparkle-float 4s ease-in-out infinite;
+}
+
+@keyframes fam-sparkle-float {
+  0% {
+    bottom: -10px;
+    opacity: 0;
+    transform: scale(0);
+  }
+  20% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    bottom: 100%;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+/* ── Enhanced Jharokha Frame ── */
+.fam-jharokha-wrapper {
+  position: relative;
+  width: 140px;
+  height: 200px;
+  margin-bottom: 1.25rem;
+  z-index: 5;
+}
+
+@media (min-width: 768px) {
+  .fam-jharokha-wrapper {
+    width: 160px;
+    height: 230px;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.fam-jharokha-glow {
+  position: absolute;
+  inset: -15px;
+  border-radius: 50% 50% 8px 8px;
+  background: radial-gradient(ellipse at 50% 30%, hsl(var(--primary) / 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.fam-jharokha-glow-active {
+  opacity: 1;
+}
+
+.fam-card-inner:hover .fam-jharokha-glow {
+  opacity: 1;
+  animation: fam-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fam-glow-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.fam-jharokha-svg {
+  position: absolute;
+  inset: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  z-index: 10;
+}
+
+.fam-jharokha-path {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fam-jharokha-draw .fam-jharokha-path {
+  stroke-dashoffset: 0;
+}
+
+.fam-jharokha-image-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 50% 50% 8px 8px;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 25px hsl(var(--background) / 0.5),
+    inset 0 0 20px hsl(var(--background) / 0.3);
+}
+
+.fam-card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fam-card-inner:hover .fam-card-photo {
+  transform: scale(1.08);
+}
+
+/* ── Title Section ── */
+.fam-card-title-section {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  z-index: 5;
+}
+
+.fam-card-subtitle {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--primary));
+  opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .fam-card-subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+  }
+}
+
+.fam-card-hindi {
+  font-family: 'Noto Sans Devanagari', 'Mukta', sans-serif;
+  font-size: 0.8rem;
+  color: hsl(var(--muted-foreground));
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+}
+
+/* ── Parents Names ── */
+.fam-card-parents {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.125rem, 4vw, 1.375rem);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  padding: 0 0.5rem;
+  z-index: 5;
+  background: linear-gradient(135deg, #D4AF37, #FFD700, #FFF9C4, #FFD700, #D4AF37);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fam-gold-shimmer 4s ease-in-out infinite;
+}
+
+/* ── Royal Button ── */
+.fam-royal-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fam-royal-btn:hover {
+  transform: translateY(-3px);
+}
+
+.fam-royal-btn-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, 
+    hsl(var(--primary) / 0.08), 
+    hsl(var(--primary) / 0.15));
+  transition: background 0.4s ease;
+}
+
+.fam-royal-btn:hover .fam-royal-btn-bg {
+  background: linear-gradient(135deg, 
+    hsl(var(--primary) / 0.15), 
+    hsl(var(--primary) / 0.25));
+}
+
+.fam-royal-btn-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid hsl(var(--primary) / 0.4);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.fam-royal-btn:hover .fam-royal-btn-border {
+  border-color: hsl(var(--primary) / 0.7);
+  box-shadow: 0 0 15px hsl(var(--primary) / 0.2);
+}
+
+.fam-royal-btn-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 5;
+}
+
+.fam-royal-btn-icon {
+  color: hsl(var(--primary));
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.fam-royal-btn:hover .fam-royal-btn-icon {
+  opacity: 1;
+}
+
+.fam-royal-btn-text {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground));
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .fam-royal-btn {
+    padding: 0.75rem 1.75rem;
+  }
+  .fam-royal-btn-text {
+    font-size: 0.65rem;
+  }
+}
+
+.fam-royal-btn-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.fam-royal-btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    hsl(var(--primary) / 0.15), 
+    transparent);
+  animation: fam-btn-shimmer-sweep 4s ease-in-out infinite;
+}
+
+@keyframes fam-btn-shimmer-sweep {
+  0% { left: -100%; }
+  40%, 100% { left: 100%; }
+}
+
+/* ── Section Footer ── */
+.fam-section-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  opacity: 0.5;
+}
+
+.fam-footer-line {
+  flex: 1;
+  max-width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3));
+}
+
+.fam-footer-line:last-child {
+  background: linear-gradient(90deg, hsl(var(--primary) / 0.3), transparent);
+}
+
+.fam-footer-lotus {
+  color: hsl(var(--primary));
+  animation: fam-lotus-breathe 4s ease-in-out infinite;
+}
+
+@keyframes fam-lotus-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
 /* Custom scrollbar for modal */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
