@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Eye, X } from 'lucide-react';
+import PeacockCorner from '@/components/global/PeacockCorner';
 import DiyaIcon from '@/components/global/DiyaIcon';
 
 // Import Images
@@ -284,15 +285,14 @@ const FloatingSparkles: React.FC<{ active: boolean }> = ({ active }) => {
 };
 
 /* ═══════════════════════════════════════════════════════
-   ROYAL CARD BORDER — Animated Rotating Golden Border
-   (Same as CelebrationsSection OrnateFrame)
+   ROYAL CARD BORDER — Themed with PeacockCorner (Same as Events)
    ═══════════════════════════════════════════════════════ */
 const RoyalCardBorder: React.FC<{ active: boolean }> = ({ active }) => (
   <div className={`fam-royal-border ${active ? 'fam-royal-border-active' : ''}`}>
-    {/* Rotating conic gradient border - same as Events section */}
-    <div className="fam-rotating-border-layer" />
+    {/* Rotating glow border - same as Events section */}
+    <div className="fam-glow-border-layer" />
     
-    {/* Inner container with decorative elements */}
+    {/* Inner container */}
     <div className="fam-border-inner-container">
       {/* Decorative inner framing line */}
       <div className="fam-border-frame-line" />
@@ -301,43 +301,13 @@ const RoyalCardBorder: React.FC<{ active: boolean }> = ({ active }) => (
       <div className="fam-frame-shimmer" />
     </div>
     
-    {/* Golden corner ornaments */}
-    <div className="fam-golden-corners">
-      {/* Top Left */}
-      <svg className="fam-corner-svg fam-corner-tl" viewBox="0 0 40 40" fill="none">
-        <path d="M0 0 L40 0 L40 5 Q20 5 5 20 L5 40 L0 40 Z" fill="url(#fam-corner-gold)" />
-        <path d="M8 8 L32 8 Q15 12 12 28 L8 28 Z" fill="url(#fam-corner-gold)" opacity="0.5" />
-        <circle cx="12" cy="12" r="2" fill="#FFD700" className="fam-corner-gem" />
-        <defs>
-          <linearGradient id="fam-corner-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFD700" />
-            <stop offset="50%" stopColor="#FFF9C4" />
-            <stop offset="100%" stopColor="#D4AF37" />
-          </linearGradient>
-        </defs>
-      </svg>
-      {/* Top Right */}
-      <svg className="fam-corner-svg fam-corner-tr" viewBox="0 0 40 40" fill="none">
-        <path d="M40 0 L0 0 L0 5 Q20 5 35 20 L35 40 L40 40 Z" fill="url(#fam-corner-gold)" />
-        <path d="M32 8 L8 8 Q25 12 28 28 L32 28 Z" fill="url(#fam-corner-gold)" opacity="0.5" />
-        <circle cx="28" cy="12" r="2" fill="#FFD700" className="fam-corner-gem" />
-      </svg>
-      {/* Bottom Left */}
-      <svg className="fam-corner-svg fam-corner-bl" viewBox="0 0 40 40" fill="none">
-        <path d="M0 40 L40 40 L40 35 Q20 35 5 20 L5 0 L0 0 Z" fill="url(#fam-corner-gold)" />
-        <path d="M8 32 L32 32 Q15 28 12 12 L8 12 Z" fill="url(#fam-corner-gold)" opacity="0.5" />
-        <circle cx="12" cy="28" r="2" fill="#FFD700" className="fam-corner-gem" />
-      </svg>
-      {/* Bottom Right */}
-      <svg className="fam-corner-svg fam-corner-br" viewBox="0 0 40 40" fill="none">
-        <path d="M40 40 L0 40 L0 35 Q20 35 35 20 L35 0 L40 0 Z" fill="url(#fam-corner-gold)" />
-        <path d="M32 32 L8 32 Q25 28 28 12 L32 12 Z" fill="url(#fam-corner-gold)" opacity="0.5" />
-        <circle cx="28" cy="28" r="2" fill="#FFD700" className="fam-corner-gem" />
-      </svg>
+    {/* PeacockCorner ornaments - SAME as Events section for theming */}
+    <div className="fam-peacock-corners">
+      <PeacockCorner pos="tl" />
+      <PeacockCorner pos="tr" />
+      <PeacockCorner pos="bl" />
+      <PeacockCorner pos="br" />
     </div>
-    
-    {/* Interactive spotlight on hover */}
-    <div className="fam-border-spotlight" />
   </div>
 );
 
@@ -608,10 +578,6 @@ const FamilyCard: React.FC<{
     const rotateX = -(y - centerY) / 25;
     const rotateY = (x - centerX) / 25;
     setTilt({ x: rotateX, y: rotateY });
-    
-    // Update CSS custom properties for spotlight effect
-    cardRef.current.style.setProperty('--mx', `${x}px`);
-    cardRef.current.style.setProperty('--my', `${y}px`);
   }, []);
 
   return (
@@ -680,161 +646,132 @@ const FamilyCard: React.FC<{
   );
 };
 
-/* ═══════════════════════════════════════════════════════
-   MEMBER CARD — Responsive with Premium Typography
-   Mobile-first design with fluid scaling
-   ═══════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   MEMBER CARD (for modal grid)
+   ═══════════════════════════════════════ */
 const MemberCard: React.FC<{
   member: FamilyMember;
   index: number;
 }> = ({ member, index }) => (
   <div
-    className="fam-member-card-enhanced group"
-    style={{ animationDelay: `${index * 0.08}s` }}
+    className="group relative rounded-xl overflow-hidden fam-member-card p-4 md:p-5 flex flex-col items-center text-center cursor-default h-full family-member-card"
+    style={{
+      animationDelay: `${index * 0.1}s`,
+      background: 'hsl(var(--background) / 0.75)',
+      border: '1px solid hsl(var(--primary) / 0.15)',
+    }}
   >
-    {/* Background glow on hover */}
-    <div className="fam-member-glow" />
-    
     {/* Jaali texture */}
-    <JaaliPattern className="opacity-15 rounded-xl" />
+    <JaaliPattern className="opacity-20 rounded-xl" />
 
-    {/* Photo container with responsive sizing */}
-    <div className="fam-member-photo-wrap">
-      <div className="fam-member-photo-frame">
+    {/* Mini Jharokha Photo */}
+    <div className="relative w-32 h-44 sm:w-28 sm:h-36 md:w-32 md:h-40 mt-2 shrink-0 mb-4 z-10">
+      <div
+        className="w-full h-full rounded-t-full rounded-b-lg border-2 border-primary/30 overflow-hidden shadow-lg transition-all duration-700 group-hover:border-primary/60 group-hover:shadow-primary/20"
+      >
         <img 
           src={member.image} 
           alt={member.name} 
-          className="fam-member-photo" 
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-115" 
         />
-        {/* Photo overlay on hover */}
-        <div className="fam-member-photo-overlay" />
       </div>
-      {/* Simplified mini frame */}
-      <div className="fam-member-mini-frame" />
+      <JharokhaSVG active={true} size="small" />
+      <OrnateBorder active={true} size="small" />
     </div>
 
-    {/* Name with responsive typography */}
-    <h4 className="fam-member-name">{member.name}</h4>
+    {/* Name */}
+    <p className="font-heading text-base md:text-lg text-primary mb-1.5 leading-snug line-clamp-2 transition-all z-10 font-bold"
+      style={{ textShadow: '0 2px 10px hsl(var(--background) / 0.8)' }}
+    >
+      {member.name}
+    </p>
 
-    {/* Animated divider */}
-    <div className="fam-member-divider" />
+    {/* Hover divider */}
+    <div className="w-10 h-0.5 mx-auto mb-2 group-hover:w-20 transition-all duration-500 z-10"
+      style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.6), transparent)' }}
+    />
 
-    {/* Relation badge */}
-    <span className="fam-member-relation">{member.relation}</span>
+    {/* Relation */}
+    <p className="text-[10px] md:text-[11px] text-foreground/70 font-display uppercase tracking-[0.2em] line-clamp-1 z-10 font-medium">
+      {member.relation}
+    </p>
   </div>
 );
 
-/* ═══════════════════════════════════════════════════════
-   FAMILY DETAILS MODAL — Enhanced Luxury Design
-   With smooth transitions, premium typography, and responsive layout
-   ═══════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   FAMILY DETAILS MODAL (Luxury)
+   ═══════════════════════════════════════ */
 const FamilyModal: React.FC<{
   data: FamilySide;
   onClose: () => void;
 }> = ({ data, onClose }) => {
-  const [isClosing, setIsClosing] = useState(false);
-  
-  const handleClose = useCallback(() => {
-    setIsClosing(true);
-    setTimeout(() => onClose(), 300);
-  }, [onClose]);
-  
-  useEffect(() => {
+  React.useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') handleClose();
+      if (e.key === 'Escape') onClose();
     };
-    // Prevent body scroll when modal is open
-    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handler);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handler);
-    };
-  }, [handleClose]);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
 
   return (
-    <div 
-      className={`fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-4 md:p-6 fam-modal-overlay ${isClosing ? 'fam-modal-closing' : ''}`} 
-      onClick={handleClose}
-    >
-      {/* Enhanced Backdrop with radial glow */}
-      <div className="absolute inset-0 fam-modal-backdrop-enhanced" />
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 md:p-6" onClick={onClose}>
+      {/* Backdrop */}
+      <div className="absolute inset-0 family-modal-backdrop" style={{
+        background: 'radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.05) 0%, hsl(var(--background) / 0.9) 70%, hsl(var(--background) / 0.98) 100%)',
+        backdropFilter: 'blur(16px)',
+      }} />
 
-      {/* Modal container with 3D entrance */}
+      {/* Modal container */}
       <div
-        className={`relative w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] overflow-hidden rounded-2xl sm:rounded-3xl flex flex-col fam-modal-container ${isClosing ? 'fam-modal-exit' : 'fam-modal-enter-enhanced'}`}
+        className="relative w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-3xl flex flex-col family-modal-enter fam-modal-luxury"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Rotating animated border */}
-        <div className="fam-modal-rotating-border" />
-        
         {/* Modal jaali overlay */}
-        <JaaliPattern className="opacity-10 z-0" />
+        <JaaliPattern className="opacity-15 z-0" />
 
-        {/* Inner gold border frame */}
-        <div className="absolute inset-[3px] rounded-2xl sm:rounded-[22px] border border-primary/20 pointer-events-none z-10" />
+        {/* Gold border glow */}
+        <div className="absolute inset-0 rounded-3xl fam-modal-border pointer-events-none z-20" />
 
-        {/* Header with improved typography */}
-        <div className="sticky top-0 z-30 flex items-center justify-between gap-4 px-4 sm:px-6 py-4 sm:py-5 border-b border-primary/15 fam-modal-header">
-          <div className="min-w-0 flex-1">
-            <h3 className="fam-modal-title">{data.title}</h3>
-            <p className="fam-modal-subtitle" lang="hi">{data.hindiTitle}</p>
+        {/* Header */}
+        <div className="sticky top-0 z-30 flex items-center justify-between px-6 py-5 border-b border-primary/20 shadow-lg"
+          style={{ background: 'hsl(var(--background) / 0.95)', backdropFilter: 'blur(12px)' }}
+        >
+          <div>
+            <h3 className="font-heading text-xl md:text-2xl gold-shimmer-slow leading-tight font-bold tracking-wide">{data.title}</h3>
+            <p className="font-hindi text-sm text-muted mt-1 opacity-80" lang="hi">{data.hindiTitle}</p>
           </div>
           <button
-            onClick={handleClose}
-            className="fam-modal-close-btn group"
-            aria-label="Close modal"
+            onClick={onClose}
+            className="w-10 h-10 rounded-full flex items-center justify-center border border-primary/30 transition-all duration-500 hover:border-primary hover:scale-110 hover:rotate-180 hover:bg-primary/10 group"
+            aria-label="Close"
           >
-            <span className="fam-close-icon-wrap">
-              <X size={18} className="text-foreground/80 group-hover:text-primary transition-colors duration-300" />
-            </span>
-            <span className="fam-close-ripple" />
+            <X size={18} className="text-foreground group-hover:text-primary transition-colors" />
           </button>
         </div>
 
-        {/* Members Grid with responsive columns */}
-        <div className="overflow-y-auto flex-1 p-4 sm:p-6 md:p-8 lg:p-10 custom-scrollbar relative z-10 scroll-smooth fam-modal-content">
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+        {/* Members Grid */}
+        <div className="overflow-y-auto p-6 md:p-10 custom-scrollbar relative z-10 scroll-smooth">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {data.members.map((member, i) => (
               <MemberCard key={i} member={member} index={i} />
             ))}
           </div>
         </div>
 
-        {/* Bottom decorative section */}
-        <div className="relative z-10 px-4 sm:px-6 py-3 sm:py-4 border-t border-primary/10 fam-modal-footer">
-          {/* Gold accent line */}
-          <div className="fam-modal-accent-line" />
-          
-          {/* Footer text */}
-          <p className="text-center text-[10px] sm:text-xs text-muted-foreground/60 font-serif italic">
-            Blessed with love and togetherness
-          </p>
-        </div>
+        {/* Bottom gold accent line */}
+        <div className="h-px w-full relative z-10" style={{
+          background: 'linear-gradient(90deg, transparent 10%, hsl(var(--primary) / 0.5) 50%, transparent 90%)',
+        }} />
 
-        {/* Corner flourishes */}
-        <div className="fam-modal-corners">
-          <svg className="fam-modal-corner fam-modal-corner-tl" viewBox="0 0 32 32" fill="none">
-            <path d="M0 0 L32 0 L32 4 Q16 4 4 16 L4 32 L0 32 Z" fill="url(#modal-gold)" />
-            <circle cx="8" cy="8" r="1.5" fill="#FFD700" />
-            <defs>
-              <linearGradient id="modal-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FFD700" />
-                <stop offset="100%" stopColor="#D4AF37" />
-              </linearGradient>
-            </defs>
+        {/* Bottom corner ornaments */}
+        <div className="absolute bottom-4 left-6 w-8 h-8 pointer-events-none z-20 opacity-30" aria-hidden="true" style={{ transform: 'scaleY(-1)' }}>
+          <svg viewBox="0 0 24 24" className="w-full h-full text-primary">
+            <path d="M0,0 L12,0 Q6,6 0,12 Z" fill="currentColor" />
           </svg>
-          <svg className="fam-modal-corner fam-modal-corner-tr" viewBox="0 0 32 32" fill="none">
-            <path d="M32 0 L0 0 L0 4 Q16 4 28 16 L28 32 L32 32 Z" fill="url(#modal-gold)" />
-            <circle cx="24" cy="8" r="1.5" fill="#FFD700" />
-          </svg>
-          <svg className="fam-modal-corner fam-modal-corner-bl" viewBox="0 0 32 32" fill="none">
-            <path d="M0 32 L32 32 L32 28 Q16 28 4 16 L4 0 L0 0 Z" fill="url(#modal-gold)" />
-            <circle cx="8" cy="24" r="1.5" fill="#FFD700" />
-          </svg>
-          <svg className="fam-modal-corner fam-modal-corner-br" viewBox="0 0 32 32" fill="none">
-            <path d="M32 32 L0 32 L0 28 Q16 28 28 16 L28 0 L32 0 Z" fill="url(#modal-gold)" />
-            <circle cx="24" cy="24" r="1.5" fill="#FFD700" />
+        </div>
+        <div className="absolute bottom-4 right-6 w-8 h-8 pointer-events-none z-20 opacity-30" aria-hidden="true" style={{ transform: 'scale(-1,-1)' }}>
+          <svg viewBox="0 0 24 24" className="w-full h-full text-primary">
+            <path d="M0,0 L12,0 Q6,6 0,12 Z" fill="currentColor" />
           </svg>
         </div>
       </div>
