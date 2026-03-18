@@ -1922,7 +1922,7 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    ROYAL JHAROKHA FRAME — Rajasthani Palace-Inspired Photo Frames
    Elegant gold borders with animated effects, mobile-first design
-   ═══════════════════════════════════════════════════════════════════════════ */
+   ═════���═════════════════════════════════════════════════════════════════════ */
 
 /* CSS Custom Property for border rotation */
 @property --jharokha-angle {
@@ -5899,99 +5899,479 @@
   }
 }
 
-/* ── Member Card — Animated Border + Hover Glow ── */
-.fam-member-card {
-  border: 1px solid hsl(var(--primary) / 0.15);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+/* ══════════════════════════════════════════════════════════════════
+   ENHANCED MEMBER CARD — Mobile-First Responsive Design
+   ══════════════════════════════════════════════════════════════════ */
+
+.fam-member-card-enhanced {
   position: relative;
-}
-.fam-member-card::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 0.8rem;
-  background: conic-gradient(
-    from 0deg,
-    hsl(var(--primary) / 0.0),
-    hsl(var(--primary) / 0.3),
-    hsl(var(--primary) / 0.0),
-    hsl(var(--primary) / 0.2),
-    hsl(var(--primary) / 0.0)
-  );
-  animation: fam-member-border-spin 6s linear infinite;
-  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.875rem 0.75rem 1rem;
+  border-radius: 0.875rem;
+  background: hsl(var(--background) / 0.75);
+  border: 1px solid hsl(var(--primary) / 0.15);
+  cursor: default;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
   opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.fam-member-card:hover::before {
-  opacity: 1;
-}
-.fam-member-card:hover {
-  transform: translateY(-6px) scale(1.04);
-  border-color: hsl(var(--primary) / 0.4);
-  box-shadow:
-    0 12px 30px hsl(var(--background) / 0.6),
-    0 0 20px hsl(var(--primary) / 0.1);
+  transform: translateY(20px) scale(0.95);
+  animation: fam-member-entrance 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
-@keyframes fam-member-border-spin {
-  to { transform: rotate(360deg); }
+@media (min-width: 640px) {
+  .fam-member-card-enhanced {
+    padding: 1rem 0.875rem 1.25rem;
+  }
 }
 
-/* Member Card Staggered Entrance */
-.family-member-card {
-  opacity: 0;
-  transform: translateY(25px) scale(0.93);
-  animation: family-member-in 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+@media (min-width: 768px) {
+  .fam-member-card-enhanced {
+    padding: 1.25rem 1rem 1.5rem;
+    border-radius: 1rem;
+  }
 }
-@keyframes family-member-in {
+
+@keyframes fam-member-entrance {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
-/* ── Modal Luxury Styling ── */
-.fam-modal-luxury {
-  background: hsl(var(--background) / 0.95);
+.fam-member-card-enhanced:hover {
+  transform: translateY(-6px) scale(1.03);
+  border-color: hsl(var(--primary) / 0.4);
   box-shadow:
-    0 0 40px hsl(var(--background) / 0.5),
-    0 0 80px hsl(var(--primary) / 0.06),
-    inset 0 1px 0 hsl(var(--primary) / 0.1);
-}
-.fam-modal-border {
-  border: 1.5px solid hsl(var(--primary) / 0.2);
-  border-radius: 1rem;
-  animation: fam-modal-border-glow 4s ease-in-out infinite;
-}
-@keyframes fam-modal-border-glow {
-  0%, 100% { border-color: hsl(var(--primary) / 0.15); box-shadow: none; }
-  50% { border-color: hsl(var(--primary) / 0.35); box-shadow: 0 0 15px hsl(var(--primary) / 0.08); }
+    0 16px 40px hsl(var(--background) / 0.7),
+    0 0 25px hsl(var(--primary) / 0.12);
 }
 
-/* Modal Backdrop */
-.family-modal-backdrop {
-  animation: family-backdrop-in 0.35s ease-out;
-}
-@keyframes family-backdrop-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Background glow on hover */
+.fam-member-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    hsl(var(--primary) / 0.08) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
-/* Modal 3D Flip Entrance */
-.family-modal-enter {
-  animation: family-modal-flip 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+.fam-member-card-enhanced:hover .fam-member-glow {
+  opacity: 1;
 }
-@keyframes family-modal-flip {
+
+/* Photo container - responsive */
+.fam-member-photo-wrap {
+  position: relative;
+  width: 80px;
+  height: 100px;
+  margin-bottom: 0.75rem;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+@media (min-width: 400px) {
+  .fam-member-photo-wrap {
+    width: 90px;
+    height: 115px;
+  }
+}
+
+@media (min-width: 640px) {
+  .fam-member-photo-wrap {
+    width: 100px;
+    height: 125px;
+    margin-bottom: 0.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .fam-member-photo-wrap {
+    width: 110px;
+    height: 140px;
+    margin-bottom: 1rem;
+  }
+}
+
+.fam-member-photo-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 50% 12px 12px;
+  border: 2px solid hsl(var(--primary) / 0.3);
+  overflow: hidden;
+  transition: all 0.5s ease;
+  box-shadow: 0 4px 16px hsl(var(--background) / 0.5);
+}
+
+.fam-member-card-enhanced:hover .fam-member-photo-frame {
+  border-color: hsl(var(--primary) / 0.6);
+  box-shadow: 
+    0 8px 25px hsl(var(--background) / 0.6),
+    0 0 15px hsl(var(--primary) / 0.1);
+}
+
+.fam-member-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fam-member-card-enhanced:hover .fam-member-photo {
+  transform: scale(1.1);
+}
+
+.fam-member-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 60%,
+    hsl(var(--primary) / 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.fam-member-card-enhanced:hover .fam-member-photo-overlay {
+  opacity: 1;
+}
+
+/* Mini decorative frame */
+.fam-member-mini-frame {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50% 50% 14px 14px;
+  border: 1px solid hsl(var(--primary) / 0.2);
+  pointer-events: none;
+  transition: border-color 0.4s ease;
+}
+
+.fam-member-card-enhanced:hover .fam-member-mini-frame {
+  border-color: hsl(var(--primary) / 0.35);
+}
+
+/* Name - responsive typography */
+.fam-member-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  font-weight: 600;
+  color: hsl(var(--primary));
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  margin-bottom: 0.375rem;
+  position: relative;
+  z-index: 10;
+  text-shadow: 0 2px 8px hsl(var(--background) / 0.8);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@media (min-width: 768px) {
+  .fam-member-name {
+    font-size: clamp(0.9rem, 2.5vw, 1.125rem);
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Animated divider */
+.fam-member-divider {
+  width: 24px;
+  height: 2px;
+  margin: 0 auto 0.375rem;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5), transparent);
+  border-radius: 1px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 10;
+}
+
+.fam-member-card-enhanced:hover .fam-member-divider {
+  width: 48px;
+}
+
+@media (min-width: 768px) {
+  .fam-member-divider {
+    width: 32px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .fam-member-card-enhanced:hover .fam-member-divider {
+    width: 64px;
+  }
+}
+
+/* Relation badge - responsive */
+.fam-member-relation {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: clamp(0.6rem, 2vw, 0.7rem);
+  font-weight: 500;
+  color: hsl(var(--foreground) / 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .fam-member-relation {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   FAMILY MODAL — Enhanced Luxury Design with Premium Animations
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Modal overlay */
+.fam-modal-overlay {
+  transition: opacity 0.3s ease;
+}
+
+.fam-modal-closing {
+  opacity: 0;
+}
+
+/* Enhanced backdrop with particles effect */
+.fam-modal-backdrop-enhanced {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 40%,
+    hsl(var(--primary) / 0.06) 0%,
+    hsl(var(--background) / 0.92) 50%,
+    hsl(var(--background) / 0.98) 100%
+  );
+  backdrop-filter: blur(20px);
+  animation: fam-backdrop-in 0.4s ease-out;
+}
+
+@keyframes fam-backdrop-in {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to { opacity: 1; backdrop-filter: blur(20px); }
+}
+
+/* Modal container */
+.fam-modal-container {
+  background: linear-gradient(
+    145deg,
+    hsl(var(--card) / 0.98),
+    hsl(var(--background) / 0.95)
+  );
+  box-shadow:
+    0 25px 80px hsl(var(--background) / 0.7),
+    0 0 100px hsl(var(--primary) / 0.08),
+    inset 0 1px 0 hsl(var(--primary) / 0.15);
+}
+
+/* Rotating animated border for modal */
+.fam-modal-rotating-border {
+  position: absolute;
+  inset: -200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0) 20%,
+    rgba(212, 175, 55, 0.5) 25%,
+    rgba(255, 215, 0, 0.8) 30%,
+    rgba(212, 175, 55, 0.5) 35%,
+    rgba(212, 175, 55, 0) 40%,
+    transparent 100%
+  );
+  animation: fam-modal-border-spin 6s linear infinite;
+  z-index: -1;
+}
+
+@keyframes fam-modal-border-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Enhanced entrance animation */
+.fam-modal-enter-enhanced {
+  animation: fam-modal-entrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fam-modal-entrance {
   from {
     opacity: 0;
-    transform: perspective(800px) rotateX(15deg) scale(0.92) translateY(30px);
+    transform: perspective(1000px) rotateX(8deg) scale(0.9) translateY(40px);
   }
   to {
     opacity: 1;
-    transform: perspective(800px) rotateX(0deg) scale(1) translateY(0);
+    transform: perspective(1000px) rotateX(0deg) scale(1) translateY(0);
   }
 }
+
+/* Exit animation */
+.fam-modal-exit {
+  animation: fam-modal-exit 0.3s ease-in forwards;
+}
+
+@keyframes fam-modal-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+}
+
+/* Modal header */
+.fam-modal-header {
+  background: linear-gradient(
+    180deg,
+    hsl(var(--background) / 0.98),
+    hsl(var(--background) / 0.95)
+  );
+  backdrop-filter: blur(16px);
+}
+
+/* Modal title - responsive typography */
+.fam-modal-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 40%, #FFF9C4 60%, #FFD700 80%, #D4AF37 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fam-title-shimmer 4s ease-in-out infinite;
+}
+
+@keyframes fam-title-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.fam-modal-subtitle {
+  font-family: 'Noto Sans Devanagari', 'Mukta', sans-serif;
+  font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+  color: hsl(var(--muted-foreground));
+  letter-spacing: 0.08em;
+  margin-top: 0.25rem;
+  opacity: 0.75;
+}
+
+/* Close button */
+.fam-modal-close-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsl(var(--background) / 0.5);
+  border: 1px solid hsl(var(--primary) / 0.25);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.fam-modal-close-btn:hover {
+  border-color: hsl(var(--primary) / 0.5);
+  background: hsl(var(--primary) / 0.1);
+  transform: scale(1.08);
+}
+
+.fam-close-icon-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fam-modal-close-btn:hover .fam-close-icon-wrap {
+  transform: rotate(90deg);
+}
+
+.fam-close-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.4s ease;
+}
+
+.fam-modal-close-btn:hover .fam-close-ripple {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+/* Modal content area */
+.fam-modal-content {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    hsl(var(--primary) / 0.02) 50%,
+    transparent 100%
+  );
+}
+
+/* Modal footer */
+.fam-modal-footer {
+  background: hsl(var(--background) / 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.fam-modal-accent-line {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4), transparent);
+}
+
+/* Modal corner ornaments */
+.fam-modal-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.fam-modal-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.3));
+}
+
+@media (min-width: 640px) {
+  .fam-modal-corner {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.fam-modal-corner-tl { top: 2px; left: 2px; }
+.fam-modal-corner-tr { top: 2px; right: 2px; }
+.fam-modal-corner-bl { bottom: 2px; left: 2px; }
+.fam-modal-corner-br { bottom: 2px; right: 2px; }
 
 /* ═══════════════════════════════════════════════════════════════
    FAMILY SECTION — Enhanced Royal Rajasthani Design (Mobile-First)
@@ -6267,7 +6647,7 @@
   background: radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.05) 0%, transparent 70%);
 }
 
-/* ── Royal Card Border — Themed same as Events Section ── */
+/* ══ Royal Card Border — Animated Rotating Golden Border ══ */
 .fam-royal-border {
   position: absolute;
   inset: 0;
@@ -6278,42 +6658,124 @@
   overflow: hidden;
 }
 
-/* Subtle Ambient Glow — Premium Natural Effect */
-.fam-glow-border-layer {
+/* Rotating conic gradient border - SAME as CelebrationsSection */
+.fam-rotating-border-layer {
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0) 15%,
+    rgba(212, 175, 55, 0.6) 22%,
+    rgba(255, 215, 0, 1) 25%,
+    rgba(255, 249, 196, 0.9) 28%,
+    rgba(255, 215, 0, 1) 31%,
+    rgba(212, 175, 55, 0.6) 34%,
+    rgba(212, 175, 55, 0) 41%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+}
+
+/* Active state: show rotating border */
+.fam-royal-border-active .fam-rotating-border-layer {
+  opacity: 0.6;
+  animation: fam-border-rotate 5s linear infinite;
+}
+
+/* Hover: intensify the rotating border */
+.fam-card-inner:hover .fam-rotating-border-layer {
+  opacity: 1;
+  animation: fam-border-rotate 3s linear infinite;
+}
+
+@keyframes fam-border-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Golden corner ornaments */
+.fam-golden-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.fam-corner-svg {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.3));
+  transition: all 0.4s ease;
+}
+
+@media (min-width: 768px) {
+  .fam-corner-svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.fam-corner-tl { top: -2px; left: -2px; }
+.fam-corner-tr { top: -2px; right: -2px; }
+.fam-corner-bl { bottom: -2px; left: -2px; }
+.fam-corner-br { bottom: -2px; right: -2px; }
+
+.fam-card-inner:hover .fam-corner-svg {
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+}
+
+/* Corner gem pulse animation */
+.fam-corner-gem {
+  animation: fam-gem-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fam-gem-pulse {
+  0%, 100% { opacity: 0.7; r: 2; }
+  50% { opacity: 1; r: 2.5; }
+}
+
+/* Border spotlight on hover */
+.fam-border-spotlight {
   position: absolute;
   inset: -1px;
   border-radius: 1.35rem;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  background: transparent;
-  opacity: 0;
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
+  z-index: 12;
+  background: radial-gradient(
+    circle 120px at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 215, 0, 0.4),
+    rgba(212, 175, 55, 0.2) 40%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
-/* Active state: subtle border glow */
-.fam-royal-border-active .fam-glow-border-layer {
+.fam-card-inner:hover .fam-border-spotlight {
   opacity: 1;
-  border-color: rgba(212, 175, 55, 0.25);
 }
 
-/* Hover: Soft outward glow from behind — natural and premium */
-.fam-card-inner:hover .fam-glow-border-layer {
-  opacity: 1;
-  border-color: rgba(212, 175, 55, 0.35);
-  box-shadow: 
-    0 0 20px rgba(212, 175, 55, 0.08),
-    0 0 40px rgba(212, 175, 55, 0.05),
-    0 0 60px rgba(212, 175, 55, 0.03);
+/* Ambient card glow behind */
+.fam-card-outer {
+  position: relative;
 }
 
-/* Ambient card glow behind — applied to outer wrapper */
 .fam-card-outer::before {
   content: '';
   position: absolute;
-  inset: -8px;
-  border-radius: 1.5rem;
+  inset: -10px;
+  border-radius: 1.75rem;
   background: radial-gradient(ellipse at 50% 50%, 
-    rgba(212, 175, 55, 0.06) 0%, 
+    rgba(212, 175, 55, 0.08) 0%, 
     transparent 70%);
   opacity: 0;
   transition: opacity 0.5s ease;
