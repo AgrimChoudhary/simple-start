@@ -214,7 +214,7 @@ const SharedPeacockDefs: React.FC = () => (
 );
 
 const EventBottomDecor: React.FC = () => (
-  <svg viewBox="0 0 340 120" width="100%" height="auto" style={{ maxWidth: '280px', filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.4))' }}>
+  <svg viewBox="0 0 340 120" width="100%" height="100%" style={{ maxWidth: '280px', filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.4))' }}>
     {/* Platform */}
     <ellipse cx="170" cy="95" rx="70" ry="15" fill="#0F172A" stroke="#D4AF37" strokeWidth="2"/>
     <ellipse cx="170" cy="95" rx="60" ry="10" fill="none" stroke="#D4AF37" strokeWidth="1" strokeDasharray="4 2"/>

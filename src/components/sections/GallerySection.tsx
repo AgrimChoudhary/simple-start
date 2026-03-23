@@ -3,6 +3,7 @@ import DiyaIcon from '@/components/global/DiyaIcon';
 import RoyalJharokhaFrame from '@/components/global/RoyalJharokhaFrame';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 import RoyalBackground from '@/components/global/RoyalBackground';
+import PeacockCorner from '@/components/global/PeacockCorner';
 import FamilySection from '@/components/sections/FamilySection';
 
 interface GallerySectionProps {
@@ -208,9 +209,19 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
       {/* Border frame */}
       <SectionBorderFrame active={active} variant="standard" />
 
-      {/* Content */}
-      <div className="gal-content">
-        {/* Family Section (shown first) */}
+      {/* ── MAYUR (PEACOCK) CORNERS ── */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 50 }}>
+        <PeacockCorner pos="tl" />
+        <PeacockCorner pos="tr" />
+        <PeacockCorner pos="bl" />
+        <PeacockCorner pos="br" />
+      </div>
+
+      {/* ── Content ── */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8 pt-10 pb-16">
+
+        {/* Section Heading */}
+        {/* ── Family Section (shown first) ── */}
         <FamilySection active={active} />
 
         {/* Gallery Heading — Premium Style with Diya on both sides */}
@@ -251,22 +262,33 @@ const GallerySection: React.FC<GallerySectionProps> = ({ active, onNext }) => {
           ))}
         </div>
 
-        {/* Next Button */}
-        <div className="gal-nav-wrapper">
-          <button
-            onClick={onNext}
-            className="gal-nav-btn"
-            style={{
-              opacity: buttonVisible ? 1 : 0,
-              transform: buttonVisible ? 'translateY(0)' : 'translateY(15px)',
-              transition: 'opacity 0.5s ease-out, transform 0.5s ease-out',
-              pointerEvents: buttonVisible ? 'auto' : 'none',
-            }}
+        {/* ── Fixed Floating Next Button (Premium Style) ── */}
+        <div 
+          className="cel-next-btn-wrap"
+          style={{
+            opacity: buttonVisible ? 1 : 0,
+            transform: buttonVisible ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
+            pointerEvents: buttonVisible ? 'auto' : 'none',
+          }}
+        >
+          <button 
+            onClick={onNext} 
+            className="cel-next-btn" 
+            aria-label="Next Section: Countdown"
           >
-            <span>Next: Countdown</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
+            <div className="cel-diya-container">
+              <div className="cel-diya-glow"></div>
+              <div className="cel-diya-flame"></div>
+              <span className="cel-diya-icon">🪔</span>
+            </div>
+            <span>Next</span>
+            <span className="cel-btn-arrow">→</span>
+            <div className="cel-diya-container" style={{ transform: 'scaleX(-1)' }}>
+              <div className="cel-diya-glow"></div>
+              <div className="cel-diya-flame"></div>
+              <span className="cel-diya-icon">🪔</span>
+            </div>
           </button>
         </div>
       </div>

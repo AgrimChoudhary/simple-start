@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import ganeshaImg from '@/assets/ganesha.png';
 import templeBgMobile from '@/assets/temple-bg-mobile.jpg';
 import templeBgDesktop from '@/assets/temple-bg-desktop.jpg';
+import PeacockCorner from '@/components/global/PeacockCorner';
 
 interface GaneshaSectionProps {
   curtainOpen: boolean;
@@ -352,6 +353,14 @@ const GaneshaSection: React.FC<GaneshaSectionProps> = ({ curtainOpen, onBeginCli
 
           <div className="jaali-overlay" />
           <GoldDustParticles active={curtainSyncActive} />
+
+          {/* ── MAYUR (PEACOCK) CORNERS ── */}
+          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 50 }}>
+            <PeacockCorner pos="tl" />
+            <PeacockCorner pos="tr" />
+            <PeacockCorner pos="bl" />
+            <PeacockCorner pos="br" />
+          </div>
         </>
       )}
 

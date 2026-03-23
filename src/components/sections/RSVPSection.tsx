@@ -3,6 +3,7 @@ import confetti from 'canvas-confetti';
 import DiyaIcon from '@/components/global/DiyaIcon';
 import GoldDivider from '@/components/global/GoldDivider';
 import SectionBorderFrame from '@/components/global/SectionBorderFrame';
+import PeacockCorner from '@/components/global/PeacockCorner';
 
 interface RSVPSectionProps {
   active: boolean;
@@ -468,6 +469,14 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ active, guestName }) => {
       {/* Ornate border frame */}
       <OrnateFrame />
       <SectionBorderFrame active={active} variant="royal" />
+
+      {/* ── MAYUR (PEACOCK) CORNERS ── */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 50 }}>
+        <PeacockCorner pos="tl" />
+        <PeacockCorner pos="tr" />
+        <PeacockCorner pos="bl" />
+        <PeacockCorner pos="br" />
+      </div>
 
       {/* Background rangoli — top right */}
       <div className="absolute -top-10 -right-10 opacity-[0.04] pointer-events-none" aria-hidden="true"

@@ -1008,6 +1008,166 @@
 }
 
 /* ═══════════════════════════════════════════════
+   PREMIUM OPEN INVITATION BUTTON (GANESHA SECTION)
+   ═══════════════════════════════════════════════ */
+
+.opening-cta-btn-premium {
+  position: relative;
+  padding: clamp(14px, 3vh, 18px) clamp(32px, 6vw, 48px);
+  min-width: 220px;
+  border: 1px solid rgba(255, 204, 102, 0.5);
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.1) 0%, hsl(var(--gold-primary) / 0.03) 50%, hsl(var(--gold-primary) / 0.1) 100%);
+  color: #ffcc66;
+  border-radius: 8px; /* Slightly rounded corners for elegance */
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px hsl(var(--background) / 0.3), inset 0 1px 0 hsl(var(--gold-primary) / 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Base Shimmer Sweep */
+.opening-cta-btn-premium::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, hsl(var(--gold-primary) / 0.2), transparent);
+  background-size: 200% 100%;
+  animation: button-shimmer 4s ease-in-out infinite;
+  opacity: 0.8;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Inner glow ring */
+.opening-cta-btn-premium::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid hsl(var(--gold-primary) / 0.2);
+  border-radius: 5px;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+/* Hover State - Full Glow & Rise */
+.opening-cta-btn-premium:hover {
+  background: linear-gradient(135deg, hsl(var(--gold-primary) / 0.8) 0%, hsl(var(--gold-secondary)) 100%);
+  color: hsl(var(--primary-foreground));
+  border-color: hsl(var(--gold-primary));
+  transform: scale(1.05) translateY(-4px);
+  box-shadow:
+    0 12px 30px hsl(var(--gold-primary) / 0.3),
+    0 0 50px hsl(var(--gold-primary) / 0.15),
+    inset 0 0 20px hsl(var(--gold-primary) / 0.2);
+}
+
+.opening-cta-btn-premium:hover::before {
+  opacity: 1;
+  background: linear-gradient(90deg, transparent, hsl(var(--text-ivory) / 0.4), transparent);
+}
+
+.opening-cta-btn-premium:hover::after {
+  border-color: hsl(var(--text-ivory) / 0.4);
+}
+
+.opening-cta-btn-premium:active {
+  transform: scale(0.98);
+}
+
+/* Content Layout */
+.opening-cta-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.opening-cta-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(12px, 2vh, 15px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  transition: text-shadow 0.4s ease;
+}
+
+.opening-cta-btn-premium:hover .opening-cta-text {
+  text-shadow: none; /* Dark text on hover doesn't need shadow */
+}
+
+/* Arrow Animation */
+.opening-cta-arrow {
+  font-size: clamp(16px, 2.5vh, 20px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-block;
+}
+
+.opening-cta-btn-premium:hover .opening-cta-arrow {
+  transform: translateX(6px) scale(1.2);
+  animation: opening-cta-arrow-bounce 1s ease-in-out infinite alternate;
+}
+
+@keyframes opening-cta-arrow-bounce {
+  0% { transform: translateX(6px) scale(1.2); }
+  100% { transform: translateX(10px) scale(1.2); }
+}
+
+/* Decorative Corners - Diamond shape */
+.opening-cta-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--gold-primary) / 0.6);
+  transform: rotate(45deg);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 3;
+}
+
+@media (min-width: 768px) {
+  .opening-cta-corner {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.opening-cta-corner-tl { top: -6px; left: -6px; }
+.opening-cta-corner-tr { top: -6px; right: -6px; }
+.opening-cta-corner-bl { bottom: -6px; left: -6px; }
+.opening-cta-corner-br { bottom: -6px; right: -6px; }
+
+/* Corner Animations on Hover */
+.opening-cta-btn-premium:hover .opening-cta-corner {
+  background: hsl(var(--text-ivory));
+  border-color: hsl(var(--text-ivory));
+  box-shadow: 0 0 12px hsl(var(--text-ivory) / 0.8);
+  border-radius: 50%; /* Diamonds turn to glowing dots */
+  transform: rotate(0deg) scale(0.8);
+}
+
+/* Subtle corner pulse when idle */
+.opening-cta-btn-premium:not(:hover) .opening-cta-corner {
+  animation: opening-cta-corner-pulse 3s infinite ease-in-out;
+}
+
+@keyframes opening-cta-corner-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 hsl(var(--gold-primary) / 0);
+  }
+  50% {
+    box-shadow: 0 0 8px hsl(var(--gold-primary) / 0.5);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════
    PREMIUM GUEST NAME SHOWCASE
    ═══════════════════════════════════════════════ */
 
@@ -4414,6 +4574,31 @@
   100% { transform: translateX(100%) skewX(-45deg); }
 }
 
+/* ── Refined Resort Background Layer ── */
+.os-resort-bg-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* Above base gradients, below content */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.os-resort-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.25; /* Subtle presence */
+  filter: saturate(0.6) contrast(1.1) brightness(0.9);
+  mask-image: linear-gradient(to bottom, black 40%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 95%);
+}
+
+.os-resort-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, #050510 100%);
+}
+
 @keyframes floral-corner-float {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   33% { transform: translate(2px, -2px) rotate(1deg); }
@@ -4482,7 +4667,7 @@
   height: 100%;
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Changed from center to allow pura upper positioning */
   justify-content: center;
 }
 
@@ -4625,17 +4810,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   text-align: center;
-  gap: clamp(24px, 4vh, 40px);
-  padding: clamp(5px, 1vh, 15px) 16px;
+  gap: 0; /* No gap at all between elements */
+  padding: clamp(60px, 10vh, 90px) 16px 0;
   max-width: 480px;
   width: 100%;
+  min-height: 100vh;
 }
 
 @media (min-width: 768px) {
   .os-content {
-    gap: 24px;
-    padding: 20px 32px;
+    gap: 0;
+    padding: 80px 32px 0;
     max-width: 600px;
   }
 }
@@ -4646,16 +4833,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(160px, min(50vw, 32vh), 210px); /* slightly larger and moved up */
+  width: clamp(160px, min(50vw, 32vh), 210px);
   aspect-ratio: 1 / 1;
-  margin-top: -16vh; /* shifted even further up for compact mobile feel */
+  margin-top: clamp(10px, 5vh, 30px); /* Push down slightly from the very top edge */
+  margin-bottom: clamp(60px, 12vh, 100px); /* Baseline margin to encapsulate overflowing diyas cleanly */
 }
 
 @media (min-width: 768px) {
   .os-portrait-hero {
-    width: clamp(130px, 18vw, 180px); /* desktop keeps it smaller */
+    width: clamp(130px, 18vw, 180px);
     aspect-ratio: 1 / 1;
-    margin-top: -15vh; /* shifted further upwards */
+    margin-top: 20px;
+    margin-bottom: clamp(90px, 15vh, 130px); /* Expanded footprint for overflowing desktop diyas */
   }
 }
 
@@ -5020,6 +5209,50 @@
   align-items: center;
   gap: 0;
   position: relative; /* for absolute peacocks */
+  margin-top: clamp(20px, 4vh, 40px); /* Close the gap since portrait handles diya clearance */
+  width: 100%;
+}
+
+/* Responsive bride/groom name text */
+.os-name {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: clamp(1.6rem, 6vw, 2.8rem);
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  background: linear-gradient(
+    90deg,
+    hsl(var(--gold-tertiary)),
+    hsl(var(--gold-primary)),
+    hsl(var(--gold-secondary)),
+    hsl(var(--gold-primary)),
+    hsl(var(--gold-tertiary))
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-shimmer 4s linear infinite;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 480px) {
+  .os-name {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+    letter-spacing: 0.05em;
+  }
+  .os-names-block {
+    margin-top: clamp(10px, 2vh, 20px); /* Balanced clearance for mobile diyas */
+  }
+}
+
+@media (min-width: 768px) {
+  .os-name {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  .os-names-block {
+    margin-top: clamp(20px, 4vh, 40px); /* Balanced clearance for desktop diyas */
+  }
 }
 
 /* ── PEACOCK FLANKING STYLES ── */
@@ -5036,16 +5269,16 @@
 }
 
 .os-peacock-left {
-  left: -55%; /* Moved further out to give names more room */
+  left: -15%; /* Pulled extremely close to names */
 }
 
 .os-peacock-right {
-  right: -55%;
+  right: -15%;
 }
 
 @media (max-width: 767px) {
-  .os-peacock-left { left: -45%; } /* Aggressive offset for mobile */
-  .os-peacock-right { right: -45%; }
+  .os-peacock-left { left: -8%; } /* Pulled extremely close for mobile */
+  .os-peacock-right { right: -8%; }
   .os-peacock-flank {
      width: 65px;
      height: 65px;
@@ -5093,10 +5326,67 @@
   50% { fill: #FFF; r: 1.5; opacity: 0.7; }
 }
 
+/* ── BLISS RESORT IMAGE STYLES (INTEGRATED) ── */
+.os-resort-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  margin-top: -10px; /* Shifted UP slightly */
+}
+
+.os-resort-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(9px, 1.8vw, 12px);
+  color: #ffcc66;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.os-resort-frame {
+  position: relative;
+  width: clamp(180px, 60vw, 380px);
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6); /* Soft shadow to blend */
+  /* Remove the border to make it look attached to background */
+}
+
+.os-resort-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* Add a soft fade to the edges to blend into the dark background */
+  mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+}
+
+.os-resort-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(5, 5, 16, 0.4) 100%);
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .os-resort-container {
+    gap: 8px;
+    margin-top: 15px;
+  }
+  .os-resort-frame {
+    width: 200px;
+  }
+}
+
 .os-name {
   font-family: 'Cinzel Decorative', serif;
   font-weight: 700;
-  font-size: clamp(16px, 5.5vw, 22px); /* reduced for mobile elegance */
+  font-size: clamp(10px, 3.5vw, 14px); /* minimal elegant size for mobile */
   letter-spacing: 0.25em; /* more spaced for elegance */
   text-transform: uppercase;
   line-height: 1.2;
@@ -5112,19 +5402,19 @@
 /* Desktop: keep names smaller */
 @media (min-width: 768px) {
   .os-name {
-    font-size: clamp(20px, 2.5vw, 26px);
-    letter-spacing: 0.3em;
+    font-size: clamp(12px, 1.4vw, 18px); /* minimal elegant size for desktop */
+    letter-spacing: 0.4em; /* slightly more tracking for luxury feel */
   }
 }
 
 /* Mobile: Keep names very close to portrait */
 .os-names-block {
-  margin-top: clamp(5px, 2vh, 15px);
+  margin-top: clamp(8px, 2vh, 15px); /* Shifted DOWN slightly */
 }
 
 @media (min-width: 768px) {
   .os-names-block {
-    margin-top: clamp(60px, 12vh, 90px); /* pushed down on desktop for balance */
+    margin-top: clamp(30px, 6vh, 50px); /* Shifted DOWN on desktop */
   }
 }
 
@@ -5161,7 +5451,7 @@
 
 .os-ampersand {
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: clamp(14px, 3vw, 24px);
+  font-size: clamp(8px, 1.5vw, 12px);
   color: #ffcc66;
   background: none;
   -webkit-background-clip: unset;
@@ -5170,13 +5460,13 @@
 }
 
 .os-amp-line {
-  width: 35px;
+  width: 20px; /* even shorter lines */
   height: 1px;
   background: linear-gradient(90deg, transparent, hsl(var(--gold-primary) / 0.5), transparent);
 }
 
 @media (min-width: 768px) {
-  .os-amp-line { width: 55px; }
+  .os-amp-line { width: 30px; }
 }
 
 /* Married text */
@@ -5189,6 +5479,99 @@
   margin-top: 4px;
   text-shadow: 0 0 20px hsl(var(--gold-primary) / 0.1);
 }
+
+/* ── WALKING BRIDE WITH MALA (ARCHED FRAME) ── */
+.os-walking-bride-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: clamp(15px, 4vh, 60px);
+  position: relative;
+  z-index: 20;
+}
+
+.os-bride-arched-frame {
+  position: relative;
+  width: clamp(240px, 80vw, 420px);
+  aspect-ratio: 5 / 6;
+  border: 3px solid hsl(var(--gold-primary));
+  border-bottom: 5px solid hsl(var(--gold-primary));
+  border-radius: 200px 200px 10px 10px; /* Traditional arch shape */
+  overflow: hidden;
+  box-shadow: 
+    0 0 25px hsl(var(--gold-primary) / 0.4),
+    inset 0 0 60px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateX(-100vw); /* Start from far left */
+  will-change: transform, opacity;
+  background: rgba(0, 0, 0, 0.2); /* Tint for better blending */
+}
+
+.os-walking-bride-active .os-bride-arched-frame {
+  animation: os-bride-walk-entrance 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.os-walking-bride-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(1.1);
+}
+
+@keyframes os-bride-walk-entrance {
+  0% {
+    transform: translateX(-100vw) scale(0.9);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.os-bride-walking-shadow {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 25px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 70%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 2s ease-out 1s;
+}
+
+.os-walking-bride-active .os-bride-walking-shadow {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .os-bride-arched-frame {
+    width: 280px;
+    border-width: 2px;
+    border-radius: 140px 140px 8px 8px;
+  }
+  .os-walking-bride-container {
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+}
+@media (max-height: 700px) and (max-width: 767px) {
+  .os-bride-arched-frame {
+    width: 240px;
+    aspect-ratio: 1 / 1.1;
+  }
+}
+
+
 
 @media (min-width: 768px) {
   .os-married-text {

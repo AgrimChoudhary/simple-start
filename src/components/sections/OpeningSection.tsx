@@ -3,6 +3,7 @@ import SectionBorderFrame from '@/components/global/SectionBorderFrame';
 import RoyalBackground from '@/components/global/RoyalBackground';
 import HangingDecors from '@/components/global/HangingDecors';
 import PeacockCorner from '@/components/global/PeacockCorner';
+import VarmalaAnimation from '@/components/animations/VarmalaAnimation';
 import coupleImage from '@/assets/indian-couple-traditional.png';
 
 /* ── ANIMATED FLANKING PEACOCKS (MAYUR) ── */
@@ -61,9 +62,22 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
   const [step, setStep] = useState(2);
 
   useEffect(() => {
-    if (!active) return;
-    const t = setTimeout(() => setStep(10), 200);
-    return () => clearTimeout(t);
+    if (!active) {
+      setStep(2);
+      return;
+    }
+    // Staggered reveal
+    const t1 = setTimeout(() => setStep(3), 100);
+    const t2 = setTimeout(() => setStep(4), 600);
+    const t3 = setTimeout(() => setStep(5), 1200);
+    const t4 = setTimeout(() => setStep(6), 1800);
+    
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+    };
   }, [active]);
 
   // Gold particles
@@ -134,7 +148,7 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
       </div>
 
       <SectionBorderFrame active={active} variant="royal" />
-
+ 
       {/* ══════ MAIN CONTENT ══════ */}
       <div className="os-content">
 
@@ -262,10 +276,10 @@ const OpeningSection: React.FC<OpeningSectionProps> = ({ active, onViewCelebrati
           </p>
         </div>
 
-
-
+        {/* ── 3. ANIMATED VARMALA EXCHANGE ── */}
+        <VarmalaAnimation active={step >= 4} />
       </div>
-
+ 
       {/* ── FIXED RIGHT-SIDE NEXT BUTTON ── */}
       <div
         style={{

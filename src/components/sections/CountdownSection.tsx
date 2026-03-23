@@ -498,6 +498,14 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ active, onNext }) =
       </div>
 
       <SectionBorderFrame active={active} variant="standard" />
+
+      {/* ── MAYUR (PEACOCK) CORNERS ── */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 50 }}>
+        <PeacockCorner pos="tl" />
+        <PeacockCorner pos="tr" />
+        <PeacockCorner pos="bl" />
+        <PeacockCorner pos="br" />
+      </div>
       <SparkleLayer sparkles={sparkles} />
 
       <div className="relative z-10 w-full max-w-3xl mx-auto px-5 md:px-8 pt-8 pb-16">
@@ -750,19 +758,33 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ active, onNext }) =
           </div>
         </div>
 
-        {/* ── Next Button ── */}
-        <div className="text-center mt-14 pb-4">
-          <button
-            onClick={onNext}
-            className="nav-button-secondary"
-            style={{
-              opacity: buttonVisible ? 1 : 0,
-              transform: buttonVisible ? 'translateY(0)' : 'translateY(10px)',
-              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
-              pointerEvents: buttonVisible ? 'auto' : 'none',
-            }}
+        {/* ── Fixed Floating Next Button (Premium Style) ── */}
+        <div 
+          className="cel-next-btn-wrap"
+          style={{
+            opacity: buttonVisible ? 1 : 0,
+            transform: buttonVisible ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
+            pointerEvents: buttonVisible ? 'auto' : 'none',
+          }}
+        >
+          <button 
+            onClick={onNext} 
+            className="cel-next-btn" 
+            aria-label="Next Section: RSVP"
           >
-            Next: RSVP →
+            <div className="cel-diya-container">
+              <div className="cel-diya-glow"></div>
+              <div className="cel-diya-flame"></div>
+              <span className="cel-diya-icon">🪔</span>
+            </div>
+            <span>Next</span>
+            <span className="cel-btn-arrow">→</span>
+            <div className="cel-diya-container" style={{ transform: 'scaleX(-1)' }}>
+              <div className="cel-diya-glow"></div>
+              <div className="cel-diya-flame"></div>
+              <span className="cel-diya-icon">🪔</span>
+            </div>
           </button>
         </div>
       </div>
